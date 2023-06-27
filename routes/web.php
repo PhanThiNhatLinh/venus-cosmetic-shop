@@ -16,13 +16,20 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/template', function () {
-    return view('template');
+Route::get('/trang-chu', function () {
+    return view('frontend.pages.home.index');
 });
 Route::get('/template-cream', function () {
     return view('template1');
 });
 
-Route::get('/test', function () {
-    return view('index');
+Route::get('/slider', function () {
+    return view('admin.pages.slider.index');
 });
+
+// Route::prefix('admin')->group(function () {
+//     Route::get('/user/profile',[UserProfileController::class, 'show'])->name('profile');
+//     Route::prefix('slider')->group(function () {
+//         Route::get('/', 'UserController@index')->name('user');
+//     });
+// });
