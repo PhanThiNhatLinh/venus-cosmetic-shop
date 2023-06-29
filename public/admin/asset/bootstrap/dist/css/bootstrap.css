@@ -254,6 +254,7 @@ th {
   .table td,
   .table th {
     background-color: #fff !important;
+    
   }
   .table-bordered th,
   .table-bordered td {
@@ -2279,6 +2280,7 @@ th {
 .table > thead > tr > th {
   vertical-align: bottom;
   border-bottom: 2px solid #ddd;
+  
 }
 .table > caption + thead > tr:first-child > th,
 .table > colgroup + thead > tr:first-child > th,
@@ -2316,6 +2318,7 @@ th {
 .table-bordered > thead > tr > th,
 .table-bordered > thead > tr > td {
   border-bottom-width: 2px;
+  
 }
 .table-striped > tbody > tr:nth-of-type(odd) {
   background-color: #f9f9f9;

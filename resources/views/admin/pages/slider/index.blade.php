@@ -2,7 +2,8 @@
 @section('title','Quản Lý Slider')
 @section('content')
     <div class="right_col" role="main">
-        @include('admin.templates.header_title',['header_title' => 'Quản Lý Slider'])
+        @include('admin.templates.header_title',['type' => 'index'])
+        @include('admin.templates.notify')
         <div class="row">
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
