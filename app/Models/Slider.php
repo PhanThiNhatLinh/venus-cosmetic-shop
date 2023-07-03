@@ -38,7 +38,11 @@ class Slider extends Model
                    $results = $query->orderBy('id','ASC')->paginate($params['item_per_page']);
         }
 
-        //frontend
+        if($options['task'] == 'frontend_get_list_items'){
+            $query = self::select('id', 'display', 'name', 'description', 'link', 'thumb', 'status');
+            $query->where('status','active')->where('display','yes');
+            $results = $query->orderBy('id','ASC')->get()->toArray();
+        }    
 
         return $results;
     }

@@ -9,18 +9,18 @@
             </button>
             <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                 <div class="navbar-nav ml-auto py-0">
-                    <a href="index.html" class="nav-item nav-link active">Tóc Đẹp</a>
-                    <a href="about.html" class="nav-item nav-link">Da Mặt</a>
-                    <a href="product.html" class="nav-item nav-link">Trang Điểm</a>
+                    @for($i=0; $i<3; $i++)
+                        <a href="index.html" class="nav-item nav-link">{{$categoryItems[$i]['name']}}</a>
+                    @endfor    
                 </div>
-                <a href="index.html" class="text-center navbar-brand mx-5 d-none d-lg-block">
-                    <h1 class="m-0 display-4 text-primary"><span class="text-secondary">V</span>ENUS</h1>
-                    <span class="font-weight-bold">The Best Cosmetic Shop</span>
-                </a>
-                <div class="navbar-nav mr-auto py-0">
-                    <a href="service.html" class="nav-item nav-link">Răng Miệng</a>
-                    <a href="gallery.html" class="nav-item nav-link">Cơ Thể</a>
-                    <a href="contact.html" class="nav-item nav-link">Nail Xinh</a>
+                    <a href="index.html" class="text-center navbar-brand mx-5 d-none d-lg-block">
+                        <h1 class="m-0 display-4 text-primary"><span class="text-secondary">V</span>ENUS</h1>
+                        <span class="font-weight-bold">The Best Cosmetic Shop</span>
+                    </a>
+                <div class="navbar-nav ml-auto py-0">
+                    @for($i=3; $i<6; $i++)
+                        <a href="index.html" class="nav-item nav-link">{{$categoryItems[$i]['name']}}</a>
+                    @endfor    
                 </div>
             </div>
         </nav>

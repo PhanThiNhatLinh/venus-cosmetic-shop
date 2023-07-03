@@ -9,12 +9,27 @@ return [
     'config' => [
         'status' => [
             'slider' =>['active','inactive'],
+            'blog' =>['active','inactive'],
+            'product' =>['active','inactive'],
+            'brand' =>['active','inactive'],
+            'category' =>['active','inactive'],
+            'country' =>['active','inactive'],
         ],
         'display' => [
             'slider' =>['no','yes'],
+            'blog' =>['no','yes'],
+            'product' =>['no','yes'],
+            'brand' =>['no','yes'],
+            'category' =>['no','yes'],
+            'country' =>['no','yes'],
         ],
         'search' => [
             'slider' =>['all','name','link','id'],
+            'blog' =>['all','name','id'],
+            'product' =>['all','name','id','code'],
+            'brand' =>['all','name'],
+            'category' =>['all','name'],
+            'country' =>['all','name'],
         ],
     ],
 
@@ -27,7 +42,7 @@ return [
         ],
         'display' => [
             'yes' =>['name'=>'Hiển Thị','class'=>'btn btn-round btn-success'],
-            'no' =>['name'=>'Không Hiển Thị','class'=>'btn btn-round btn-danger'],
+            'no' =>['name'=>'Ẩn','class'=>'btn btn-round btn-danger'],
             'default' =>['name'=>'Chưa Xác Định','class'=>'btn btn-round btn-info'],
         ],
         'search' => [
@@ -35,7 +50,12 @@ return [
             'name' =>['name'=>'Tìm Bằng Tên'],
             'link' =>['name'=>'Tìm Bằng Link'],
             'id' =>['name'=>'Tìm Bằng ID'],
+            'code' =>['name'=>'Tìm Bằng Mã Sản Phẩm'],
             'default' =>['name'=>'Chưa Xác Định'],
-        ]
+        ],
+        'featured' => [
+            'yes' =>['name'=>'Nổi Bật'],
+            'no' =>['name'=>'Không'],
+        ],
     ],
 ];    

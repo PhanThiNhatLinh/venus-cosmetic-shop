@@ -1,3 +1,7 @@
+@php
+    use Illuminate\Support\Str;
+    use App\Helpers\URL;
+@endphp
 @extends('frontend.main')
 @section('title', 'Trang Chủ')
 @section('content')
@@ -15,7 +19,7 @@
     @include('frontend.blocs.newProduct')
     <!-- End -->
     <!-- Galery Image-->
-    @include('frontend.blocs.galery')
+    @include('frontend.blocs.featured_brand')
     <!-- End -->
     <!-- Promotion many products -->
     @include('frontend.blocs.promotion')

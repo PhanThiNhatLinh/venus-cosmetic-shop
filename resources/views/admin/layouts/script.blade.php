@@ -14,3 +14,15 @@
 <script src="{{asset('/admin/js/custom.min.js')}}"></script>
 <!-- My sj file -->
 <script src="{{asset('/admin/js/linh-js.js')}}"></script>
+<!-- ckeditor Scripts -->
+<script src="{{asset('/admin/js/ckeditor/ckeditor.js')}}"></script>
+<script> 
+    CKEDITOR.replace( 'content', {
+        filebrowserBrowseUrl: '{{ asset('ckfinder/ckfinder.html') }}',
+        filebrowserImageBrowseUrl: '{{ asset('ckfinder/ckfinder.html?type=Images') }}',
+        filebrowserFlashBrowseUrl: '{{ asset('ckfinder/ckfinder.html?type=Flash') }}',
+        filebrowserUploadUrl: '{{ asset('ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files') }}',
+        filebrowserImageUploadUrl: '{{ asset('ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images') }}',
+        filebrowserFlashUploadUrl: '{{ asset('ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Flash') }}'
+    } );
+</script>

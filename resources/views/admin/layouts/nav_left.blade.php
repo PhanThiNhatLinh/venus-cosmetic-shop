@@ -19,13 +19,16 @@
         <!-- sidebar menu -->
         <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
             <div class="menu_section">
-                <h3>General</h3>
+                <h3>Danh Sách Các Mục Quản Lý</h3>
                 <ul class="nav side-menu">
                     <li><a><i class="fa fa-home"></i> Home</a></li>
                     <li><a><i class="fa fa-user"></i> User</a></li>
-                    <li><a><i class="fa fa fa-building-o"></i> Category</a></li>
-                    <li><a><i class="fa fa-newspaper-o"></i> Article</a></li>
-                    <li><a><i class="fa fa-sliders"></i> Silders</a></li>
+                    <li><a href="/admin/product"><i class="fa fa-product-hunt"></i>Sản Phẩm</a></li>
+                    <li><a href="/admin/country"><i class="fa fa-globe"></i> Xuất Xứ Sản Phẩm</a></li>
+                    <li><a href="/admin/brand"><i class="fa fa-tasks"></i> Thương Hiệu Sản Phẩm</a></li>
+                    <li><a href="/admin/category"><i class="fa fa fa-building-o"></i> Danh Mục Sản Phẩm</a></li>
+                    <li><a href="/admin/blog"><i class="fa fa-newspaper-o"></i> Blog</a></li>
+                    <li><a href="/admin/slider"><i class="fa fa-sliders"></i> Silders</a></li>
                 </ul>
             </div>
         </div>

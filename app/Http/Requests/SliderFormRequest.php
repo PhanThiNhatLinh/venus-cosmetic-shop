@@ -25,7 +25,7 @@ class SliderFormRequest extends FormRequest
     public function rules(): array
     {
         $id = $this->id;
-        $nameCondi = 'bail|between: 5,100|unique:'.$this->table.',name';
+        $nameCondi = 'bail|required|between: 5,100|unique:'.$this->table.',name';
         $descriptionCondi = 'bail|required|between: 5,200';
         $thumbCondi = 'bail|required|image|max:2048';
         $linkCondi = 'bail|required|min:5|url';
@@ -33,11 +33,7 @@ class SliderFormRequest extends FormRequest
         $displayCondi = 'bail|required|in:yes,no';
         if(!empty($id)){
             $nameCondi .=','.$this->id;
-            $descriptionCondi = 'bail|between: 5,200';
             $thumbCondi = 'bail|image|max:2048';
-            $linkCondi = 'bail|min:5|url';
-            $statusCondi = 'bail|in:active,inactive';
-            $displayCondi = 'bail|in:yes,no';
         }
         return [
             'name' => $nameCondi,
