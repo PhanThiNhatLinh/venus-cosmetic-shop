@@ -27,7 +27,7 @@
                                     <h4 class="col-6"style="color:mediumblue; text-align:left">{{$promo}}</h4>
                                 </div>
                                 <a href="" class="btn btn-sm btn-secondary">Mua Hàng</a>
-                                <a href="" class="btn btn-sm btn-primary">Xem Chi Tiết</a>
+                                <a href="/san-pham/chi-tiet/{{$product['id']}}.html" class="btn btn-sm btn-primary">Xem Chi Tiết</a>
                             </div>
                         </div>
                     @endforeach

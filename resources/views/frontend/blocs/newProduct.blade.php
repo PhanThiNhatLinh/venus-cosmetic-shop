@@ -34,7 +34,7 @@
                                 <h5 class="font-weight-semi-bold mt-5 mb-3 pt-5">{{$name}}</h5>
                                 {!!$xhtml!!}
                                 <a href="" class="btn btn-sm btn-secondary">Mua Hàng</a>
-                                <a href="" class="btn btn-sm btn-primary">Xem Chi Tiết</a>
+                                <a href="/san-pham/chi-tiet/{{$product['id']}}.html" class="btn btn-sm btn-primary">Xem Chi Tiết</a>
                             </div>
                         </div>
                     @endforeach

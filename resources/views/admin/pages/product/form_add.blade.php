@@ -63,8 +63,7 @@
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Mô Tả
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input type="text" name="description"
-                                       class="form-control col-md-7 col-xs-12">
+                                <textarea name="description" id="ckeditor"></textarea>
                             </div>
                         </div>
                         <div class="form-group">
@@ -149,8 +148,11 @@
                         <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Hình ảnh
                             </label>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
+                            {{-- <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input type="file" name="thumb" class="form-control col-md-7 col-xs-12">
+                            </div> --}}
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="file" name="thumb[]" class="form-control col-md-7 col-xs-12" multiple>
                             </div>
                         </div>
                         <div class="ln_solid"></div>

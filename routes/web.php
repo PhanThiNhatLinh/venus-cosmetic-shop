@@ -131,4 +131,24 @@ Route::prefix('')->namespace('Frontend')->group(function () {
     $controllerName = 'home';
     $controller = ucfirst($controllerName).'Controller@';
     Route::get('/trang-chu', $controller.'index')->name($controllerName.'.index');
+
+    //Product
+    
+    $prefix = 'san-pham';
+    Route::prefix($prefix)->group(function () {
+        $controllerName = 'product';
+        $controller = ucfirst($controllerName).'Controller@';
+        // Route::get('', $controller.'showAll')->name($controllerName.'.index');
+        Route::get('/chi-tiet/{id}.html', $controller.'showDetail')->name($controllerName.'.detail')
+                ->where(['id' => '[0-9]+', 'display' => '[a-z]+']);
+    });    
+
+    $prefix = 'danh-muc';
+    Route::prefix($prefix)->group(function () {
+        $controllerName = 'category';
+        $controller = ucfirst($controllerName).'Controller@';
+        // Route::get('', $controller.'showAll')->name($controllerName.'.index');
+        Route::get('/chi-tiet/{id}.html', $controller.'showDetail')->name($controllerName.'.detail')
+                ->where(['id' => '[0-9]+', 'display' => '[a-z]+']);
+    });    
 });

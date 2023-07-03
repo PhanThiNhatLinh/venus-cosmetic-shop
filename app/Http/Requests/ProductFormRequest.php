@@ -30,8 +30,9 @@ class ProductFormRequest extends FormRequest
         $discountCondi = 'bail|min:1';
         $stockCondi = 'bail|required|min:0';
         $codeCondi = 'bail|between: 3,10 |unique:'.$this->table.',code';
-        $descriptionCondi = 'bail|required|between: 5,500';
-        $thumbCondi = 'bail|required|image|max:2048';
+        $descriptionCondi = 'bail|required|between: 5,2000';
+        $thumbCondi = 'required';
+        $thumbCondi2 = 'image|mimes:jpeg,png,jpg,gif,svg|max:2048';
         $expiry_dateCondi = 'bail|required|date';
         $id_countryCondi = 'required';
         $id_brandCondi = 'required';
@@ -55,6 +56,7 @@ class ProductFormRequest extends FormRequest
             'id_category' =>$id_categoryCondi,
             'description' => $descriptionCondi,
             'thumb' => $thumbCondi,
+            'thumb.*' => $thumbCondi2,
             'status' => $statusCondi, 
             'display' => $displayCondi, 
         ];
@@ -68,7 +70,7 @@ class ProductFormRequest extends FormRequest
             'image'=> ':attribute phải có đuôi là jpg, jpeg, png, bmp, gif, svg, or webp',
             'max'=> ':attribute không được vượt quá',
             'unique' => ':attribute không được trùng lặp',
-            'between' => ':attribute phải nằm trong khoảng 5-10 ký tự',
+            'between' => ':attribute phải nằm trong khoảng 5-2000 ký tự',
             'date' => ':attribute phải là định dạng thời gian',
         ];
     }

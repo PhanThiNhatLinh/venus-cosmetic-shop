@@ -1,6 +1,5 @@
 @php
     use Illuminate\Support\Str;
-    use App\Helpers\URL;
 @endphp
 @extends('frontend.main')
 @section('title', 'Trang Chủ')

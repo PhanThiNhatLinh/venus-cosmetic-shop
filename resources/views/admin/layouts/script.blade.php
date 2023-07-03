@@ -17,7 +17,7 @@
 <!-- ckeditor Scripts -->
 <script src="{{asset('/admin/js/ckeditor/ckeditor.js')}}"></script>
 <script> 
-    CKEDITOR.replace( 'content', {
+    CKEDITOR.replace( 'ckeditor', {
         filebrowserBrowseUrl: '{{ asset('ckfinder/ckfinder.html') }}',
         filebrowserImageBrowseUrl: '{{ asset('ckfinder/ckfinder.html?type=Images') }}',
         filebrowserFlashBrowseUrl: '{{ asset('ckfinder/ckfinder.html?type=Flash') }}',

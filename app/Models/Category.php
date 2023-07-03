@@ -14,6 +14,10 @@ class Category extends Model
     protected $fillable = ['id','name','status','display','thumb','created_by','modified_by'];
     public $timestamps = true;
     use HasFactory;
+    public function products()
+    {
+        return $this->hasMany(Product::class, 'id_category');
+    }
     public function getListItems($params=null,$options = null){
         //admin
         if($options['task'] == 'admin_get_list_items'){
@@ -122,6 +126,16 @@ class Category extends Model
         //admin
         if($options['task'] == 'admin_get_item'){
            $results = self::findOrFail($id);
+        }
+        return $results;
+    }
+
+    public function getProductsInCategory($id=null,$options = null){ //get item info in the db belong to id
+        //admin
+        if($options['task'] == 'frontend_get_lists_products'){
+           $category = self::findOrFail($id);
+           $results = $category->products()->where('status', 'active')->where('display', 'yes')
+                    ->orderBy('id','ASC')->paginate(8);
         }
         return $results;
     }

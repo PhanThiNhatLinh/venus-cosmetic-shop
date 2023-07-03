@@ -17,7 +17,7 @@ class Product extends Model
     public $timestamps = true;
 
     use HasFactory;
-
+    
     public function brand()
     {
        return $this->belongsTo(Brand::class, 'id_brand');
@@ -60,7 +60,7 @@ class Product extends Model
             $query = self::select('id','name','description','status','display','thumb','created_by', 'featured',
             'modified_by', 'price', 'discount', 'stock','id_category', 'id_brand','id_country','expiry_date','code');
             $query->where('status','active')->where('display','yes')->where('featured','yes');
-            $results = $query->orderBy('id','ASC')->take(4)->get()->toArray();
+            $results = $query->orderBy('id','ASC')->take(6)->get()->toArray();
         }   
 
         if($options['task'] == 'frontend_get_latest_items'){// the latest products in db has the biggest ids

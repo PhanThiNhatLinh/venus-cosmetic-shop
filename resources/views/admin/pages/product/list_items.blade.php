@@ -28,7 +28,7 @@
                             $discount = $item['discount'];
                             $code = $item['code'];
                             $stock = $item['stock'];
-                            $exp = $item['expiry_date'];
+                            $exp = date(Config::get('linh_config.date.short_time'), strtotime($item['expiry_date']));
                             $featured = $item['featured'];
                             $brand = $item->brand->name;
                             $country = $item->country->name;

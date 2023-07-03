@@ -110,7 +110,7 @@ class ProductController extends Controller
     {
         if($request->method() == 'POST'){
             $params = $request->all();        
-            // dd($params);    
+            dd($request->file('thumb'));    
             if(!empty($request->id)){
                 $this->model->updateItem($params,['task'=>'admin_edit_item']);
                 $notify = "Chỉnh Sửa Thông Tin Thành Công";

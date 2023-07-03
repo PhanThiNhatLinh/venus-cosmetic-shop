@@ -25,7 +25,7 @@ $promo = number_format($price_shock['price'] - (($price_shock['discount'] * $pri
                 <h3 class="font-weight-bold text-white mt-3 mb-4">Sản Phẩm Giá Sốc Mỗi Tuần</h3>
                 <p class="text-white mb-4">{{$price_shock['name']}}</p>
                 <a href="" class="btn btn-secondary py-3 px-5 mt-2">Mua Hàng</a>
-                <a href="" class="btn btn-primary py-3 px-5 mt-2">Xem Chi Tiết</a>
+                <a href="/san-pham/chi-tiet/{{$price_shock['id']}}.html" class="btn btn-primary py-3 px-5 mt-2">Xem Chi Tiết</a>
             </div>
         </div>
     </div>
