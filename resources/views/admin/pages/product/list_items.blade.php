@@ -33,7 +33,8 @@
                             $brand = $item->brand->name;
                             $country = $item->country->name;
                             $category = $item->category->name;
-                            $thumb = $item['thumb'];
+                            // dd($item['thumb']);
+                            $thumbs = json_decode($item['thumb'],true);
                             $display = $item['display'];
                             $created_by = $item['created_by'];
                             $created_at = date(Config::get('linh_config.date.long_time'), strtotime($item['created_at']));
@@ -59,7 +60,12 @@
                                 <p><strong>Sản Xuất Tại: </strong>{{$country}}</p>
                                 <p><strong>Ngày Hết Hạn: </strong>{{$exp}}</p>
                                 <p><strong>Sản Phẩm Nổi Bật: </strong>{{$params['featured_templates'][$featured]['name']}}</p>
-                                <img width="100%" height="200px" src="{{asset('admin/images/'.$controllerName.'/'.$thumb)}}" alt="{{$name}}">
+                                @foreach($thumbs as $thumb)
+                                    @if(!empty($thumb))
+                                        <img width="100%" height="200px" src="{{asset('/admin/images/product/'.$thumb)}}" alt="{{$name}}">
+                                        @break;
+                                    @endif
+                                @endforeach
                             </td>
                             <td width="10%">
                                 <a href="{{route($controllerName.'.status',['id'=>$id, 'status'=> $status])}}" type="button" class="{{$params['status_templates'][$status]['class']}}">{{$params['status_templates'][$status]['name']}}</a>

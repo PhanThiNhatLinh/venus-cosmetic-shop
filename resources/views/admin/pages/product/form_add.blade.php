@@ -17,7 +17,7 @@
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
-                    <form method="POST" action="{{route($controllerName.'.save')}}" enctype="multipart/form-data" class="form-horizontal form-label-left">
+                    <form id="form_add" method="POST" action="{{route($controllerName.'.save')}}" enctype="multipart/form-data" class="form-horizontal form-label-left">
                         @csrf
                         <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Tên
@@ -146,7 +146,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Hình ảnh
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Hình ảnh <span style="color: red; font-size:10px">(* Có Thể Tải Lên Từ 1-3 ảnh)</span>
                             </label>
                             {{-- <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input type="file" name="thumb" class="form-control col-md-7 col-xs-12">

@@ -125,20 +125,73 @@ class Product extends Model
                 ->update(['display' => $display]);
         }
         if($options['task'] == 'admin_edit_item'){
-            if(!empty($params['thumb'])){
-                $params['thumb'] = self::uploadImage($params['thumb']);
-            }
             self::findOrFail($params['id'])
                 ->update($params);
+            
+        }
+    }    
+    
+    public function getThumbsEdit($params,$options){
+        $thumbsCurrents = self::getItem($params['id'],['task'=>'admin_get_item'])->thumb;
+        $thumbsCurrents = json_decode($thumbsCurrents, true); // json to array
+
+        //remove the image checked in edit form
+        if(!empty($params['image_delete'])){
+            foreach($thumbsCurrents as $k=> $thumb){
+                if(in_array($thumb,$params['image_delete'])){ //delete image checked in the db and public folder
+                    unset($thumbsCurrents[$k]);
+                }
+            }
         }
         
-        //frontend
+        if(!isset($params['thumb'])){  //ko upload
 
+            if(empty($thumbsCurrents)){ //xóa hết ảnh
+                $params['thumb'] = null;
+                // $params['thumb'] = json_encode($params['thumb']);
+                $x=1;
+            }else{ //còn ảnh, chưa xóa hết
+                $params['thumb'] = json_encode($thumbsCurrents);
+                $x=1;
+            }
+        }else{
+            $total_thumb = count($params['thumb']) + count($thumbsCurrents);
+            // dd($total_thumb);
+            if($total_thumb > 3){ 
+                $x=2;
+            }else{
+                if(!empty($thumbsCurrents)){ //xóa chưa hết + upload ảnh mới
+                    $params['thumb'] = self::uploadImage($params['thumb']); //return array
+                    $params['thumb'] = array_merge($params['thumb'],$thumbsCurrents);
+                    // dd($params['thumb']);
+                    $params['thumb'] = json_encode($params['thumb']);
+                    $x=1;
+                }
+                if(empty($thumbsCurrents)){ //xóa hết + upload ảnh mới
+                    $params['thumb'] = self::uploadImage($params['thumb']); //return array
+                    $params['thumb'] = json_encode($params['thumb']);
+                    $x=1;
+                } 
+            }
+        }
+        if($x==1){
+            return $params['thumb'];
+        }else{
+            return "false";
+        }
+        
+        
     }
-    public function uploadImage($thumbObj){
-        $thumbName = Str::random(10)."-".$thumbObj->getClientOriginalName(); 
-        $thumbObj->move(public_path($this->image_path), $thumbName);
-        return $thumbName;
+
+    public function uploadImage($thumbObjs){
+        $thumbNames =[];
+        foreach($thumbObjs as  $k=> $thumbObj){
+            $thumbName = Str::random(10)."-".$thumbObj->getClientOriginalName(); 
+            $thumbObj->move(public_path($this->image_path), $thumbName);
+            array_push($thumbNames,$thumbName);
+        }
+        
+        return $thumbNames;
     }
 
     public function insertItem($params=null,$options = null){
@@ -150,7 +203,7 @@ class Product extends Model
             self::create($params);
         }
     }
-    public function deleteItem($item=null,$options = null){
+    public function deleteItem($item=null,$options = null){ 
         //admin
         if($options['task'] == 'admin_delete_item'){
             self::deleteThumb($item['thumb']);
@@ -166,11 +219,14 @@ class Product extends Model
         return $results;
     }
 
-    public function deleteThumb($thumbName){
-        //delete the image in folder public
-        $thumbName = public_path($this->image_path).'/'.$thumbName;
-        if(file_exists($thumbName)) {
-           @unlink($thumbName);
+    public function deleteThumb($images_delete_array)
+    {
+        foreach($images_delete_array as $thumbName){
+            //delete the image in folder public
+            $thumbName = public_path($this->image_path).'/'.$thumbName;
+            if(file_exists($thumbName)) {
+                @unlink($thumbName);
+            }
         }
     }
 

@@ -2,9 +2,6 @@
 @section('title','Quản Lý Slider')
 @section('content')
 <div class="right_col" role="main">
-    @php
-        print_r($item['thumb']);
-    @endphp
     @include('admin.templates.header_title',['type' =>'edit'])
     @include('admin.templates.notify')
     @include('admin.templates.errors')
@@ -20,7 +17,7 @@
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
-                    <form method="POST" action="{{route($controllerName.'.save',['id'=> $item['id']])}}" enctype="multipart/form-data" class="form-horizontal form-label-left">
+                    <form id="form_edit" method="POST" action="{{route($controllerName.'.save',['id'=> $item['id']])}}" enctype="multipart/form-data" class="form-horizontal form-label-left">
                         @csrf
                         <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Tên
@@ -33,8 +30,8 @@
                         <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Mô Tả
                             </label>
-                            <div class="col-md-6 col-sm-6 col-xs-12 ckeditor">
-                                <textarea name="description" id="ckeditor">{{$item['description']}}</textarea>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <textarea name="description" id="ckeditor" >{{$item['description']}}</textarea>
                             </div>
                         </div>
                         <div class="form-group">
@@ -176,8 +173,15 @@
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Hình ảnh
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input type="file" name="thumb" class="form-control col-md-7 col-xs-12">
-                                <img width="100%" src="{{asset('/admin/images/'.$controllerName.'/'.$item['thumb'])}}" alt="{{$item['name']}}">
+                                <input type="file" name="thumb[]" class="form-control col-md-7 col-xs-12" multiple>
+                                @php
+                                 $thumbs = json_decode($item['thumb'],true);
+                                //  dd($thumbs);
+                                @endphp
+                                @foreach ($thumbs as $thumb)
+                                    <img id={{$thumb}} width="50px" height="50px" src="{{asset('/admin/images/'.$controllerName.'/'.$thumb)}}" alt="{{$item['name']}}">
+                                    <input class="delete_thumb" type="checkbox" name="image_delete[]" value="{{$thumb}}">
+                                @endforeach
                             </div>
                         </div>
                         <div class="ln_solid"></div>

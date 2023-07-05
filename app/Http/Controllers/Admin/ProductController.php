@@ -46,7 +46,6 @@ class ProductController extends Controller
         $this->params['search_field'] = (in_array($request->input('search_field','all'),$this->params['search_field_for_controller'])? $request->input('search_field','all') : 'all');
         $this->params['search_value'] = $request->input('search_value','');
         $this->params['filter_display'] = (in_array($request->input('display_field'),$this->params['display_for_controller'])? $request->input('display_field','all') : 'all');
-        
         $status_counts = $this->model->countByStatus($this->params,['task'=>'admin_count_status']);
         $items = $this->model->getListItems($this->params, ['task'=>'admin_get_list_items']);
         // dd($items);
@@ -109,12 +108,31 @@ class ProductController extends Controller
     public function save(MainRequest $request)
     {
         if($request->method() == 'POST'){
-            $params = $request->all();        
-            dd($request->file('thumb'));    
+            $params = $request->all();    
+            // dd($params);    
             if(!empty($request->id)){
-                $this->model->updateItem($params,['task'=>'admin_edit_item']);
-                $notify = "Chỉnh Sửa Thông Tin Thành Công";
+                if($request->has($request->file('image_delete'))){
+                    $params['image_delete'] = $request->file('image_delete');
+                }
+                $thumb = $this->model->getThumbsEdit($params,['task'=>'admin_get_item']);
+                // dd($thumb);
+                if($thumb == null){
+                    return redirect()->back()->withErrors('Sản Phẩm phải có ít nhất 1 hình ảnh');
+                }elseif($thumb == "false"){
+                    return redirect()->back()->withErrors('Sản Phẩm Không Quá 3 Hình ảnh');
+                }else{
+                    $params['thumb'] = $thumb;
+                    if(!empty($params['image_delete'])){
+                        $this->model->deleteThumb($params['image_delete']);
+                    }
+                    $this->model->updateItem($params,['task'=>'admin_edit_item']);
+                    $notify = "Chỉnh Sửa Thông Tin Thành Công";
+                }
             }else{
+                if(count($request->file('thumb'))>3){
+                    return redirect()->back()->withErrors('Chỉ được tải lên tối đa 3 ảnh');
+                }
+                $params['thumb'] =[];
                 $params['thumb'] = $request->file('thumb');
                 $this->model->insertItem($params,['task'=>'admin_add_new_item']);
                 $notify = "Thêm Mới Thành Công";

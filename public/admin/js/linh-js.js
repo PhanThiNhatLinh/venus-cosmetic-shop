@@ -1,6 +1,12 @@
 
 
 $(document).ready(function(){
+    $.ajaxSetup({
+        headers: {
+
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
     let input_search_field= $("input[name  = search_field]");
 	let input_search_value = $("input[name  = search_value]");
     let input_display_field = $("input[name  = display_field]");
@@ -61,4 +67,48 @@ $(document).ready(function(){
         });
         window.location.href = pathname + '?'+ link + 'display_field='+ value_display;
     });
+    
+    //confirm save with edit form
+    var ckeditor_changed = false;
+    var form = $('#form_edit');
+    CKEDITOR.instances.ckeditor.on('change', function() { 
+        ckeditor_changed = true;
+    }); 
+    original = form.serialize();
+    console.log(original);
+    form.submit(function(){
+        window.onbeforeunload = null
+    })
+    window.onbeforeunload = function(){
+        if (form.serialize() != original || ckeditor_changed == true){
+            return 'Changes you made may not be saved? ';  
+        }      
+    }
+    
+    //confirm save with add form
+    var form1 = $('#form_add');
+    original = form1.serialize();
+    console.log(original);
+    form1.submit(function(){
+        window.onbeforeunload = null
+    })
+    window.onbeforeunload = function(){
+        if (form1.serialize() != original || ckeditor_changed == true){
+            return 'Changes you made may not be saved? ';  
+        }      
+    }
+    //delete thumbs checked in the edit form
+    $(".delete_thumb").click(function(){
+        let image_name = $(this).val();
+        let src= 'http://venus-cosmetic-shop.test/admin/images/product/'+image_name;
+        let img = $(`img[src\$='${src}']`);
+        $(img).hide();
+        $(this).hide();
+        window.onbeforeunload = function(){
+            return 'Changes you made may not be saved?';
+        }
+    });
+
+    
+    
   });

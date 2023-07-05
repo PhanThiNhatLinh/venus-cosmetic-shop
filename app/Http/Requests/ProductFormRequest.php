@@ -42,7 +42,8 @@ class ProductFormRequest extends FormRequest
         if(!empty($id)){
             $nameCondi .=','.$this->id;
             $codeCondi .=','.$this->id;
-            $thumbCondi = 'bail|image|max:2048';
+            $thumbCondi ='';
+            $thumbCondi2 = 'image|mimes:jpeg,png,jpg,gif,svg|max:2048';
         }
         return [
             'name' => $nameCondi,
