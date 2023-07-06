@@ -1,12 +1,18 @@
 @php
 $price = number_format($price_shock['price'],0,'','.');
 $promo = number_format($price_shock['price'] - (($price_shock['discount'] * $price_shock['price'])/100),0,'','.');
+$thumbs = json_decode($price_shock['thumb'],true);
 @endphp
 <div class="container-fluid my-5 py-5 px-0">
     <div style="background:#FF00FF" class="row m-0">
         <div class="col-md-6 px-0" style="min-height: 500px;">
             <div class="position-relative h-100">
-                <img class="position-absolute w-100 h-100" src="{{asset('/admin/images/product/'.$price_shock['thumb'])}}" style="object-fit: cover;">
+                @foreach ($thumbs as $thumb)
+                    @if(!empty($thumb))
+                        <img class="position-absolute w-100 h-100" src="{{asset('/admin/images/product/'.$thumb)}}" style="object-fit: cover;">
+                        @break;
+                    @endif
+                @endforeach
                 <button type="button" class="btn-play" data-toggle="modal"
                     data-src="https://www.youtube.com/embed/52LjStjDij0" data-target="#videoModal">
                     <span></span>

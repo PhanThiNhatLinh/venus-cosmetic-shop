@@ -14,6 +14,7 @@ return [
             'brand' =>['active','inactive'],
             'category' =>['active','inactive'],
             'country' =>['active','inactive'],
+            'user' =>['active','inactive'],
         ],
         'display' => [
             'slider' =>['no','yes'],
@@ -30,6 +31,7 @@ return [
             'brand' =>['all','name'],
             'category' =>['all','name'],
             'country' =>['all','name'],
+            'user' =>['all','name'],
         ],
     ],
 

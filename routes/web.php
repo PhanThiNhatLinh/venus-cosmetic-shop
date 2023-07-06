@@ -12,11 +12,14 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
+Auth::routes();
 Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/no-permission', function () {
+    return view('no_permission');
+});
 // Route::get('/template-cream', function () {
 //     return view('template1');
 // });
@@ -26,7 +29,7 @@ Route::get('/', function () {
 // });
 
 /* -------------------------------- ADMIN ---------------------------------- */
-Route::prefix('admin')->namespace('Admin')->group(function () {
+Route::prefix('admin')->namespace('Admin')->middleware(['auth','permission.admin'])->group(function () {
     //SLIDER
     $prefix = 'slider';
     Route::prefix($prefix)->group(function () {
@@ -124,6 +127,23 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
               ->where(['id' => '[0-9]+', 'display' => '[a-z]+']);
               
       });
+
+      //User
+      $prefix = 'user';
+      Route::prefix($prefix)->group(function () {
+          $controllerName = 'user';
+          $controller = ucfirst($controllerName).'Controller@';
+          Route::get('/', $controller.'index')->name($controllerName.'.index');
+          Route::get('/form', $controller.'showFormAdd')->name($controllerName.'.form_add');
+          Route::get('/edit/{id}', $controller.'showFormEdit')->name($controllerName.'.form_edit');
+          Route::post('/form/{id?}', $controller.'save')->name($controllerName.'.save');
+          Route::get('/delete/{id}', $controller.'delete')->name($controllerName.'.delete');
+          Route::get('/change-status-{status?}/{id?}', $controller.'changeStatus')->name($controllerName.'.status')
+              ->where(['id' => '[0-9]+', 'status' => '[a-z]+']);
+          Route::get('/change-display-{display?}/{id?}', $controller.'changeDisplay')->name($controllerName.'.display')
+              ->where(['id' => '[0-9]+', 'display' => '[a-z]+']);
+              
+      });
 });
 
 /* -------------------------------- FRONTEND ---------------------------------- */
@@ -152,3 +172,10 @@ Route::prefix('')->namespace('Frontend')->group(function () {
                 ->where(['id' => '[0-9]+', 'display' => '[a-z]+']);
     });    
 });
+
+
+
+// Route::get('/dang-nhap', [App\Http\Controllers\LoginController::class, 'index'])->name('login_form');
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+

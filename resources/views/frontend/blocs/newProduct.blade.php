@@ -13,7 +13,7 @@
                     @foreach($latestProducts as $product)
                     @php
                         $name = Str::of($product['name'])->limit(40);
-                        $thumb = $product['thumb'];
+                        $thumbs = json_decode($product['thumb'],true);
                         $price = number_format($product['price'],0,'','.');
                         $xhtml = '';
                         if ($product['discount']>0) {
@@ -27,9 +27,14 @@
                         }
                     @endphp
                         <div class="service-item">
-                            <div class="service-img mx-auto">
-                                <img class="rounded-circle w-100 h-100 bg-light p-3" src="{{asset('/admin/images/product/'.$thumb)}}" style="object-fit: cover;">
-                            </div>
+                            @foreach ($thumbs as $thumb)
+                                @if(!empty($thumb))
+                                    <div class="service-img mx-auto">
+                                        <img class="rounded-circle w-100 h-100 bg-light p-3" src="{{asset('/admin/images/product/'.$thumb)}}" style="object-fit: cover;">
+                                    </div>
+                                    @break;
+                                @endif
+                            @endforeach
                             <div class="position-relative text-center bg-light rounded p-4 pb-5" style="margin-top: -75px;">
                                 <h5 class="font-weight-semi-bold mt-5 mb-3 pt-5">{{$name}}</h5>
                                 {!!$xhtml!!}

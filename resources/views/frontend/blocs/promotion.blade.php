@@ -14,12 +14,17 @@
                         $name = Str::of($product['name'])->limit(40);
                         $promo = number_format($product['price'] - (($product['discount'] * $product['price'])/100),0,'','.');
                         $price = number_format($product['price'],0,'','.');
-
+                        $thumbs = json_decode($product['thumb'],true);
                     @endphp
                         <div class="team-item">
-                            <div class="team-img mx-auto">
-                                <img class="rounded-circle w-100 h-100" src="{{asset('/admin/images/product/'.$product['thumb'])}}" style="object-fit: cover;">
-                            </div>
+                            @foreach ($thumbs as $thumb)
+                               @if(!empty($thumb))
+                                    <div class="team-img mx-auto">
+                                        <img class="rounded-circle w-100 h-100" src="{{asset('/admin/images/product/'.$thumb)}}" style="object-fit: cover;">
+                                    </div>
+                                    @break;
+                                @endif
+                            @endforeach    
                             <div class="position-relative text-center bg-light rounded px-4 py-5" style="margin-top: -100px;">
                                 <h5 class="font-weight-bold mt-5 mb-3 pt-5">{{$name}}</h5>
                                 <div class="row">

@@ -6,6 +6,7 @@
 @section('content')
     <!-- Slider Start -->
     @include('frontend.blocs.slider')
+    @include('frontend.templates.notify')
     <!-- Slider End -->
     @include('frontend.blocs.searchBar')
     <!-- Featured Product -->

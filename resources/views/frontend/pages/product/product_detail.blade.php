@@ -5,6 +5,8 @@
   $promo = number_format($product['price'] - (($product['discount'] * $product['price'])/100),0,'','.');
   $price = number_format($product['price'],0,'','.');
   $exp = date(Config::get('linh_config.date.short_time'), strtotime($product['expiry_date']));
+  $thumbs = json_decode($product['thumb'],true);
+  $class_active ="active";
 @endphp
 
 <div class="container-fluid py-5">
@@ -19,15 +21,15 @@
                 <div id="demo" class="carousel slide" data-ride="carousel">
                     <!-- The slideshow -->
                     <div class="carousel-inner">
-                      <div class="carousel-item active">
-                        <img src="{{asset('/admin/images/product/'.$product['thumb'])}}" alt="Los Angeles" width="600" height="700">
-                      </div>
-                      <div class="carousel-item">
-                        <img src="{{asset('/admin/images/product/'.$product['thumb'])}}" alt="Chicago" width="600" height="600">
-                      </div>
-                      <div class="carousel-item">
-                        <img src="{{asset('/admin/images/product/'.$product['thumb'])}}" alt="New York" width="600" height="600">
-                      </div>
+                      @foreach ($thumbs as $k=> $thumb)
+                        @if($k==0)
+                         <div class="carousel-item {{$class_active}}">
+                        @else
+                          <div class="carousel-item">
+                        @endif    
+                          <img src="{{asset('/admin/images/product/'.$thumb)}}" alt="{{$product['name']}}" width="550" height="700">
+                        </div>
+                      @endforeach  
                     </div>
                     <!-- Left and right controls -->
                     <a class="carousel-control-prev" href="#demo" data-slide="prev">

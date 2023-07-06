@@ -6,7 +6,7 @@
                     @csrf
                     <div class="search_box pull-left">
                         <input style="width:80%" name="search_data" type="text" value="" placeholder="Tìm Kiếm Sản Phẩm"/>
-                        <button type="submit" class="btn btn-default btn-primary btn-search"><i class="fas fa-search"></i></button>
+                        <button type="submit" class="btn btn-default btn-primary btn-search position-relative"><i class="fas fa-search"></i></button>
                     </div>
                 </form>
             </div>
