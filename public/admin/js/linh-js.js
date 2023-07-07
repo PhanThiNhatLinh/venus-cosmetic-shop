@@ -10,7 +10,10 @@ $(document).ready(function(){
     let input_search_field= $("input[name  = search_field]");
 	let input_search_value = $("input[name  = search_value]");
     let input_display_field = $("input[name  = display_field]");
+    let input_level = $("input[name  = level_field]");
     let select_display = $("select[name  = select_filter]");
+    let select_level = $("select[name  = select_level]");
+    console.log(select_level);
     let pathname = window.location.pathname; 
     let search_params = new URLSearchParams(window.location.search); //return đoạn query ?filter_status=active
 
@@ -67,7 +70,30 @@ $(document).ready(function(){
         });
         window.location.href = pathname + '?'+ link + 'display_field='+ value_display;
     });
-    
+
+    //for user page only
+    $(select_level).change(function(){
+        let $params = ['filter_status','search_field','search_value'];
+        let value_level = $(this).val(); //get value of option selected
+        input_level.val(value_level); // give this value for input element
+        let link ='';
+        $.each($params, function(key, param){
+            if(search_params.has(param)){
+                link += param + "=" + search_params.get(param) +"&"; // link => filter_status=active&&search_field=all&search_value=abc
+            }
+        });
+        window.location.href = pathname + '?'+ link + 'filter_level='+ value_level;
+    });
+
+    $(select_level).change(function(){
+        //get value of option selected after click change level
+        let value_level = select_level.val();
+        let data_url = select_level.attr('data-url');
+        // console.log(value_level);
+        data_url_new = data_url.replace("new_value", value_level);
+        // console.log(data_url_new);
+        window.location.href = data_url_new; 
+    });
     //confirm save with edit form
     var ckeditor_changed = false;
     var form = $('#form_edit');

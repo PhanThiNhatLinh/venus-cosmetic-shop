@@ -33,6 +33,9 @@ return [
             'country' =>['all','name'],
             'user' =>['all','name'],
         ],
+        'level' => [
+            'user' =>['super_admin','admin','user'],
+        ],
     ],
 
     'template' => [
@@ -58,6 +61,12 @@ return [
         'featured' => [
             'yes' =>['name'=>'Nổi Bật'],
             'no' =>['name'=>'Không'],
+        ],
+        'level' => [
+            'super_admin' =>['name'=>'Quản Lý Cao Cấp'],
+            'admin' =>['name'=>'Quản Trị Viên'],
+            'user' =>['name'=>'Người Dùng'],
+            'default' =>['name'=>'Chưa Xác Định'],
         ],
     ],
 ];    

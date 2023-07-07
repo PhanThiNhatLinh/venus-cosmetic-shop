@@ -29,10 +29,14 @@ Route::get('/no-permission', function () {
 // });
 
 /* -------------------------------- ADMIN ---------------------------------- */
-Route::prefix('admin')->namespace('Admin')->middleware(['auth','permission.admin'])->group(function () {
+Route::prefix('admin')->namespace('Admin')->middleware('auth')->group(function () {
     //SLIDER
     $prefix = 'slider';
-    Route::prefix($prefix)->group(function () {
+    Route::middleware(['auth', 'second'])->group(function () {
+        
+    });
+    // Route::prefix($prefix)->group(function () {
+    Route::group(['prefix' => $prefix, 'middleware' => ['permission.admin','permission.super.admin']],function () {  
         $controllerName = 'slider';
         $controller = ucfirst($controllerName).'Controller@';
         Route::get('/', $controller.'index')->name($controllerName.'.index');
@@ -48,7 +52,7 @@ Route::prefix('admin')->namespace('Admin')->middleware(['auth','permission.admin
 
     //BLOG
     $prefix = 'blog';
-    Route::prefix($prefix)->group(function () {
+    Route::prefix($prefix)->middleware(['permission.admin','permission.super.admin'])->group(function () {
         $controllerName = 'blog';
         $controller = ucfirst($controllerName).'Controller@';
         Route::get('/', $controller.'index')->name($controllerName.'.index');
@@ -64,7 +68,7 @@ Route::prefix('admin')->namespace('Admin')->middleware(['auth','permission.admin
 
      //Product
      $prefix = 'product';
-     Route::prefix($prefix)->group(function () {
+     Route::prefix($prefix)->middleware('permission.admin')->middleware('permission.super.admin')->group(function () {
          $controllerName = 'product';
          $controller = ucfirst($controllerName).'Controller@';
          Route::get('/', $controller.'index')->name($controllerName.'.index');
@@ -79,7 +83,7 @@ Route::prefix('admin')->namespace('Admin')->middleware(['auth','permission.admin
      });
      //BRAND
      $prefix = 'brand';
-     Route::prefix($prefix)->group(function () {
+     Route::prefix($prefix)->middleware(['permission.admin','permission.super.admin'])->group(function () {
          $controllerName = 'brand';
          $controller = ucfirst($controllerName).'Controller@';
          Route::get('/', $controller.'index')->name($controllerName.'.index');
@@ -96,7 +100,7 @@ Route::prefix('admin')->namespace('Admin')->middleware(['auth','permission.admin
 
      //Category
      $prefix = 'category';
-     Route::prefix($prefix)->group(function () {
+     Route::prefix($prefix)->middleware(['permission.admin','permission.super.admin'])->group(function () {
          $controllerName = 'category';
          $controller = ucfirst($controllerName).'Controller@';
          Route::get('/', $controller.'index')->name($controllerName.'.index');
@@ -113,7 +117,7 @@ Route::prefix('admin')->namespace('Admin')->middleware(['auth','permission.admin
 
       //Country
       $prefix = 'country';
-      Route::prefix($prefix)->group(function () {
+      Route::prefix($prefix)->middleware(['permission.admin','permission.super.admin'])->group(function () {
           $controllerName = 'country';
           $controller = ucfirst($controllerName).'Controller@';
           Route::get('/', $controller.'index')->name($controllerName.'.index');
@@ -130,18 +134,20 @@ Route::prefix('admin')->namespace('Admin')->middleware(['auth','permission.admin
 
       //User
       $prefix = 'user';
-      Route::prefix($prefix)->group(function () {
+      Route::prefix($prefix)->middleware('permission.super.admin')->group(function () {
           $controllerName = 'user';
           $controller = ucfirst($controllerName).'Controller@';
           Route::get('/', $controller.'index')->name($controllerName.'.index');
+          Route::get('/profile', $controller.'showProfile')->name($controllerName.'.profile');
           Route::get('/form', $controller.'showFormAdd')->name($controllerName.'.form_add');
           Route::get('/edit/{id}', $controller.'showFormEdit')->name($controllerName.'.form_edit');
           Route::post('/form/{id?}', $controller.'save')->name($controllerName.'.save');
           Route::get('/delete/{id}', $controller.'delete')->name($controllerName.'.delete');
+          Route::post('/change-password', $controller.'changePassword')->name($controllerName.'.change-password');
           Route::get('/change-status-{status?}/{id?}', $controller.'changeStatus')->name($controllerName.'.status')
               ->where(['id' => '[0-9]+', 'status' => '[a-z]+']);
-          Route::get('/change-display-{display?}/{id?}', $controller.'changeDisplay')->name($controllerName.'.display')
-              ->where(['id' => '[0-9]+', 'display' => '[a-z]+']);
+          Route::get('/change-level-{level?}/{id?}', $controller.'changeLevel')->name($controllerName.'.level')
+              ->where(['id' => '[0-9]+', 'level' => '[a-z]+']);
               
       });
 });

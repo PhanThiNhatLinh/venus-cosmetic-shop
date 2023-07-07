@@ -5,6 +5,10 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Auth;
+use App\Models\User;
+use Illuminate\Http\Request;
+
 
 class LoginController extends Controller
 {
@@ -40,8 +44,14 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-    protected function loggedOut() {
+    protected function loggedOut(Request $request) { //redirect after logout. 
         return redirect('/trang-chu');
     }
 
+    protected function credentials(Request $request)
+    {
+        $credentials = $request->only($this->username(), 'password');
+        $credentials['status'] = "active";
+        return $credentials;
+    }
 }

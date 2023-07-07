@@ -18,62 +18,51 @@ class UserController extends Controller
     protected $controllerName ='user';
     protected $model;
     protected $params=[];
-    // protected $status_for_controller = [];
-    // protected $status_templates = [];
-    // protected $display_for_controller = [];
-    // protected $display_templates = [];
+    protected $status_for_controller = [];
+    protected $status_templates = [];
     protected $search_field_for_controller = [];
     protected $search_field_templates = [];
+    protected $level_for_controller = [];
+    protected $level_templates = [];
 
     public function __construct() {
         $this->model = new MainModel();
         $this->params['item_per_page'] = 3;
-        // $this->params['status_for_controller'] = Config::get('linh_config.config.status.'.$this->controllerName, 'default');
-        // $this->params['status_templates'] = Config::get('linh_config.template.status');
-        // $this->params['display_for_controller'] = Config::get('linh_config.config.display.'.$this->controllerName, 'default');
-        // $this->params['display_templates'] = Config::get('linh_config.template.display');
+        $this->params['status_for_controller'] = Config::get('linh_config.config.status.'.$this->controllerName, 'default');
+        $this->params['status_templates'] = Config::get('linh_config.template.status');
+        $this->params['level_for_controller'] = Config::get('linh_config.config.level.'.$this->controllerName, 'default');
+        $this->params['level_templates'] = Config::get('linh_config.template.level');
         $this->params['search_field_for_controller'] = Config::get('linh_config.config.search.'.$this->controllerName, 'default');
         $this->params['search_field_templates'] = Config::get('linh_config.template.search');
         view()->share(['controllerName' => $this->controllerName, 'params' => $this->params]);
     }
     public function index(Request $request)
     {
-        // $this->params['filter_status'] = (in_array($request->input('filter_status'),$this->params['status_for_controller'])? $request->input('filter_status','all') : 'all');
+        $this->params['filter_status'] = (in_array($request->input('filter_status'),$this->params['status_for_controller'])? $request->input('filter_status','all') : 'all');
+        $this->params['filter_level'] = (in_array($request->input('filter_level'),$this->params['level_for_controller'])? $request->input('filter_level','all') : 'all');
         $this->params['search_field'] = (in_array($request->input('search_field','all'),$this->params['search_field_for_controller'])? $request->input('search_field','all') : 'all');
         $this->params['search_value'] = $request->input('search_value','');
-        // $this->params['filter_display'] = (in_array($request->input('display_field'),$this->params['display_for_controller'])? $request->input('display_field','all') : 'all');
-        // $status_counts = $this->model->countByStatus($this->params,['task'=>'admin_count_status']);
+        $status_counts = $this->model->countByStatus($this->params,['task'=>'admin_count_status']);
+        // dd($status_counts);
         $items = $this->model->getListItems($this->params, ['task'=>'admin_get_list_items']);
         // dd($items);
-        return view($this->pathViewName.'index',compact('items'))->with("params",$this->params);
+        return view($this->pathViewName.'index',compact('items','status_counts'))->with("params",$this->params);
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    // public function changeStatus(Request $request)
-    // {
-    //    $id = $request->id;
-    //    $status = $request->status;
-    //    if($status =='default'){
-    //     $status = 'active';
-    //    }
-    //    $this->model->updateItem(['id'=> $id,'status'=> $status],['task'=>'admin_change_status']);
-    //    return redirect()->back()->with('notify', 'Kích hoạt trạng thái thành công');
+    public function changeStatus(Request $request)
+    {
+       $id = $request->id;
+       $status = $request->status;
+       if($status =='default'){
+            $status = 'active';
+       }
+       $this->model->updateItem(['id'=> $id,'status'=> $status],['task'=>'admin_change_status']);
+       return redirect()->back()->with('notify', 'Kích hoạt trạng thái thành công');
        
-    // }
-    //display in home or not
-    // public function changeDisplay(Request $request)
-    // {
-    //    $id = $request->id;
-    //    $display = $request->display;
-    //    if($display =='default'){
-    //     $display = 'yes';
-    //    }
-    //    $this->model->updateItem(['id'=> $id,'display'=> $display],['task'=>'admin_change_display']);
-    //    return redirect()->back()->with('notify', 'Kích hoạt trạng thái hiển thị thành công');
-       
-    // }
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -81,6 +70,11 @@ class UserController extends Controller
     public function showFormAdd(Request $request)
     {
         return view($this->pathViewName.'form_add');
+    }
+
+    public function showProfile(Request $request)
+    {
+        return view($this->pathViewName.'profile');
     }
 
     public function showFormEdit(Request $request)
@@ -120,6 +114,24 @@ class UserController extends Controller
         $this->model->deleteItem($item,['task'=>'admin_delete_item']);
         $notify = "Xóa Thành Công";
         return redirect()->route($this->controllerName.'.index')->with('notify', $notify);
+    }
+
+    public function changePassword(MainRequest $request){
+        if($request->method() == "POST" ){
+            $params = $request->all();
+            // dd($params);
+            $this->model->updateItem($params,['task' =>'change-password']);
+            return redirect()->route($this->controllerName.'.index')->with('notify', 'Đổi mật khẩu thành công');
+        }
+    }
+
+    public function changeLevel(Request $request)
+    {
+        $level = $request->level;
+        $id = $request->id;
+        $this->model->updateItem(['id'=> $id,'level'=> $level],['task'=>'admin_change_level']);
+        return redirect()->back()->with('notify', 'Thay đổi vai trò thành công');
+       
     }
 
 }

@@ -7,11 +7,11 @@
         <!-- menu profile quick info -->
         <div class="profile clearfix">
             <div class="profile_pic">
-                <img src="img/img.jpg" alt="..." class="img-circle profile_img">
+                <img src="{{asset('admin/images/'.$controllerName.'/'.Auth::user()->thumb)}}" alt="..." class="img-circle profile_img">
             </div>
             <div class="profile_info">
-                <span>Welcome,</span>
-                <h2>John Doe</h2>
+                <span>Xin Chào!</span>
+                <h2>{{Auth::user()->name}}</h2>
             </div>
         </div>
         <!-- /menu profile quick info -->
@@ -21,8 +21,9 @@
             <div class="menu_section">
                 <h3>Danh Sách Các Mục Quản Lý</h3>
                 <ul class="nav side-menu">
-                    <li><a><i class="fa fa-home"></i> Home</a></li>
-                    <li><a><i class="fa fa-user"></i> User</a></li>
+                    <li><a href="/trang-chu"><i class="fa fa-home"></i> Trang Chu</a></li>
+                    <li><a href="/admin/user/profile"><i class="fa fa-user"></i> Thông Tin Tài Khoản</a></li>
+                    <li><a href="/admin/user"><i class="fa fa-user"></i>Quản Lý Người Dùng</a></li>
                     <li><a href="/admin/product"><i class="fa fa-product-hunt"></i>Sản Phẩm</a></li>
                     <li><a href="/admin/country"><i class="fa fa-globe"></i> Xuất Xứ Sản Phẩm</a></li>
                     <li><a href="/admin/brand"><i class="fa fa-tasks"></i> Thương Hiệu Sản Phẩm</a></li>

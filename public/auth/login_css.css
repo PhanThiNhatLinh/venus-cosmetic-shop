@@ -39,8 +39,8 @@ html,body{
 .wrapper form .field{
   height: 50px;
   width: 100%;
-  margin-top: 20px;
-  margin-bottom: 50px;
+  margin-top: 30px;
+  margin-bottom: 70px;
   position: relative;
 }
 .wrapper form .field input{

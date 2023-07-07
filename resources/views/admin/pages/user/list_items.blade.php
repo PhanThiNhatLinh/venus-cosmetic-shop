@@ -9,10 +9,9 @@
                 <th class="column-title">#</th>
                 <th class="column-title">ID</th>
                 <th class="column-title">Thông tin</th>
+                <th class="column-title">Ảnh Đại Diện</th>
                 <th class="column-title">Trạng Thái</th>
-                <th class="column-title">Hiển Thị</th>
-                <th class="column-title">Tạo Mới</th>
-                <th class="column-title">Chỉnh sửa</th>
+                <th class="column-title">Vai Trò</th>
                 <th class="column-title">Hành động</th>
             </tr>
             </thead>
@@ -24,17 +23,11 @@
                             $id = $item['id'];
                             $name = $item['name'];
                             $email = $item['email'];
-                            // $description = $item['description'];
-                            // $thumb = $item['thumb'];
-                            // $display = $item['display'];
-                            // $created_by = $item['created_by'];
+                            $thumb = $item['thumb'];
                             $created_at = date(Config::get('linh_config.date.long_time'), strtotime($item['created_at']));
-                            // $modified_by = $item['modified_by'];
                             $updated_at = date(Config::get('linh_config.date.long_time'), strtotime($item['updated_at']));
                             //status button
-                            // $status = (in_array($item['status'], $params['status_for_controller'])) ? $item['status'] : 'default';
-                            //display button
-                            // $display = (in_array($item['display'], $params['display_for_controller'])) ? $item['display'] : 'default';
+                            $status = (in_array($item['status'], $params['status_for_controller'])) ? $item['status'] : 'default';
                         @endphp
                             <tr class="even pointer">
                             <td width="1%">{{$index}}</td>
@@ -42,22 +35,28 @@
                             <td width="40%">
                                 <p><strong>Tên: </strong>{{$name}}</p>
                                 <p><strong>Email: </strong>{{$email}}</p>
-                                <p><strong>Hình ảnh: </strong></p>
-                                {{-- <img width="100%" height="200px" src="{{asset('admin/images/'.$controllerName.'/'.$thumb)}}" alt="{{$name}}"> --}}
+                                <p><strong>Số điện thoại: </strong></p>
+                                <p><strong>Ngày sinh: </strong></p>
+                                <p><strong>Địa chỉ: </strong></p>
                             </td>
                             <td width="10%">
-                                {{-- <a href="{{route($controllerName.'.status',['id'=>$id, 'status'=> $status])}}" type="button" class="{{$params['status_templates'][$status]['class']}}">{{$params['status_templates'][$status]['name']}}</a> --}}
+                                <img width="50px" height="50px" src="{{asset('admin/images/'.$controllerName.'/'.$thumb)}}" alt="{{$name}}">
                             </td>
-                            <td width="10%">
-                                {{-- <a href="{{route($controllerName.'.display',['id'=>$id, 'display'=> $display])}}" type="button" class="{{$params['display_templates'][$display]['class']}}">{{$params['display_templates'][$display]['name']}}</a> --}}
+                            
+                            <td width="15%">
+                                <a href="{{route($controllerName.'.status',['id'=>$id, 'status'=> $status])}}" type="button" class="{{$params['status_templates'][$status]['class']}}">{{$params['status_templates'][$status]['name']}}</a>
                             </td>
-                            <td width="10%">
-                                {{-- <p><i class="fa fa-user"></i> {{$created_by}}</p> --}}
-                                <p><i class="fa fa-clock-o"></i> {{$created_at}}</p>
-                            </td>
-                            <td width="10%">
-                                {{-- <p><i class="fa fa-user"></i> {{$modified_by}}</p> --}}
-                                <p><i class="fa fa-clock-o"></i> {{$updated_at}}</p>
+                            <td width="15%">
+                                <select data-url="{{route($controllerName.'.level',['level'=>'new_value','id'=>$item['id']])}}" name="level" class="form-control">
+                                    <option>Tùy chọn</option>
+                                    @foreach($params['level_for_controller'] as $level)
+                                        @if($item['level'] == $level)
+                                        <option selected value="{{$level}}" >{{$params['level_templates'][$level]['name']}}</option>
+                                        @else
+                                            <option value="{{$level}}" >{{$params['level_templates'][$level]['name']}}</option>
+                                        @endif
+                                    @endforeach  
+                                </select>
                             </td>
                             <td class="last">
                                 <div class="zvn-box-btn-filter"><a

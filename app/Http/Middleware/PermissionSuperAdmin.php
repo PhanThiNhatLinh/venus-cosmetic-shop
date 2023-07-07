@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Auth;
  
-class PermissionAdmin
+class PermissionSuperAdmin
 {
     /**
      * Handle an incoming request.
@@ -16,7 +16,7 @@ class PermissionAdmin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth::user()->level == "admin") {
+        if (Auth::user()->level == "super_admin") {
             return $next($request);
         }else{
             return redirect('/no-permission');
