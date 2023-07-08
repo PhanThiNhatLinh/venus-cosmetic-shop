@@ -91,16 +91,18 @@ class UserController extends Controller
     public function save(MainRequest $request)
     {
         if($request->method() == 'POST'){
-            $params = $request->all();            
+            $params = $request->all();     
             if(!empty($request->id)){
                 $this->model->updateItem($params,['task'=>'admin_edit_item']);
                 $notify = "Chỉnh Sửa Thông Tin Thành Công";
+                return redirect()->back()->with('notify', 'Thay đổi thông tin người dùng thành công');
             }else{
                 // $params['thumb'] = $request->file('thumb');
                 $this->model->insertItem($params,['task'=>'admin_add_new_item']);
                 $notify = "Thêm Mới Thành Công";
+                return redirect()->route($this->controllerName.'.index')->with('notify', $notify);
             }
-            return redirect()->route($this->controllerName.'.index')->with('notify', $notify);
+            
         }
     }
 

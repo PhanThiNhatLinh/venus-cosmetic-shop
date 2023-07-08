@@ -11,25 +11,30 @@
             </div>
             <div class="col-md-6 text-center text-lg-right">
                 <div class="d-inline-flex align-items-center">
-                    <a class="text-white px-3" href="">
-                        <i class="fas fa-cart-plus"> Giỏ Hàng</i>
+                    
+                    <a class="text-white px-3 total_cart" href="{{ route('cart.index') }}">
+                        @if(Cart::count()>0)
+                            <i class="fas fa-cart-plus"><span style="color: blue"> {{Cart::count()}}</span></i>
+                        @else
+                            <i class="fas fa-cart-plus"> {{Cart::count()}}</i>
+                        @endif
                     </a>
                     @if(Auth::check())
-                    <a class="text-white px-3" href="">
-                        <i class="fas fa-user-alt">{{Auth::user()->name}}</i>
-                    </a>
-                    <a class="text-white px-3" href="{{ route('logout') }}"
+                        <a class="text-white px-3" href="/admin/user/profile">
+                            <i class="fas fa-user-alt"> {{Auth::user()->name}}</i>
+                        </a>
+                        <a class="text-white px-3" href="{{ route('logout') }}"
                         onclick="event.preventDefault();
                                         document.getElementById('logout-form').submit();">
                         <i class="fas fa-key"> Đăng Xuất</i>
-                    </a>
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                        @csrf
-                    </form>
+                        </a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                            @csrf
+                        </form>
                     @else
-                    <a class="text-white px-3" href="/login">
-                        <i class="fas fa-key"> Đăng Nhập</i>
-                    </a>
+                        <a class="text-white px-3" href="/login">
+                            <i class="fas fa-key"> Đăng Nhập</i>
+                        </a>
                     @endif
                 </div>
             </div>

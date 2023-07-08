@@ -2,14 +2,13 @@
 @section('title','Quản Lý Slider')
 @section('content')
 <div class="right_col" role="main">
-    @include('admin.templates.header_title',['type' =>'edit'])
     @include('admin.templates.notify')
     @include('admin.templates.errors')
     <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="x_panel">
                         <div class="x_title">
-                            <h2>Form Thông Tin</h2>
+                            <h2>Thông Tin Người Dùng</h2>
                             <ul class="nav navbar-right panel_toolbox">
                                 <li class="pull-right"><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                                 </li>
@@ -17,7 +16,7 @@
                             <div class="clearfix"></div>
                         </div>
                         <div class="x_content">
-                            <form method="POST" enctype="multipart/form-data" class="form-horizontal form-label-left">
+                            <form method="POST" action="{{route($controllerName.'.save',['id'=> Auth::user()->id])}}" enctype="multipart/form-data" class="form-horizontal form-label-left">
                                 @csrf
                                 <div class="form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12">Tên
@@ -64,7 +63,7 @@
                                     </label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
                                         <input type="file" name="thumb" class="form-control col-md-7 col-xs-12">
-                                        <img width="100%" src="{{asset('/admin/images/'.$controllerName.'/'.Auth::user()->thumb)}}" alt="{{Auth::user()->name}}">
+                                        <img width="200px" height="200px" src="{{asset('/admin/images/'.$controllerName.'/'.Auth::user()->thumb)}}" alt="{{Auth::user()->name}}">
                                     </div>
                                 </div>
                                 <div class="ln_solid"></div>

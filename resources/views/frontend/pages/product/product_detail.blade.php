@@ -76,7 +76,7 @@
                     <div style="display: display-block" class="row">
                         <h5 class="text-muted mb-3">Số Lượng:<input type="number" value="" /></h5>                            
                     </div>
-                    <a href="" class="btn btn-secondary py-3 px-5 mt-2">Thêm Vào Giỏ Hàng</a>
+                    <button style="margin-bottom: 2px" href="#"  id="{{$product['id']}}" class="btn btn-secondary py-3 px-5 mt-2 add-to-cart"><i style="color: white" id="fly" class="fas fa-cart-plus fa-lg"></i> Mua Hàng</button>
                 </div>
             </div>
         </div>

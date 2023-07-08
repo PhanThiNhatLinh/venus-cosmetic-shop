@@ -31,7 +31,7 @@
                                     <h4 class="col-6" style="color:black; text-align:right"><del>{{$price}}</del></h4>
                                     <h4 class="col-6"style="color:mediumblue; text-align:left">{{$promo}}</h4>
                                 </div>
-                                <a href="" class="btn btn-sm btn-secondary">Mua Hàng</a>
+                                <button style="margin-bottom: 2px" href="#"  id="{{$product['id']}}" class="btn btn-sm btn-secondary add-to-cart"><i style="color: white" id="fly" class="fas fa-cart-plus fa-lg"></i> Mua Hàng</button>
                                 <a href="/san-pham/chi-tiet/{{$product['id']}}.html" class="btn btn-sm btn-primary">Xem Chi Tiết</a>
                             </div>
                         </div>

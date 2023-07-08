@@ -12,3 +12,6 @@
 
 <!-- Template Javascript -->
 <script src="{{asset('/frontend/js/main.js')}}"></script>
+
+<!-- My js -->
+<script src="{{asset('/frontend/js/frontend_linh_js.js')}}"></script>

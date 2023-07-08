@@ -21,15 +21,29 @@
             <div class="menu_section">
                 <h3>Danh Sách Các Mục Quản Lý</h3>
                 <ul class="nav side-menu">
-                    <li><a href="/trang-chu"><i class="fa fa-home"></i> Trang Chu</a></li>
-                    <li><a href="/admin/user/profile"><i class="fa fa-user"></i> Thông Tin Tài Khoản</a></li>
-                    <li><a href="/admin/user"><i class="fa fa-user"></i>Quản Lý Người Dùng</a></li>
-                    <li><a href="/admin/product"><i class="fa fa-product-hunt"></i>Sản Phẩm</a></li>
-                    <li><a href="/admin/country"><i class="fa fa-globe"></i> Xuất Xứ Sản Phẩm</a></li>
-                    <li><a href="/admin/brand"><i class="fa fa-tasks"></i> Thương Hiệu Sản Phẩm</a></li>
-                    <li><a href="/admin/category"><i class="fa fa fa-building-o"></i> Danh Mục Sản Phẩm</a></li>
-                    <li><a href="/admin/blog"><i class="fa fa-newspaper-o"></i> Blog</a></li>
-                    <li><a href="/admin/slider"><i class="fa fa-sliders"></i> Silders</a></li>
+                    @if(Auth::user()->level == "super_admin")
+                        <li><a href="/trang-chu"><i class="fa fa-home"></i> Trang Chủ</a></li>
+                        <li><a href="/admin/user/profile"><i class="fa fa-user"></i> Thông Tin Tài Khoản</a></li>
+                        <li><a href="/admin/user"><i class="fa fa-user"></i>Quản Lý Người Dùng</a></li>
+                        <li><a href="/admin/product"><i class="fa fa-product-hunt"></i>Sản Phẩm</a></li>
+                        <li><a href="/admin/country"><i class="fa fa-globe"></i> Xuất Xứ Sản Phẩm</a></li>
+                        <li><a href="/admin/brand"><i class="fa fa-tasks"></i> Thương Hiệu Sản Phẩm</a></li>
+                        <li><a href="/admin/category"><i class="fa fa fa-building-o"></i> Danh Mục Sản Phẩm</a></li>
+                        <li><a href="/admin/blog"><i class="fa fa-newspaper-o"></i> Blog</a></li>
+                        <li><a href="/admin/slider"><i class="fa fa-sliders"></i> Silders</a></li>
+                    @elseif(Auth::user()->level == "admin")
+                        <li><a href="/trang-chu"><i class="fa fa-home"></i> Trang Chủ</a></li>
+                        <li><a href="/admin/user/profile"><i class="fa fa-user"></i> Thông Tin Tài Khoản</a></li>
+                        <li><a href="/admin/product"><i class="fa fa-product-hunt"></i>Sản Phẩm</a></li>
+                        <li><a href="/admin/country"><i class="fa fa-globe"></i> Xuất Xứ Sản Phẩm</a></li>
+                        <li><a href="/admin/brand"><i class="fa fa-tasks"></i> Thương Hiệu Sản Phẩm</a></li>
+                        <li><a href="/admin/category"><i class="fa fa fa-building-o"></i> Danh Mục Sản Phẩm</a></li>
+                        <li><a href="/admin/blog"><i class="fa fa-newspaper-o"></i> Blog</a></li>
+                        <li><a href="/admin/slider"><i class="fa fa-sliders"></i> Silders</a></li>
+                    @else
+                        <li><a href="/trang-chu"><i class="fa fa-home"></i> Trang Chủ</a></li>
+                        <li><a href="/admin/user/profile"><i class="fa fa-user"></i> Thông Tin Tài Khoản</a></li>
+                    @endif    
                 </ul>
             </div>
         </div>

@@ -38,7 +38,7 @@
                             <div class="position-relative text-center bg-light rounded p-4 pb-5" style="margin-top: -75px;">
                                 <h5 class="font-weight-semi-bold mt-5 mb-3 pt-5">{{$name}}</h5>
                                 {!!$xhtml!!}
-                                <a href="" class="btn btn-sm btn-secondary">Mua Hàng</a>
+                                <button style="margin-bottom: 2px" href="#"  id="{{$product['id']}}" class="btn btn-sm btn-secondary add-to-cart"><i style="color: white" id="fly" class="fas fa-cart-plus fa-lg"></i> Mua Hàng</button>
                                 <a href="/san-pham/chi-tiet/{{$product['id']}}.html" class="btn btn-sm btn-primary">Xem Chi Tiết</a>
                             </div>
                         </div>
