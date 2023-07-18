@@ -1,6 +1,6 @@
 <?php
-$totalItems = $productsInCategory->total();
-$totalPages = $productsInCategory->lastPage();
+$totalItems = $items->total();
+$totalPages = $items->lastPage();
 ?>
 <div class="x_content">
     <div class="row">
@@ -10,7 +10,7 @@ $totalPages = $productsInCategory->lastPage();
         </div>
         <div class="col-md-8">
             <nav aria-label="Page navigation example">
-               {!! $productsInCategory->appends(request()->input())->links('pagination.pagination_frontend',['paginator'=> $productsInCategory]) !!}
+               {!! $items->appends(request()->input())->links('pagination.pagination_frontend',['paginator'=> $items]) !!}
             </nav>
         </div>
     </div>

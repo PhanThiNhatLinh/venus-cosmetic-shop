@@ -14,6 +14,12 @@ class Brand extends Model
     protected $fillable = ['id','name','description','status','display','thumb','created_by','modified_by'];
     public $timestamps = true;
     use HasFactory;
+
+    public function products()
+    {
+        return $this->hasMany(Product::class, 'id_category');
+    }
+
     public function getListItems($params=null,$options = null){
         //admin
         if($options['task'] == 'admin_get_list_items'){
@@ -46,7 +52,13 @@ class Brand extends Model
         
         //frontend
 
+        if($options['task'] == 'frontend_get_lists_brand'){
+            $query = self::select('id','name','description','status','display','thumb','created_by','modified_by');
+            $query->where('status','active')->where('display','yes'); 
+            $results = $query->orderBy('id','DESC')->paginate(8);
+        }  
         return $results;
+
     }
 
     public function countByStatus($params=null,$options = null){
@@ -120,10 +132,10 @@ class Brand extends Model
         }
     }
 
-    public function getItem($id=null,$options = null){ //get item info in the db belong to id
+    public function getItem($params=null,$options = null){ //get item info in the db belong to id
         //admin
         if($options['task'] == 'admin_get_item'){
-           $results = self::findOrFail($id);
+           $results = self::findOrFail($params['id']);
         }
         return $results;
     }
@@ -134,5 +146,26 @@ class Brand extends Model
         if(file_exists($thumbName)) {
            @unlink($thumbName);
         }
+    }
+
+    public function getProductsInBrand($params=null,$options = null){ //get item info in the db belong to id
+        //admin
+        if($options['task'] == 'frontend_get_lists_products'){
+           $brand = self::findOrFail($params['id']);
+           $query = $brand->products()->where('status', 'active')->where('display', 'yes');
+           if(isset($params['price_field']) && $params['price_field'] !== "all"){
+                if($params['price_field']== 250000)
+                    $query->where('price','<=',$params['price_field']);
+                elseif($params['price_field']== 500000){
+                    $query->whereBetween('price', [250000, 500000]);
+                }elseif($params['price_field']== 1000000){
+                    $query->whereBetween('price', [500000, 1000000]);
+                }else{
+                    $query->where('price','>',1000000);
+                }
+            }
+           $results = $query->orderBy('id','ASC')->paginate(8);
+        }
+        return $results;
     }
 }

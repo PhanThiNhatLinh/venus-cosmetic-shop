@@ -16,10 +16,17 @@ class PermissionAdmin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth::user()->level == "admin") {
-            return $next($request);
-        }else{
-            return redirect('/no-permission');
+        // if (Auth::user()->level == "admin") {
+        //     return $next($request);
+        // }else{
+        //     return redirect('/no-permission');
+        // }
+
+        foreach(Auth::user()->roles as $role){
+            if($role['name'] == $request){
+                return true;
+            }
+            return false;
         }
  
     }

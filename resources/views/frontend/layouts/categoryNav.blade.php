@@ -8,18 +8,28 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+                
                 <div class="navbar-nav ml-auto py-0">
                     @for($i=0; $i<3; $i++)
-                        <a href="/danh-muc/chi-tiet/{{$categoryItems[$i]['id']}}.html" class="nav-item nav-link">{{$categoryItems[$i]['name']}}</a>
+                    @php
+                        $link = route('category.detail',['category_id' => $categoryItems[$i]['id'],'category_name' => Str::slug($categoryItems[$i]['name'])]);
+                    @endphp
+                        <a href="{{$link}}" class="nav-item nav-link">{{$categoryItems[$i]['name']}}</a>
                     @endfor    
                 </div>
+                    <div class="navbar-nav ml-auto py-0">
+                        <a href="/bai-viet" class="nav-item nav-link">Blog</a>
+                    </div>
                     <a href="/trang-chu" class="text-center navbar-brand mx-5 d-none d-lg-block">
                         <h1 class="m-0 display-4 text-primary"><span class="text-secondary">V</span>ENUS</h1>
                         <span class="font-weight-bold">The Best Cosmetic Shop</span>
                     </a>
                 <div class="navbar-nav ml-auto py-0">
                     @for($i=3; $i<6; $i++)
-                        <a href="/danh-muc/chi-tiet/{{$categoryItems[$i]['id']}}.html" class="nav-item nav-link">{{$categoryItems[$i]['name']}}</a>
+                        @php
+                            $link = route('category.detail',['category_id' => $categoryItems[$i]['id'],'category_name' => Str::slug($categoryItems[$i]['name'])]);
+                        @endphp
+                        <a href="{{$link}}" class="nav-item nav-link">{{$categoryItems[$i]['name']}}</a>
                     @endfor    
                 </div>
             </div>

@@ -4,6 +4,7 @@
 <div class="container-fluid p-0 mb-5 pb-5">
   <img style="height: 600px" class="w-100" src="{{asset('/admin/images/category/'.$categoryItem['thumb'])}}" alt="{{$categoryItem['name']}}">
 </div>
+@include('frontend.blocs.filterPriceArea')
 <div class="container-fluid py-5">
   <div class="container py-5">
     <div class="row justify-content-center">
@@ -12,12 +13,13 @@
         </div>
     </div>
     <div class="row" >
-      @foreach ($productsInCategory as $product)
+      @foreach ($items as $product)
         @php
           $name = Str::of($product['name'])->limit(40);
           $thumbs = json_decode($product['thumb'],true);
           $price = number_format($product['price'],0,'','.');
           $xhtml = '';
+          $link = route('product.detail',['product_id' => $product['id'],'product_name' => Str::slug($product['name'])]);
           if ($product['discount']>0) {
               $promo = number_format($product['price'] - (($product['discount'] * $product['price'])/100),0,'','.');
               $xhtml = sprintf('<del style="font-size: 15px; margin-bottom: -10px">%s</del>
@@ -44,7 +46,7 @@
           @endforeach    
           <h5 class="font-weight-bold mb-4">{{$name}}</h5>
           <button style="margin-bottom: 2px" href="#"  id="{{$product['id']}}" class="btn btn-sm btn-secondary add-to-cart"><i style="color: white" id="fly" class="fas fa-cart-plus fa-lg"></i> Mua Hàng</button>
-          <a href="/san-pham/chi-tiet/{{$product['id']}}.html" class="btn btn-sm btn-primary">Xem chi tiết</a>
+          <a href="{{$link}}" class="btn btn-sm btn-primary">Xem chi tiết</a>
         </div>
       </div>
       @endforeach

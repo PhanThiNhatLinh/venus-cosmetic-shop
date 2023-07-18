@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests\ProductFormRequest as MainRequest;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Models\Brand;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 use Config;
 
@@ -42,6 +44,9 @@ class ProductController extends Controller
     }
     public function index(Request $request)
     {
+        if(!Gate::allows('product.view')){
+            return redirect('/no-permission');
+        }
         $this->params['filter_status'] = (in_array($request->input('filter_status'),$this->params['status_for_controller'])? $request->input('filter_status','all') : 'all');
         $this->params['search_field'] = (in_array($request->input('search_field','all'),$this->params['search_field_for_controller'])? $request->input('search_field','all') : 'all');
         $this->params['search_value'] = $request->input('search_value','');
@@ -57,25 +62,31 @@ class ProductController extends Controller
      */
     public function changeStatus(Request $request)
     {
-       $id = $request->id;
-       $status = $request->status;
-       if($status =='default'){
-        $status = 'active';
-       }
-       $this->model->updateItem(['id'=> $id,'status'=> $status],['task'=>'admin_change_status']);
-       return redirect()->back()->with('notify', 'Kích hoạt trạng thái thành công');
+        if(!Gate::allows('product.change_status')){
+            return redirect('/no-permission');
+        }
+        $id = $request->id;
+        $status = $request->status;
+        if($status =='default'){
+            $status = 'active';
+        }
+        $this->model->updateItem(['id'=> $id,'status'=> $status],['task'=>'admin_change_status']);
+        return redirect()->back()->with('notify', 'Kích hoạt trạng thái thành công');
        
     }
     //display in home or not
     public function changeDisplay(Request $request)
     {
-       $id = $request->id;
-       $display = $request->display;
-       if($display =='default'){
-        $display = 'yes';
-       }
-       $this->model->updateItem(['id'=> $id,'display'=> $display],['task'=>'admin_change_display']);
-       return redirect()->back()->with('notify', 'Kích hoạt trạng thái hiển thị thành công');
+        if(!Gate::allows('product.change_display')){
+            return redirect('/no-permission');
+        }
+        $id = $request->id;
+        $display = $request->display;
+        if($display =='default'){
+            $display = 'yes';
+        }
+        $this->model->updateItem(['id'=> $id,'display'=> $display],['task'=>'admin_change_display']);
+        return redirect()->back()->with('notify', 'Kích hoạt trạng thái hiển thị thành công');
        
     }
 
@@ -84,7 +95,9 @@ class ProductController extends Controller
      */
     public function showFormAdd(Request $request)
     {
-        
+        if(!Gate::allows('product.add')){
+            return redirect('/no-permission');
+        }
         $brands = $this->model->getListBrands();
         $countries = $this->model->getListCountries();
         $categories = $this->model->getListCategories();
@@ -93,6 +106,9 @@ class ProductController extends Controller
 
     public function showFormEdit(Request $request)
     {
+        if(!Gate::allows('product.edit')){
+            return redirect('/no-permission');
+        }
         $brands = $this->model->getListBrands();
         $countries = $this->model->getListCountries();
         $categories = $this->model->getListCategories();
@@ -107,6 +123,9 @@ class ProductController extends Controller
      */
     public function save(MainRequest $request)
     {
+        if(!Gate::allows('product.save')){
+            return redirect('/no-permission');
+        }
         if($request->method() == 'POST'){
             $params = $request->all();    
             // dd($params);    
@@ -146,6 +165,9 @@ class ProductController extends Controller
      */
     public function delete(Request $request)
     {
+        if(!Gate::allows('product.delete')){
+            return redirect('/no-permission');
+        }
         $id = $request->id;
         $item = $this->model->getItem($id,['task'=>'admin_get_item']); //find($id) infos in the db
         $this->model->deleteItem($item,['task'=>'admin_delete_item']);

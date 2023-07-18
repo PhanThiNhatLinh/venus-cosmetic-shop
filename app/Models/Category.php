@@ -122,20 +122,31 @@ class Category extends Model
         }
     }
 
-    public function getItem($id=null,$options = null){ //get item info in the db belong to id
+    public function getItem($params=null,$options = null){ //get item info in the db belong to id
         //admin
         if($options['task'] == 'admin_get_item'){
-           $results = self::findOrFail($id);
+           $results = self::findOrFail($params['id']);
         }
         return $results;
     }
 
-    public function getProductsInCategory($id=null,$options = null){ //get item info in the db belong to id
+    public function getProductsInCategory($params=null,$options = null){ //get item info in the db belong to id
         //admin
         if($options['task'] == 'frontend_get_lists_products'){
-           $category = self::findOrFail($id);
-           $results = $category->products()->where('status', 'active')->where('display', 'yes')
-                    ->orderBy('id','ASC')->paginate(8);
+           $category = self::findOrFail($params['id']);
+           $query = $category->products()->where('status', 'active')->where('display', 'yes');
+           if(isset($params['price_field']) && $params['price_field'] !== "all"){
+                if($params['price_field']== 250000)
+                    $query->where('price','<=',$params['price_field']);
+                elseif($params['price_field']== 500000){
+                    $query->whereBetween('price', [250000, 500000]);
+                }elseif($params['price_field']== 1000000){
+                    $query->whereBetween('price', [500000, 1000000]);
+                }else{
+                    $query->where('price','>',1000000);
+                }
+            }
+            $results= $query->orderBy('id','ASC')->paginate(8);
         }
         return $results;
     }

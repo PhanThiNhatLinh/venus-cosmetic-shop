@@ -47,13 +47,13 @@
                                 <a href="{{route($controllerName.'.status',['id'=>$id, 'status'=> $status])}}" type="button" class="{{$params['status_templates'][$status]['class']}}">{{$params['status_templates'][$status]['name']}}</a>
                             </td>
                             <td width="15%">
-                                <select data-url="{{route($controllerName.'.level',['level'=>'new_value','id'=>$item['id']])}}" name="level" class="form-control">
-                                    <option>Tùy chọn</option>
-                                    @foreach($params['level_for_controller'] as $level)
-                                        @if($item['level'] == $level)
-                                        <option selected value="{{$level}}" >{{$params['level_templates'][$level]['name']}}</option>
+                                <select data-url="{{route($controllerName.'.role',['role_id'=>'new_value','id'=>$id])}}" name="role" class="form-control">
+                                    <option>Tùy Chọn</option>
+                                    @foreach($roles as $role)
+                                        @if($item->roles->pluck('id')->first() == $role['id'])
+                                            <option selected value="{{$role['id']}}" >{{$role['name']}}</option>
                                         @else
-                                            <option value="{{$level}}" >{{$params['level_templates'][$level]['name']}}</option>
+                                            <option value="{{$role['id']}}">{{$role['name']}}</option>
                                         @endif
                                     @endforeach  
                                 </select>

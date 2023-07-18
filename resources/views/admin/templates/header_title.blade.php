@@ -9,6 +9,9 @@
         $header_title = 'Quản Lý '. ucfirst($controllerName);
         $button = sprintf('<a href="%s" class="btn btn-success"><i class="fa %s"></i> %s</a>',
                         route($controllerName.'.form_add'), 'fa-plus-circle','Thêm Mới');
+    }else{
+        $header_title = 'Quản Lý '. ucfirst($controllerName);
+        $button = "";
     }
 @endphp
 <div class="page-header zvn-page-header clearfix">

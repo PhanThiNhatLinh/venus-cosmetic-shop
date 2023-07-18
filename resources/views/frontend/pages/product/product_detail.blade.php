@@ -42,14 +42,27 @@
             </div>
             <div class="col-lg-6">
                 <!--/product-information-->
-                <h6 class="text-muted mb-3"a><div class="rating"> 
-                  <input type="radio" checked name="rating" value="5" id="5"><label for="5">☆</label>
-                  <input type="radio" name="rating" value="4" id="4"><label for="4">☆</label> 
-                  <input type="radio" name="rating" value="3" id="3"><label for="3">☆</label>
-                  <input type="radio" name="rating" value="2" id="2"><label for="2">☆</label>
-                  <input type="radio" name="rating" value="1" id="1"><label for="1">☆</label>
-                  
-                </div></h6>
+                <div class="rate">
+                  @php
+                      $rating = $product->rating->pluck('rating')->toArray();
+                      if(!empty($rating)){
+                        $rating_count = array_sum($rating);
+                        $rating_average = round($rating_count/count($rating),1);
+                      }else{
+                        $rating_average = 0;
+                      }
+                  @endphp
+                  <div class="vote">
+                    @for($i = 1; $i<= 5; $i++)
+                      @if($i<=$rating_average)
+                      <div class="star_{{$i}} ratings_stars ratings_over"><input value="{{$i}}" type="hidden"></div>
+                        @else
+                        <div class="star_{{$i}} ratings_stars"><input value="{{$i}}" type="hidden"></div>
+                      @endif
+                    @endfor  
+                      <span class="rate-np">{{$rating_average}}</span>
+                  </div> 
+              </div>
                 <h4>Thông Tin Sản Phẩm:</h4> 
                 <div class="product-information">
                     {{-- <h1 class="font-weight-bold mb-3"></h1> --}}
@@ -77,23 +90,30 @@
                         <h5 class="text-muted mb-3">Số Lượng:<input type="number" value="" /></h5>                            
                     </div>
                     <button style="margin-bottom: 2px" href="#"  id="{{$product['id']}}" class="btn btn-secondary py-3 px-5 mt-2 add-to-cart"><i style="color: white" id="fly" class="fas fa-cart-plus fa-lg"></i> Mua Hàng</button>
-                </div>
+                    @if(Auth::check())
+                      <input type="hidden" class="user_id" id="{{Auth::user()->id}}">
+                    @endif
+                  </div>
             </div>
         </div>
     </div>
+    @include('frontend.templates.success')
     <div class="container py-5">
       <div class="card">  
         <div class="row">
           <div class="col-12">
               <div class="comment-box ml-2">
                   <h4>Add a comment</h4>
-                  <div class="rating"> 
-                      <input type="radio" name="rating" value="5" id="5"><label for="5">☆</label>
-                      <input type="radio" name="rating" value="4" id="4"><label for="4">☆</label> 
-                      <input type="radio" name="rating" value="3" id="3"><label for="3">☆</label>
-                      <input type="radio" name="rating" value="2" id="2"><label for="2">☆</label>
-                      <input type="radio" name="rating" value="1" id="1"><label for="1">☆</label>
-                  </div>
+                  <div class="rate">
+                    <div class="vote">
+                        <div class="star_1 ratings_stars"><input value="1" type="hidden"></div>
+                        <div class="star_2 ratings_stars"><input value="2" type="hidden"></div>
+                        <div class="star_3 ratings_stars"><input value="3" type="hidden"></div>
+                        <div class="star_4 ratings_stars"><input value="4" type="hidden"></div>
+                        <div class="star_5 ratings_stars"><input value="5" type="hidden"></div>
+                        <span class="rate-np">0/5</span>
+                    </div> 
+                </div>
                   <div class="comment-area">
                     <textarea class="form-control" placeholder="what is your view?" rows="4"></textarea>
                   </div>

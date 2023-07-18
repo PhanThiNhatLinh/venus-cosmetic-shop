@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -24,7 +24,6 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'level',
         'status',
         'phone',
         'thumb',
@@ -55,15 +54,45 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class,'user_role'); //liên kết đến bảng trung gian
+    }
+
+    public function getAllRoles()
+    {
+        $roles = Role::all()->toArray();
+        return $roles;
+    }
+
+    public function hasPermission($permission)
+    {
+        // dd($this->roles); == Auth::user->roles - kiểm tra xem user đang truy cập có quyền gì
+        foreach($this->roles as $role){
+            if($role->permission->where('slug', $permission)->count()>0){
+                return true;
+            }
+            return false;
+        }
+    }
+    
+    public function hasRole($params)
+    {
+        // dd($this->roles); == Auth::user->roles - kiểm tra xem user đang truy cập có quyền gì
+        foreach($this->roles as $role){
+            if($role['name'] == $params){
+                return true;
+            }
+            return false;
+        }
+    }
+
     public function getListItems($params=null,$options = null){
         //admin
         if($options['task'] == 'admin_get_list_items'){
-            $query = self::select('id', 'email', 'name', 'level', 'password','thumb','phone','address','birthday','status');
+            $query = self::select('id', 'email', 'name', 'password','thumb','phone','address','birthday','status');
                     if($params['filter_status'] !== 'all'){
                         $query->where('status',$params['filter_status']);
-                    }
-                    if($params['filter_level'] !== 'all'){
-                        $query->where('level',$params['filter_level']);
                     }
                     if($params['search_field'] !== 'all'){
                         $query->where($params['search_field'], 'LIKE', "%{$params['search_value']}%");
@@ -79,7 +108,7 @@ class User extends Authenticatable
         }
 
         if($options['task'] == 'frontend_get_list_items'){
-            $query = self::select('id', 'email', 'name', 'level', 'password');
+            $query = self::select('id', 'email', 'name', 'password');
             $query->where('status','active');
             $results = $query->orderBy('id','ASC')->get()->toArray();
         }    
@@ -92,9 +121,6 @@ class User extends Authenticatable
             $query = self::groupBy('status')->selectRaw('count(id) as count, status');
                 if($params['filter_status'] !== 'all'){
                     $query->where('status',$params['filter_status']);
-                }
-                if($params['filter_level'] !== 'all'){
-                    $query->where('level',$params['filter_level']);
                 }
                 if($params['search_field'] !== 'all'){
                     $query->where($params['search_field'], 'LIKE', "%{$params['search_value']}%");
@@ -120,10 +146,10 @@ class User extends Authenticatable
                 ->update(['status' => $status]);
         }
 
-        if($options['task'] == 'admin_change_level'){
-            $level = $params['level'];
-            self::findOrFail($params['id'])
-                ->update(['level' => $level]);
+        if($options['task'] == 'admin_change_role'){
+            $user = self::findOrFail($params['id']);
+            $user->roles()->sync($params['role_id']); //cập nhật vai trò permission_id vào bảng user_role
+            $user->update(['role_id' => $params['role_id']]);
         }
 
         if($options['task'] == 'admin_edit_item'){
@@ -151,7 +177,11 @@ class User extends Authenticatable
         //admin
         if($options['task'] == 'admin_add_new_item'){
             $params['thumb'] = self::uploadImage($params['thumb']);
-            self::create($params);
+            $user = self::create($params);
+            if(empty($params['roles'])){
+                $params['roles'] = '';
+            }
+            $user->roles()->attach($params['roles']); //đưa những id của roles được chọn vào bảng user_role
         }
     }
     public function deleteItem($item=null,$options = null){

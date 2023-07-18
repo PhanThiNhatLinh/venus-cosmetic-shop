@@ -7,15 +7,37 @@ $(document).ready(function(){
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
+    let input_slug= $("input[name  = slug]");
     let input_search_field= $("input[name  = search_field]");
 	let input_search_value = $("input[name  = search_value]");
     let input_display_field = $("input[name  = display_field]");
+    let input_status_field = $("input[name  = order_status]");
     let input_level = $("input[name  = level_field]");
+    let input_permission = $("input[name  = modules_field]");
     let select_display = $("select[name  = select_filter]");
     let select_level = $("select[name  = select_level]");
-    console.log(select_level);
+    let select_role = $("select[name  = role]");
+    let select_status = $("select[name  = status]");
+    let select_status_filter = $("select[name  = order_status]");
+    let select_permission = $("select[name  = select_permission]");
+    let select_permission_area = $("select[name  = permission_area]");
+    let select_permission_name = $("select[name  = permission_name]");
+    // console.log(select_level);
     let pathname = window.location.pathname; 
     let search_params = new URLSearchParams(window.location.search); //return đoạn query ?filter_status=active
+
+    //this will execute on page load(to be more specific when document ready event occurs)
+    if ($('.ty-compact-list').length > 3) {
+        $('.ty-compact-list:gt(2)').hide();
+        $('.show-more').show();
+    }
+  
+    $('.show-more').on('click', function() {
+        //toggle elements with class .ty-compact-list that their index is bigger than 2
+        $('.ty-compact-list:gt(2)').toggle();
+        //change text of show more element just for demonstration purposes to this demo
+        $(this).text() === 'Xem Toàn Bộ Quyền' ? $(this).text('Thu gọn') : $(this).text('Xem Toàn Bộ Quyền');
+    });
 
     //click search field 
     $("a.select-field").click(function(){
@@ -26,7 +48,7 @@ $(document).ready(function(){
     });
     //click button Tim kiem
     $("#btn-search").click(function(){
-        let $params = ['filter_status','display_field'];
+        let $params = ['filter_status','display_field','filter_status_order'];
         let search_field = input_search_field.val();
         let search_value = input_search_value.val();
         if(search_value.replace(/\s/g,"") == ""){  
@@ -43,7 +65,7 @@ $(document).ready(function(){
     });
     //click button Xoa tim kiem
     $("button#btn-clear").click(function(){
-        let $params = ['filter_status','display_field'];
+        let $params = ['filter_status','display_field','filter_status_order'];
         let link ='';
         $.each($params, function(key, param){
             if(search_params.has(param)){
@@ -55,6 +77,12 @@ $(document).ready(function(){
     //click the icon delete, the form confirm will appear
     $('a.btn-delete').click(function(){
         if(!confirm("Bạn chắc chắn muốn xóa!!")) 
+        return false;
+    });  
+
+    //click the icon cancel order, the form confirm will appear
+    $('a#order_cancel').click(function(){
+        if(!confirm("Bạn chắc chắn muốn hủy đơn hàng này!!")) 
         return false;
     });  
 
@@ -71,7 +99,21 @@ $(document).ready(function(){
         window.location.href = pathname + '?'+ link + 'display_field='+ value_display;
     });
 
-    //for user page only
+    //for permission page only - filter with permission area
+    $(select_permission).change(function(){
+        let $params = ['search_field','search_value'];
+        let value_permission = $(this).val(); //get value of option selected
+        input_permission.val(value_permission); // give this value for input element
+        let link ='';
+        $.each($params, function(key, param){
+            if(search_params.has(param)){
+                link += param + "=" + search_params.get(param) +"&"; // link => filter_status=active&&search_field=all&search_value=abc
+            }
+        });
+        window.location.href = pathname + '?'+ link + 'modules_field='+ value_permission;
+    });
+
+    //for permission page only - filter with permission
     $(select_level).change(function(){
         let $params = ['filter_status','search_field','search_value'];
         let value_level = $(this).val(); //get value of option selected
@@ -84,16 +126,40 @@ $(document).ready(function(){
         });
         window.location.href = pathname + '?'+ link + 'filter_level='+ value_level;
     });
-
-    $(select_level).change(function(){
+        
+    //for user page only - change the role
+    $(select_role).change(function(){
         //get value of option selected after click change level
-        let value_level = select_level.val();
-        let data_url = select_level.attr('data-url');
-        // console.log(value_level);
-        data_url_new = data_url.replace("new_value", value_level);
-        // console.log(data_url_new);
+        let value_role = $(this).val();
+        let data_url = $(this).attr('data-url'); //use this to get data_url of each option
+        let data_url_new = data_url.replace("new_value", value_role);
         window.location.href = data_url_new; 
     });
+
+    //for order page only - change the status of order
+    $(select_status).change(function(){
+        //get value of option selected after click change level
+        let value_status = $(this).val();
+        console.log(value_status);
+        let data_url = $(this).attr('data-url'); //use this to get data_url of each option
+        let data_url_new = data_url.replace("new_status", value_status);
+        window.location.href = data_url_new; 
+    });
+
+    //for order page only - filter with the status of order
+    $(select_status_filter).change(function(){
+        let $params = ['search_field','search_value'];
+        let value_status_field = $(this).val(); //get value of option selected
+        input_status_field.val(value_status_field); // give this value for input element
+        let link ='';
+        $.each($params, function(key, param){
+            if(search_params.has(param)){
+                link += param + "=" + search_params.get(param) +"&"; 
+            }
+        });
+        window.location.href = pathname + '?'+ link + 'filter_status_order='+ value_status_field;
+    });
+
     //confirm save with edit form
     var ckeditor_changed = false;
     var form = $('#form_edit');
@@ -135,7 +201,4 @@ $(document).ready(function(){
         }
     });
 
-    
-    
-    
   });

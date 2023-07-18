@@ -90,10 +90,10 @@
                         <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Vai Trò</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <select name="level" class="form-control">
-                                    <option>Tùy chọn</option>
-                                    @foreach($params['level_for_controller'] as $level)
-                                        <option value="{{$level}}" >{{$params['level_templates'][$level]['name']}}</option>
+                                <select name="roles[]" class="form-control">
+                                    <option>Tùy Chọn</option>
+                                    @foreach($roles as $role)
+                                            <option value="{{$role['id']}}">{{$role['name']}}</option>
                                     @endforeach  
                                 </select>
                             </div>

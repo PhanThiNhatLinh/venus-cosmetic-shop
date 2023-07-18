@@ -2,7 +2,7 @@
     <div class="container py-1">
         <div class="row">
             <div style="margin-left:30%; margin-top:-70px; display:inline-block" class="col-sm-6">
-                <form method="POST" action="/product/search">
+                <form method="get" action="/san-pham/tim-kiem">
                     @csrf
                     <div class="search_box pull-left">
                         <input style="width:80%" name="search_data" type="text" value="" placeholder="Tìm Kiếm Sản Phẩm"/>

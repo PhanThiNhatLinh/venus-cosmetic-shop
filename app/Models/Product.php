@@ -30,6 +30,10 @@ class Product extends Model
     {
        return $this->belongsTo(Country::class, 'id_country');
     }
+    public function rating()
+    {
+       return $this->hasMany(Rating::class, 'product_id');
+    }
     public function getListItems($params=null,$options = null){
         //admin
         if($options['task'] == 'admin_get_list_items'){
@@ -244,4 +248,19 @@ class Product extends Model
         $results = Category::all();
         return $results;
     } 
+
+    public function searchItem($params =null, $options =null){ 
+        if($options['task'] == 'frontend_search_item'){
+            // $results = self::paginate($params['item_per_page']);
+            $query = self::select('id','name','description','status','display','thumb','created_by','featured','price_shock',
+                                'modified_by', 'price', 'discount', 'stock','id_category', 'id_brand','id_country','expiry_date','code');
+                    $query->where(function($query) use ($params){
+                        $query->where('name','LIKE', "%{$params['search_data']}%");
+                        $query->orWhere('description','LIKE', "%{$params['search_data']}%");
+                        $query->orWhere('code','LIKE', "%{$params['search_data']}%");
+                    });
+                    $results =  $query->get()->toArray();
+        }
+        return $results;
+    }
 }

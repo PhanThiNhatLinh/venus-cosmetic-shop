@@ -38,7 +38,7 @@ class UserFormRequest extends FormRequest
             case 'add':
                 $nameCondi = 'bail|required|between: 5,100|unique:'.$this->table.',name';
                 $statusCondi = 'bail|required|in:active,inactive';
-                $levelCondi = 'bail|required|in:super_admin,admin,user';
+                // $levelCondi = 'bail|required|in:super_admin,admin,user';
                 $phoneCondi = 'bail|numeric';
                 $thumbCondi = 'bail|image|max:2048';
                 $addressCondi = 'bail|string|between: 1,100';
@@ -48,7 +48,7 @@ class UserFormRequest extends FormRequest
                 $nameCondi = 'bail|required|between:5,100|unique:'.$this->table.',name,'.$id;
                 $thumbCondi = 'bail|image|max:2048';
                 $statusCondi = 'bail|in:active,inactive';
-                $levelCondi = 'bail|in:super_admin,admin,user';
+                // $levelCondi = 'bail|in:super_admin,admin,user';
                 $phoneCondi = 'numeric';
                 $addressCondi = 'bail|string|between: 1,100';
                 break;

@@ -12,6 +12,7 @@
                 <div class="owl-carousel service-carousel">
                     @foreach($latestProducts as $product)
                     @php
+                        $link = route('product.detail',['product_id' => $product['id'],'product_name' => Str::slug($product['name'])]);
                         $name = Str::of($product['name'])->limit(40);
                         $thumbs = json_decode($product['thumb'],true);
                         $price = number_format($product['price'],0,'','.');
@@ -39,7 +40,7 @@
                                 <h5 class="font-weight-semi-bold mt-5 mb-3 pt-5">{{$name}}</h5>
                                 {!!$xhtml!!}
                                 <button style="margin-bottom: 2px" href="#"  id="{{$product['id']}}" class="btn btn-sm btn-secondary add-to-cart"><i style="color: white" id="fly" class="fas fa-cart-plus fa-lg"></i> Mua Hàng</button>
-                                <a href="/san-pham/chi-tiet/{{$product['id']}}.html" class="btn btn-sm btn-primary">Xem Chi Tiết</a>
+                                <a href="{{$link}}" class="btn btn-sm btn-primary">Xem Chi Tiết</a>
                             </div>
                         </div>
                     @endforeach

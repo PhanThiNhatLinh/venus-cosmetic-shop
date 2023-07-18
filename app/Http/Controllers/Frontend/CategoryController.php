@@ -9,14 +9,21 @@ use App\Models\Product;
 
 class CategoryController extends Controller
 {
-    public function showDetail(string $id){
+    public function showDetail(Request $request){
+        if($request->input('price_field')){
+            $params['price_field'] = $request->input('price_field');
+        }else{
+            $params['price_field'] = 'all';
+        }
+        $params['id'] = $request->category_id;
+        // dd($params);
         $categoryModel = new Category();
         $productModel = new Product();
         $categoryItems = $categoryModel->getListItems(null,['task' =>'frontend_get_list_items']);
-        $categoryItem = $categoryModel->getItem($id,['task' =>'admin_get_item']);
-        $productsInCategory = $categoryModel->getProductsInCategory($id,['task' =>'frontend_get_lists_products']);
+        $categoryItem = $categoryModel->getItem($params,['task' =>'admin_get_item']);
+        $items = $categoryModel->getProductsInCategory($params,['task' =>'frontend_get_lists_products']);
         // dd($productsInCategory);
-        return view('frontend.pages.category.category_detail', compact('categoryItem','categoryItems','productsInCategory'));
+        return view('frontend.pages.category.category_detail', compact('categoryItem','categoryItems','items','params'));
     }
     
 }

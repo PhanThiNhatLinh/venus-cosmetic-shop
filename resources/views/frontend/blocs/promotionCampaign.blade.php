@@ -2,6 +2,7 @@
 $price = number_format($price_shock['price'],0,'','.');
 $promo = number_format($price_shock['price'] - (($price_shock['discount'] * $price_shock['price'])/100),0,'','.');
 $thumbs = json_decode($price_shock['thumb'],true);
+$link = route('product.detail',['product_id' => $price_shock['id'],'product_name' => Str::slug($price_shock['name'])]);
 @endphp
 <div class="container-fluid my-5 py-5 px-0">
     <div style="background:#FF00FF" class="row m-0">
@@ -32,7 +33,7 @@ $thumbs = json_decode($price_shock['thumb'],true);
                 <p class="text-white mb-4">{{$price_shock['name']}}</p>
 
                 <button style="margin-bottom: 2px" href="#"  id="{{$price_shock['id']}}" class="btn btn-secondary py-3 px-5 mt-2 add-to-cart"><i style="color: white" id="fly" class="fas fa-cart-plus fa-lg"></i> Mua Hàng</button>
-                <a href="/san-pham/chi-tiet/{{$price_shock['id']}}.html" class="btn btn-primary py-3 px-5 mt-2">Xem Chi Tiết</a>
+                <a href="{{$link}}" class="btn btn-primary py-3 px-5 mt-2">Xem Chi Tiết</a>
             </div>
         </div>
     </div>

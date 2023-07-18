@@ -39,7 +39,11 @@ class Blog extends Model
         }
 
         //frontend
-
+        if($options['task'] == 'frontend_get_list_items'){
+            // $results = self::paginate($params['item_per_page']);
+            $query = self::select('id', 'display', 'name', 'description', 'content', 'thumb', 'created_by', 'modified_by', 'status');
+                   $results = $query->orderBy('id','ASC')->paginate(4);
+        }
         return $results;
     }
 

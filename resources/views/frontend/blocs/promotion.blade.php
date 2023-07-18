@@ -11,6 +11,7 @@
                 <div class="owl-carousel team-carousel">
                     @foreach($promoProducts as $product)
                     @php
+                        $link = route('product.detail',['product_id' => $product['id'],'product_name' => Str::slug($product['name'])]);
                         $name = Str::of($product['name'])->limit(40);
                         $promo = number_format($product['price'] - (($product['discount'] * $product['price'])/100),0,'','.');
                         $price = number_format($product['price'],0,'','.');
@@ -32,7 +33,7 @@
                                     <h4 class="col-6"style="color:mediumblue; text-align:left">{{$promo}}</h4>
                                 </div>
                                 <button style="margin-bottom: 2px" href="#"  id="{{$product['id']}}" class="btn btn-sm btn-secondary add-to-cart"><i style="color: white" id="fly" class="fas fa-cart-plus fa-lg"></i> Mua Hàng</button>
-                                <a href="/san-pham/chi-tiet/{{$product['id']}}.html" class="btn btn-sm btn-primary">Xem Chi Tiết</a>
+                                <a href="{{$link}}" class="btn btn-sm btn-primary">Xem Chi Tiết</a>
                             </div>
                         </div>
                     @endforeach

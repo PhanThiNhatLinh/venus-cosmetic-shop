@@ -46,7 +46,7 @@ class ShoppingCartController extends Controller
         $qty = $product->qty + 1;
 
         Cart::update($rowId,$qty);
-        return redirect('/gio-hang');
+        return redirect()->back();
     }
 
     public function downQuantity(Request $request){
@@ -55,7 +55,7 @@ class ShoppingCartController extends Controller
         $qty = $product->qty - 1;
 
         Cart::update($rowId,$qty);
-        return redirect('/gio-hang');
+        return redirect()->back();
     }
     
     public function destroy(){

@@ -16,5 +16,5 @@
             </div>
         @endforeach
     </div>
-    <a style="font-size: 20px;" href="">Xem Thêm Thương Hiệu <i class="fa fa-fast-forward" aria-hidden="true"></i> </a>
+    <a style="font-size: 20px;" href="{{route('brand.index')}}">Xem Thêm Thương Hiệu <i class="fa fa-fast-forward" aria-hidden="true"></i> </a>
 </div>

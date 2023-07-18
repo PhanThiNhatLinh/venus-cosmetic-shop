@@ -1,6 +1,7 @@
 @extends('frontend.main')
 @section('title', 'Trang Danh Mục Chi Tiết')
 @section('content')
+@include('frontend.templates.success')
 <div class="container-fluid p-0 mb-5 pb-5">
    <img style="height: 700px" class="w-100" src="{{asset('/frontend/img/gio_hang.jpg')}}" alt="giỏ hàng">
 </div>
@@ -57,14 +58,22 @@
                         <div class="card mb-4">
                             <div class="card-body p-4 d-flex flex-row">
                                 <div class="form-outline flex-fill">
-                                <h4>Tổng {{Cart::count()}} Sản Phẩm : <span style="color: blue">{{Cart::subtotal()}} (VND)</span></h4> 
+                                <h4>Tổng {{Cart::count()}} Sản Phẩm : <span style="color: blue">{{number_format(Cart::subtotal(),0,'','.')}} (VND)</span></h4> 
                                 </div>
                             </div>
                         </div>
                         <p></p>
                         <div class="card">
                             <div class="card-body">
-                            <button type="button" class="btn btn-warning btn-block btn-lg">Tiến Hành Đặt Hàng</button>
+                                @if(Auth::check())
+                                    @if(Cart::count()>0)
+                                    <a href="{{route('order.index')}}" type="button" class="btn btn-warning btn-block btn-lg">Tiến Hành Đặt Hàng</a>
+                                    @else  
+                                        <p>Chưa có sản phẩm để đặt hàng. Quay lại<a href="/trang-chu">mua hàng</a></p>
+                                    @endif
+                                @else
+                                    <p>Đăng nhập để tiến hành đặt hàng <a href="/login">Login</a></p>
+                                @endif
                             </div>
                         </div>
                     </div>
