@@ -22,22 +22,37 @@ $(document).ready(function(){
     let select_permission = $("select[name  = select_permission]");
     let select_permission_area = $("select[name  = permission_area]");
     let select_permission_name = $("select[name  = permission_name]");
+    let select_price_shock = $("select[name  = price_shock]");
     // console.log(select_level);
     let pathname = window.location.pathname; 
     let search_params = new URLSearchParams(window.location.search); //return đoạn query ?filter_status=active
 
     //this will execute on page load(to be more specific when document ready event occurs)
+    /*
     if ($('.ty-compact-list').length > 3) {
         $('.ty-compact-list:gt(2)').hide();
         $('.show-more').show();
     }
-  
+    */
+    $('.ty-compact-list').hide();
     $('.show-more').on('click', function() {
         //toggle elements with class .ty-compact-list that their index is bigger than 2
-        $('.ty-compact-list:gt(2)').toggle();
+        $(this).siblings('.ty-compact-list').toggle();
         //change text of show more element just for demonstration purposes to this demo
         $(this).text() === 'Xem Toàn Bộ Quyền' ? $(this).text('Thu gọn') : $(this).text('Xem Toàn Bộ Quyền');
     });
+
+    //video in price_shock show
+    $("div#video").hide();
+    $(select_price_shock).click(function(){
+        let val = $(this).find("option:selected").val();
+        
+      if(val == 'yes'){
+        $("div#video").show();
+      }else{
+        $("div#video").hide();
+      }
+     });
 
     //click search field 
     $("a.select-field").click(function(){

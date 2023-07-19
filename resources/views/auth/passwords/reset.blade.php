@@ -1,4 +1,4 @@
-@extends('layouts.app')
+{{-- @extends('layouts.app')
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
@@ -61,6 +61,69 @@
         </div>
     </div>
 </div>
+@endsection --}}
+
+
+@extends('layouts.login_form')
+@section('content')
+@include('frontend.templates.success')
+    <div class="wrapper">
+        <div class="title">
+           Lấy Lại Mật Khẩu Mới
+        </div>
+        <form method="POST" action="{{ route('password.update') }}">
+            @csrf
+            <input type="hidden" name="token" value="{{ $token }}">
+        <div class="field">
+            <input id="email" type="email" class="@error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+            <label for="email">Địa chỉ email</label>
+            @error('email')
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
+            @enderror
+        </div>
+        <div class="field">
+            <input id="password" type="password" class="@error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+            <label for="password">Mật khẩu</label>
+            @error('password')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
+        </div>
+        <div class="field">
+            <input id="password-confirm" type="password" name="password_confirmation" required autocomplete="new-password">
+            <label for="password-confirm">Mật Khẩu Xác Nhận</label>
+            @error('password')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
+        </div>
+        <div class="content">
+            <div class="checkbox">
+            <input  type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
+            <label for="remember">
+                Lưu đăng nhập
+            </label>
+            </div>
+            <div class="pass-link">
+                @if (Route::has('password.request'))
+                    <a class="btn btn-link" href="{{ route('password.request') }}">
+                        Bạn quên mật khẩu?
+                    </a>
+                @endif
+            </div>
+        </div>
+        <div class="field">
+            <input type="submit" value="Nhập">
+        </div>
+        <div class="signup-link">
+            Bạn chưa có tài khoản? <a href="/register">Đăng Kí</a>
+        </div>
+        </form>
+    </div>
 @endsection
 
 

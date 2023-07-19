@@ -170,7 +170,31 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Hình ảnh
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Giá sốc mỗi tuần
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <select name="price_shock" class="form-control">
+                                    <option>Tùy chọn</option>
+                                    @if($item['price_shock'] == "yes")
+                                        <option selected value="yes">Có</option>
+                                        <option value="no">Không</option>
+                                    @else
+                                        <option value="yes">Có</option>
+                                        <option selected value="no">Không</option>
+                                    @endif
+                                </select>
+                            </div>
+                        </div>
+                        <div id='video' class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Video Link
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" name="video" value="{{$item['video']}}"
+                                       class="form-control col-md-7 col-xs-12">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Hình ảnh <span style="color: red; font-size:10px">(* Sản phẩm không quá 3 ảnh)</span>
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input type="file" name="thumb[]" class="form-control col-md-7 col-xs-12" multiple>

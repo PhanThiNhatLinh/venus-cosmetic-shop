@@ -103,7 +103,9 @@ class Slider extends Model
 
     public function insertItem($params=null,$options = null){
         //admin
+
         if($options['task'] == 'admin_add_new_item'){
+            // dd($params);
             $params['thumb'] = self::uploadImage($params['thumb']);
             $params['created_by'] ='nhatlinh';
             $params['modified_by'] =null;

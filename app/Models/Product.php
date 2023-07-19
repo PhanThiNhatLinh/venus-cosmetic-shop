@@ -13,7 +13,7 @@ class Product extends Model
     protected $image_path='/admin/images/product';
     protected $fillable = ['id','name','description','status','display','thumb','featured','price_shock',
                          'created_by', 'modified_by', 'price', 'discount', 'stock',
-                        'id_category', 'id_brand','id_country','expiry_date','code'];
+                        'id_category', 'id_brand','id_country','expiry_date','code','video'];
     public $timestamps = true;
 
     use HasFactory;
@@ -87,7 +87,7 @@ class Product extends Model
 
         //frontend
         if($options['task'] == 'frontend_get_price_shock_item'){
-            $query = self::select('id','name','status','display','thumb','price_shock','price', 'discount');
+            $query = self::select('id','name','status','display','thumb','price_shock','price', 'discount','video');
             $query->where('status','active')->where('display','yes')->where('price_shock','yes');
             $results = $query->orderBy('id','ASC')->take(1)->first();
         }   
@@ -140,7 +140,7 @@ class Product extends Model
     }    
     
     public function getThumbsEdit($params,$options){
-        $thumbsCurrents = self::getItem($params['id'],['task'=>'admin_get_item'])->thumb;
+        $thumbsCurrents = self::getItem($params['id'],['task'=>'admin_get_item'])->thumb; //get thumb in db
         $thumbsCurrents = json_decode($thumbsCurrents, true); // json to array
 
         //remove the image checked in edit form
@@ -206,6 +206,7 @@ class Product extends Model
         //admin
         if($options['task'] == 'admin_add_new_item'){
             $params['thumb'] = self::uploadImage($params['thumb']);
+            $params['thumb'] = json_encode($params['thumb']);
             $params['created_by'] ='nhatlinh';
             $params['modified_by'] ='linh';
             self::create($params);

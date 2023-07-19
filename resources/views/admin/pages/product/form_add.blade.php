@@ -20,7 +20,7 @@
                     <form id="form_add" method="POST" action="{{route($controllerName.'.save')}}" enctype="multipart/form-data" class="form-horizontal form-label-left">
                         @csrf
                         <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Tên
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Tên <span style="color: red; font-size:10px">*</span>
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input type="text" name="name"
@@ -28,7 +28,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Giá
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Giá <span style="color: red; font-size:10px">*</span>
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input type="number" name="price"
@@ -44,7 +44,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Số Lượng
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Số Lượng <span style="color: red; font-size:10px">*</span>
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input type="number" name="stock"
@@ -52,7 +52,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Mã Sản Phẩm
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Mã Sản Phẩm <span style="color: red; font-size:10px">*</span>
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input type="number" name="code"
@@ -60,14 +60,14 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Mô Tả
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Mô Tả <span style="color: red; font-size:10px">(Từ 5-2000 chữ)</span>
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <textarea name="description" id="ckeditor"></textarea>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Hạn Sử Dụng
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Hạn Sử Dụng <span style="color: red; font-size:10px">*</span>
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input type="date" name="expiry_date"
@@ -75,7 +75,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Sản Xuất Tại
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Sản Xuất Tại <span style="color: red; font-size:10px">*</span>
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <select name="id_country"  class="form-control">
@@ -87,7 +87,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Thương Hiệu
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Thương Hiệu <span style="color: red; font-size:10px">*</span>
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12"> 
                                 <select name="id_brand"  class="form-control">
@@ -99,7 +99,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Danh Mục
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Danh Mục <span style="color: red; font-size:10px">*</span>
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <select  name="id_category" class="form-control">
@@ -111,7 +111,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Trạng Thái
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Trạng Thái <span style="color: red; font-size:10px">*</span>
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <select name="status" class="form-control">
@@ -123,7 +123,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Sản Phẩm Nổi Bật
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Sản Phẩm Nổi Bật <span style="color: red; font-size:10px">*</span>
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <select name="featured" class="form-control">
@@ -135,7 +135,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Hiển Thị</label>
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Hiển Thị <span style="color: red; font-size:10px">*</span> </label> 
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <select name="display" class="form-control">
                                     <option>Tùy chọn</option>
@@ -143,6 +143,25 @@
                                         <option value="{{$display}}" >{{$params['display_templates'][$display]['name']}}</option>
                                     @endforeach  
                                 </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Giá sốc mỗi tuần <span style="color: red; font-size:10px">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <select name="price_shock" class="form-control">
+                                    <option>Tùy chọn</option>
+                                    <option value="yes">Có</option>
+                                    <option value="no">Không</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div id='video' class="form-group"> 
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Video Link 
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" name="video"
+                                       class="form-control col-md-7 col-xs-12">
                             </div>
                         </div>
                         <div class="form-group">

@@ -182,6 +182,8 @@ Route::prefix('admin')->namespace('Admin')->middleware('auth')->group(function (
         Route::get('/change-status-{status?}/{id?}', $controller.'changeStatus')->name($controllerName.'.status')
               ->where(['id' => '[0-9]+', 'status' => '[a-z]+']);
     });
+    Route::get('/sendmail', 'MailController@sendMail');
+
 });
 
 /* -------------------------------- FRONTEND ---------------------------------- */
@@ -274,6 +276,7 @@ Route::prefix('')->namespace('Frontend')->group(function () {
         return view('no_permission');
     });
 });
+
 
 
 

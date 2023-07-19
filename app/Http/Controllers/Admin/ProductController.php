@@ -151,7 +151,7 @@ class ProductController extends Controller
                 if(count($request->file('thumb'))>3){
                     return redirect()->back()->withErrors('Chỉ được tải lên tối đa 3 ảnh');
                 }
-                $params['thumb'] =[];
+                // $params['thumb'] =[];
                 $params['thumb'] = $request->file('thumb');
                 $this->model->insertItem($params,['task'=>'admin_add_new_item']);
                 $notify = "Thêm Mới Thành Công";

@@ -30,9 +30,7 @@ class Order extends Model
         if($options['task'] == 'admin_get_list_items'){
             // $results = self::paginate($params['item_per_page']);
             $query = self::select('id','user_id','created_at','status','updated_at');
-            if($params['filter_status_order'] !== 'all'){
-                $query->where('status',$params['filter_status_order']);
-            }
+            
             if($params['search_field'] !== 'all'){
                 $query->where($params['search_field'], 'LIKE', "%{$params['search_value']}%");
             }elseif($params['search_field'] == 'all'){
@@ -69,7 +67,9 @@ class Order extends Model
                     }
                 }
             }
-            
+            if($params['filter_status_order'] !== 'all'){
+                $query->where('status',$params['filter_status_order']);
+            }
             $results = $query->orderBy('id','ASC')->paginate($params['item_per_page']);
         }
 

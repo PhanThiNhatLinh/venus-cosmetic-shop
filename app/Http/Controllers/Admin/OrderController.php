@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Gloudemans\Shoppingcart\Facades\Cart;
+use App\Mail\DemoMail;
+use Illuminate\Support\Facades\Mail;
 
 use Redirect;
 use Config;
@@ -49,7 +51,7 @@ class OrderController extends Controller
     
     public function changeStatus(Request $request)
     {
-        if(!Gate::allows('order.view')){
+        if(!Gate::allows('order.status')){
             return redirect('/no-permission');
         }
         $id = $request->id;
@@ -65,15 +67,18 @@ class OrderController extends Controller
 
     public function save(Request $request)
     {
-        // if(!Gate::allows('order.save')){
-        //     return redirect('/no-permission');
-        // }
+        if(!Gate::allows('order.save')){
+            return redirect('/no-permission');
+        }
         if($request->method() == 'POST'){
-            $params = $request->all();        
+            $params = $request->all();     
+            // dd($params);
             $this->model->insertItem($params,['task'=>'admin_add_new_item']);
+            // $order_id = $this->model->orderBy('id', 'desc')->first()->id;
+            $order_id = ['key'=> 'value','key2'=>'value2'];
             Cart::destroy();
-            return redirect('/gio-hang')->with('success', 'Bạn Đã Đặt Hàng Thành Công!');
-           
+            Mail::to('nhatlinhphan9999@gmail.com')->send(new DemoMail($order_id));
+            return redirect('/gio-hang')->with('success', 'Bạn Đã Đặt Hàng Thành Công!');           
         }
     }
 

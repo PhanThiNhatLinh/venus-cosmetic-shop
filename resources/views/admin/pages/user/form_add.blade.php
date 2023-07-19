@@ -20,7 +20,7 @@
                     <form method="POST" action="{{route($controllerName.'.save')}}" enctype="multipart/form-data" class="form-horizontal form-label-left">
                         @csrf
                         <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Tên
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Tên <span style="color: red">*</span>
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input type="text" name="name"
@@ -28,23 +28,23 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Mật Khẩu
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Mật Khẩu <span style="color: red">*</span>
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input type="password" name="password" value=""
+                                <input title="Mật khẩu phải có ít nhất 8 kí tự, có chữ viết hoa và thường, 1 số và 1 kí tự đặc biệt"  type="password" name="password" value=""
                                        class="form-control col-md-7 col-xs-12">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Mật Khẩu Xác Minh
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Mật Khẩu Xác Minh <span style="color: red">*</span>
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input type="password" name="password_confirmation" value=""
+                                <input title="Mật khẩu phải có ít nhất 8 kí tự, có chữ viết hoa và thường, 1 số và 1 kí tự đặc biệt"  type="password" name="password_confirmation" value=""
                                        class="form-control col-md-7 col-xs-12">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Email
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Email <span style="color: red">*</span>
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input type="email" name="email"
@@ -52,15 +52,15 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Số Điện Thoại
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Số Điện Thoại (+84) <span style="color: red">*</span>
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input type="phone" name="phone"
+                                <input title="Số điện thoại phải từ 10-11 số, bắt đầu bằng +84" type="phone" name="phone"
                                        class="form-control col-md-7 col-xs-12">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Ngày Sinh
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Ngày Sinh <span style="color: red">*</span>
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input type="date" name="birthday"
@@ -68,7 +68,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Địa Chỉ
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Địa Chỉ <span style="color: red">*</span>
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input type="text" name="address"
@@ -76,7 +76,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Trạng Thái
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Trạng Thái <span style="color: red">*</span>
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <select name="status" class="form-control">
@@ -88,7 +88,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Vai Trò</label>
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Vai Trò <span style="color: red">*</span></label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <select name="roles[]" class="form-control">
                                     <option>Tùy Chọn</option>
@@ -99,7 +99,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Ảnh Đại Diện
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Ảnh Đại Diện <span style="color: red">*</span>
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input type="file" name="thumb" class="form-control col-md-7 col-xs-12">

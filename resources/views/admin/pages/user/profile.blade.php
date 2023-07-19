@@ -35,10 +35,10 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Số Điện Thoại
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Số Điện Thoại (+84)
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                            <input type="phone" name="phone" value="{{Auth::user()->phone}}"
+                            <input title="Số điện thoại phải từ 10-11 số, bắt đầu bằng +84" type="phone" name="phone" value="{{Auth::user()->phone}}"
                                 class="form-control col-md-7 col-xs-12">
                         </div>
                     </div>

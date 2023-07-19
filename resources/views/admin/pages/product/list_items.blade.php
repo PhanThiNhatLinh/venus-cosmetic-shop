@@ -28,6 +28,7 @@
                             $discount = $item['discount'];
                             $code = $item['code'];
                             $stock = $item['stock'];
+                            $price_shock = $item['price_shock'];
                             $exp = date(Config::get('linh_config.date.short_time'), strtotime($item['expiry_date']));
                             $featured = $item['featured'];
                             $brand = $item->brand->name;
@@ -60,6 +61,7 @@
                                 <p><strong>Sản Xuất Tại: </strong>{{$country}}</p>
                                 <p><strong>Ngày Hết Hạn: </strong>{{$exp}}</p>
                                 <p><strong>Sản Phẩm Nổi Bật: </strong>{{$params['featured_templates'][$featured]['name']}}</p>
+                                <p><strong>Sản Phẩm Trong Chiến Dịch Giá Sốc Mỗi Tuần : </strong>{{$price_shock}}</p>
                                 @foreach($thumbs as $thumb)
                                     @if(!empty($thumb))
                                         <img width="100%" height="200px" src="{{asset('/admin/images/product/'.$thumb)}}" alt="{{$name}}">

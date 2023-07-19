@@ -1,5 +1,6 @@
 @php
 $price = number_format($price_shock['price'],0,'','.');
+$video_link = $price_shock['video'];
 $promo = number_format($price_shock['price'] - (($price_shock['discount'] * $price_shock['price'])/100),0,'','.');
 $thumbs = json_decode($price_shock['thumb'],true);
 $link = route('product.detail',['product_id' => $price_shock['id'],'product_name' => Str::slug($price_shock['name'])]);
@@ -15,7 +16,7 @@ $link = route('product.detail',['product_id' => $price_shock['id'],'product_name
                     @endif
                 @endforeach
                 <button type="button" class="btn-play" data-toggle="modal"
-                    data-src="https://www.youtube.com/embed/52LjStjDij0" data-target="#videoModal">
+                    data-src="{{$video_link}}" data-target="#videoModal">
                     <span></span>
                 </button>
                 
@@ -30,7 +31,7 @@ $link = route('product.detail',['product_id' => $price_shock['id'],'product_name
                 <h4><del>{{$price}}</del></h4>
                 <h4 style="color:yellow; font-size:40px">{{$promo}}</h4>
                 <h3 class="font-weight-bold text-white mt-3 mb-4">Sản Phẩm Giá Sốc Mỗi Tuần</h3>
-                <p class="text-white mb-4">{{$price_shock['name']}}</p>
+                <a href="{{$link}}"><p class="text-white mb-4">{{$price_shock['name']}}</p></a>
 
                 <button style="margin-bottom: 2px" href="#"  id="{{$price_shock['id']}}" class="btn btn-secondary py-3 px-5 mt-2 add-to-cart"><i style="color: white" id="fly" class="fas fa-cart-plus fa-lg"></i> Mua Hàng</button>
                 <a href="{{$link}}" class="btn btn-primary py-3 px-5 mt-2">Xem Chi Tiết</a>

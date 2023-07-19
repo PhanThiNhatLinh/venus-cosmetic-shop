@@ -20,14 +20,16 @@
                         <div class="team-item">
                             @foreach ($thumbs as $thumb)
                                @if(!empty($thumb))
-                                    <div class="team-img mx-auto">
-                                        <img class="rounded-circle w-100 h-100" src="{{asset('/admin/images/product/'.$thumb)}}" style="object-fit: cover;">
-                                    </div>
+                                    <a href="{{$link}}">
+                                        <div class="team-img mx-auto">
+                                            <img class="rounded-circle w-100 h-100" src="{{asset('/admin/images/product/'.$thumb)}}" style="object-fit: cover;">
+                                        </div>
+                                    </a>    
                                     @break;
                                 @endif
                             @endforeach    
                             <div class="position-relative text-center bg-light rounded px-4 py-5" style="margin-top: -100px;">
-                                <h5 class="font-weight-bold mt-5 mb-3 pt-5">{{$name}}</h5>
+                                <a href="{{$link}}"><h5 class="font-weight-bold mt-5 mb-3 pt-5">{{$name}}</h5></a>
                                 <div class="row">
                                     <h4 class="col-6" style="color:black; text-align:right"><del>{{$price}}</del></h4>
                                     <h4 class="col-6"style="color:mediumblue; text-align:left">{{$promo}}</h4>
