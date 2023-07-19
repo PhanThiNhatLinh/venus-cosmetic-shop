@@ -1,6 +1,6 @@
 <footer>
     <div class="pull-right">
-        Học lập trình online tại <a href="https://colorlib.com/">ZendVN.com</a>
+        Công Ty Trách Nhiệm Hữu Hạn <a href="/trang-chu">Venus Cosmetic</a>
     </div>
     <div class="clearfix"></div>
 </footer>

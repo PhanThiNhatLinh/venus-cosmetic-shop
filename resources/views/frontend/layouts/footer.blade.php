@@ -15,19 +15,19 @@
             <div class="col-12 mt-2 mb-4">
                 <div class="row">
                     <div class="col-sm-6 text-center text-sm-right border-right mb-3 mb-sm-0">
-                        <h5 class="font-weight-bold mb-2">Get In Touch</h5>
-                        <p class="mb-2">123 Street, New York, USA</p>
+                        <h5 class="font-weight-bold mb-2">Địa chỉ</h5>
+                        <p class="mb-2">123 Trần Hưng Đạo, TP Hồ Chí Minh, Việt Nam</p>
                         <p class="mb-0">+012 345 67890</p>
                     </div>
                     <div class="col-sm-6 text-center text-sm-left">
-                        <h5 class="font-weight-bold mb-2">Opening Hours</h5>
-                        <p class="mb-2">Mon – Sat, 8AM – 5PM</p>
-                        <p class="mb-0">Sunday: Closed</p>
+                        <h5 class="font-weight-bold mb-2">Giờ mở cửa</h5>
+                        <p class="mb-2">Thứ 2 – Thứ 7, 8AM – 5PM</p>
+                        <p class="mb-0">Chủ Nhật: Đóng cửa</p>
                     </div>
                 </div>
             </div>
             <div class="col-12">
-                <p class="m-0">&copy; <a href="#">Domain</a>. All Rights Reserved. Designed by <a href="https://htmlcodex.com">HTML Codex</a>
+                <p class="m-0">&copy; <a href="/trang-chu">Venus Cosmetic</a> Công Ty Trách Nhiệm Hữu Hạn Một Thành Viên. </p>
                 </p>
             </div>
         </div>

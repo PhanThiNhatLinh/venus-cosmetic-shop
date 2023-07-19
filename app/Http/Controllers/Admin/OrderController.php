@@ -35,22 +35,23 @@ class OrderController extends Controller
     }
     public function index(Request $request)
     {
-        // if(!Gate::allows('role.view')){
-        //     return redirect('/no-permission');
-        // }
         $this->params['filter_status_order'] = (in_array($request->input('filter_status_order'),$this->params['status_for_order_controller'])? $request->input('filter_status_order','all') : 'all');
         // dd($this->params['filter_status_order']);
         $this->params['search_field'] = (in_array($request->input('search_field','all'),$this->params['search_field_for_controller'])? $request->input('search_field','all') : 'all');
         $this->params['search_value'] = $request->input('search_value','');        
-        $items = $this->model->getListItems($this->params, ['task'=>'admin_get_list_items']);
+        if(Gate::allows('order.view')){
+            $items = $this->model->getListItems($this->params, ['task'=>'admin_get_list_items']);
+        }else{
+            $items= $this->model->getListItems($this->params,['task'=>'admin_get_list_items_for_user']);
+        }
         return view($this->pathViewName.'index',compact('items'))->with("params",$this->params);
     }
     
     public function changeStatus(Request $request)
     {
-        // if(!Gate::allows('product.change_status')){
-        //     return redirect('/no-permission');
-        // }
+        if(!Gate::allows('order.view')){
+            return redirect('/no-permission');
+        }
         $id = $request->id;
         $status = $request->status;
         // dd($status);
@@ -62,20 +63,9 @@ class OrderController extends Controller
        
     }
 
-    public function showOrderForUser(Request $request)
-    {
-        // if(!Gate::allows('product.change_status')){
-        //     return redirect('/no-permission');
-        // }
-        $items = $this->model->getListItems($this->params,['task'=>'admin_get_list_items_for_user']);
-        // dd($items); 
-        return view($this->pathViewName.'user_order',compact('items'));
-
-    }
-
     public function save(Request $request)
     {
-        // if(!Gate::allows('role.save')){
+        // if(!Gate::allows('order.save')){
         //     return redirect('/no-permission');
         // }
         if($request->method() == 'POST'){
@@ -92,14 +82,13 @@ class OrderController extends Controller
      */
     public function delete(Request $request)
     {
-        // if(!Gate::allows('role.delete')){
-        //     return redirect('/no-permission');
-        // }
+        if(!Gate::allows('order.delete')){
+            return redirect('/no-permission');
+        }
         $id = $request->id;
         $item = $this->model->getItem($id,['task'=>'admin_get_item']); //find($id) infos in the db
         $this->model->deleteItem($item,['task'=>'admin_delete_item']);
-        $notify = "Xóa Thành Công";
-        return redirect()->route($this->controllerName.'.index')->with('notify', $notify);
+        return redirect()->back()->with('notify', 'Xóa Thành Công');
     }
 
 }

@@ -34,6 +34,10 @@ class Product extends Model
     {
        return $this->hasMany(Rating::class, 'product_id');
     }
+    public function comment()
+    {
+       return $this->hasMany(Comment::class, 'product_id');
+    }
     public function getListItems($params=null,$options = null){
         //admin
         if($options['task'] == 'admin_get_list_items'){

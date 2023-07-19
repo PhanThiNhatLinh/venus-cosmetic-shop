@@ -183,6 +183,11 @@ class User extends Authenticatable
             }
             $user->roles()->attach($params['roles']); //đưa những id của roles được chọn vào bảng user_role
         }
+
+        if($options['task'] == 'register'){
+            $user = self::create($params);
+            $user->roles()->attach($params['roles']); //đưa những id của roles được chọn vào bảng user_role
+        }
     }
     public function deleteItem($item=null,$options = null){
         //admin

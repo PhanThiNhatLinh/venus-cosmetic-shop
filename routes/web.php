@@ -15,13 +15,11 @@ use App\Http\Middleware\PermissionSuperAdmin;
 |
 */
 Auth::routes();
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
-Route::get('/no-permission', function () {
-    return view('no_permission');
-});
+
 // Route::get('/template-cream', function () {
 //     return view('template1');
 // });
@@ -173,6 +171,7 @@ Route::prefix('admin')->namespace('Admin')->middleware('auth')->group(function (
         Route::get('/delete/{id}', $controller.'delete')->name($controllerName.'.delete');
     });
 
+    //order
     $prefix = 'order';
     Route::prefix($prefix)->group(function(){
         $controllerName = 'order';         
@@ -182,7 +181,6 @@ Route::prefix('admin')->namespace('Admin')->middleware('auth')->group(function (
         Route::get('/delete/{id}', $controller.'delete')->name($controllerName.'.delete');
         Route::get('/change-status-{status?}/{id?}', $controller.'changeStatus')->name($controllerName.'.status')
               ->where(['id' => '[0-9]+', 'status' => '[a-z]+']);
-        Route::get('/detail', $controller.'showOrderForUser')->name($controllerName.'.detail');
     });
 });
 
@@ -211,6 +209,16 @@ Route::prefix('')->namespace('Frontend')->group(function () {
         $controllerName = 'rating';
         $controller = ucfirst($controllerName).'Controller@';
         Route::get('/', $controller.'createRating')->name($controllerName.'.rating');
+    });   
+
+    //Comment
+    
+    $prefix = 'binh-luan';
+    Route::prefix($prefix)->group(function () {
+        $controllerName = 'comment';
+        $controller = ucfirst($controllerName).'Controller@';
+        Route::get('/', $controller.'createComment')->name($controllerName.'.comment');
+        Route::get('/xoa', $controller.'deleteComment')->name($controllerName.'.comment_delete');
     });   
     //Category
 
@@ -260,6 +268,10 @@ Route::prefix('')->namespace('Frontend')->group(function () {
         $controller = ucfirst($controllerName).'Controller@';
         Route::get('/', $controller.'index')->name($controllerName.'.index');
         Route::get('/{brand_name}-{brand_id}.html', $controller.'showBrandDetail')->name($controllerName.'.detail')->where(['brand_id' => '[0-9]+', 'brand_name' => '[0-9a-zA-Z_-]+']);
+    });
+
+    Route::get('/no-permission', function () {
+        return view('no_permission');
     });
 });
 

@@ -23,7 +23,7 @@
                 <ul class="nav side-menu">
                     <li><a href="/trang-chu"><i class="fa fa-home"></i>Về Lại Trang Chủ</a></li>
                     <li><a href="/admin/user/profile"><i class="fa fa-user" aria-hidden="true"></i> Thông Tin Tài Khoản</a></li>
-                    <li><a href="/admin/order/detail"><i class="fa fa-shopping-bag"></i>Thông Tin Đơn Hàng Chi Tiết</a></li>
+                    <li><a href="/admin/order"><i class="fa fa-list-ul"></i>Thông Tin Đơn Hàng</a></li>
                     @canany(['user.view'])
                         <li class="dropdown">
                             <a type="button" data-toggle="dropdown"><i class="fa fa-users"></i>Quản Lý Người dùng</a>
@@ -33,7 +33,7 @@
                                 <li><a href="/admin/role">Vai Trò</a></li>
                             </ul>
                         </li>
-                        <li><a href="/admin/order"><i class="fa fa-list-ul"></i>Thông Tin Đơn Hàng</a></li>
+                        
                     @endcanany
                     @canany(['product.view','country.view','brand.view','category.view','blog.view','slider.view'])
                         <li><a href="/admin/product"><i class="fa fa-product-hunt"></i>Sản Phẩm</a></li>

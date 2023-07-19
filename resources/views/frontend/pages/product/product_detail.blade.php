@@ -7,6 +7,14 @@
   $exp = date(Config::get('linh_config.date.short_time'), strtotime($product['expiry_date']));
   $thumbs = json_decode($product['thumb'],true);
   $class_active ="active";
+  $rating = $product->rating->pluck('rating')->toArray();
+  if(!empty($rating)){
+    $rating_count = array_sum($rating);
+    $rating_average = round($rating_count/count($rating),1);
+  }else{
+    $rating_average = 0;
+  }
+  $comments = $product->comment;
 @endphp
 
 <div class="container-fluid py-5">
@@ -43,15 +51,6 @@
             <div class="col-lg-6">
                 <!--/product-information-->
                 <div class="rate">
-                  @php
-                      $rating = $product->rating->pluck('rating')->toArray();
-                      if(!empty($rating)){
-                        $rating_count = array_sum($rating);
-                        $rating_average = round($rating_count/count($rating),1);
-                      }else{
-                        $rating_average = 0;
-                      }
-                  @endphp
                   <div class="vote">
                     @for($i = 1; $i<= 5; $i++)
                       @if($i<=$rating_average)
@@ -87,11 +86,13 @@
                         @endif  
                     </p>
                     <div style="display: display-block" class="row">
-                        <h5 class="text-muted mb-3">Số Lượng:<input type="number" value="" /></h5>                            
+                        <h5 class="text-muted mb-3">Số Lượng:<input style="width:100px" class="number_cart" type="number" value="" min="0" max={{$product['stock']}} /></h5>                            
                     </div>
                     <button style="margin-bottom: 2px" href="#"  id="{{$product['id']}}" class="btn btn-secondary py-3 px-5 mt-2 add-to-cart"><i style="color: white" id="fly" class="fas fa-cart-plus fa-lg"></i> Mua Hàng</button>
                     @if(Auth::check())
                       <input type="hidden" class="user_id" id="{{Auth::user()->id}}">
+                      <input type="hidden" class="user_name" value="{{Auth::user()->name}}">
+                      <input type="hidden" class="user_image" value="{{Auth::user()->thumb}}">
                     @endif
                   </div>
             </div>
@@ -114,6 +115,7 @@
                         <span class="rate-np">0/5</span>
                     </div> 
                 </div>
+                <form method="GET" action="#">
                   <div class="comment-area">
                     <textarea class="form-control" placeholder="what is your view?" rows="4"></textarea>
                   </div>
@@ -121,11 +123,13 @@
                       <div style="text-align:right" class="row">
                           <div class="col-12">
                               <div class="pull-right">
-                              <button class="btn btn-secondary send btn-sm">Gửi<i class="fa fa-long-arrow-right ml-1"></i></button>      
+                              <button type="submit" class="btn btn-secondary send btn-sm">Gửi<i class="fa fa-long-arrow-right ml-1"></i></button>      
                               </div>
                           </div>
                       </div>
                   </div>
+                </form>
+                  
               </div>
           </div>
       </div>
@@ -135,23 +139,27 @@
             Bình Luận Của Khách Hàng
           </h3>
           <div class="row">
-            <div class="col-md-12">
-              <div class="media">
-                <img width="50px" height="50px" class="mr-3 rounded-circle" alt="Bootstrap Media Preview" src="https://i.imgur.com/stD0Q19.jpg" />
-                <div class="media-body">
-                  <div class="row">
-                    <div class="col-8 d-flex">
-                    <h5>Maria Smantha</h5>
-                    <span>- 2 hours ago</span>
-                    </div>
-                    <div class="col-4">
-                    <div class="pull-right reply">
-                  <a href="#"><span><i class="fa fa-reply"></i> Phản Hồi</span></a>
-                    </div>
-                    </div>
-                  </div>		
-                  It is a long established fact that a reader will be distracted by the readable content of a page.
-                  <div class="media mt-4">
+            <div class="content_area col-md-12">
+              @foreach($comments as $comment)
+              <div style="margin-bottom:30px" class="media">
+                  <img width="50px" height="50px" class="mr-3 rounded-circle" alt="Bootstrap Media Preview" src="{{asset('admin/images/user/'.$comment->user->thumb)}}" />
+                  <div class="media-body">
+                    <div class="row">
+                      <div class="col-8 d-flex">
+                      <h5>{{$comment->user->name}}</h5>
+                      <span style="margin-left:50px"><i class="fa fa-clock" aria-hidden="true"></i> {{$comment['created_at']}}</span>
+                      </div>
+                      <div class="col-4">
+                        @if(Auth::user()->id == $comment->user->id)
+                          <div class="pull-right reply">
+                            <a id="{{$comment['id']}}" class="delete-comment" href="#"><span><i class="fa fa-times"></i> Xóa Bình Luận</span></a>
+                          </div>
+                        @endif
+                      </div>
+                      <p style="margin-left:12px" >{!!$comment['comment']!!}</p>
+                    </div>		
+                   
+                  {{-- <div class="media mt-4">
                       <a class="pr-3" href="#"><img width="50px" height="50px" class="rounded-circle" alt="Bootstrap Media Another Preview" src="https://i.imgur.com/xELPaag.jpg" /></a>
                     <div class="media-body">
                       <div class="row">
@@ -174,9 +182,10 @@
                   </div>
                       the majority have suffered alteration in some form, by injected humour, or randomised words.
                     </div>
-                  </div>
+                  </div> --}}
                 </div>
               </div>
+              @endforeach 
             </div>
           </div>
         </div>

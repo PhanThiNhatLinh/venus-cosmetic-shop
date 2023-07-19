@@ -18,6 +18,7 @@ class ShoppingCartController extends Controller
 
     public function addToCart(Request $request){
         $id_product= $request->id;
+        $qty = $request->qty_add_to_cart;
         $productModel = new Product();
         $product = $productModel->getItem($id_product,['task'=>'admin_get_item']);
         // dd($product);
@@ -26,7 +27,7 @@ class ShoppingCartController extends Controller
         Cart::add([
             'id' => $id_product, 
             'name' => $product['name'], 
-            'qty' => 1, 
+            'qty' => $qty, 
             'price' => $product['price'],
             'options' => ['thumb' => $thumb]
         ]);

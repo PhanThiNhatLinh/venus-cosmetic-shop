@@ -37,7 +37,13 @@ $(document).ready(function(){
     $('button.add-to-cart').click(function(){
         let id_product = $(this).attr('id');
         let qty_cart_total = parseInt($(this).closest("body").find("a.total_cart").text());
-        qty_cart_total += 1;
+        let qty_add_to_cart = parseInt($("input.number_cart").val());
+        if(qty_add_to_cart>0){
+            qty_cart_total += qty_add_to_cart;
+        }else{
+            qty_add_to_cart = 1;
+            qty_cart_total += 1;
+        }
         // console.log(qty_cart_total);
         //lấy số lượng sp tăng lên thay vào giỏ hàng
         parseInt($(this).closest("body").find("a.total_cart").html('<i class="fas fa-cart-plus"><span style="color:blue"> '+ qty_cart_total
@@ -55,6 +61,7 @@ $(document).ready(function(){
             url:"/gio-hang/them-san-pham/"+ id_product,
             data:{
                 qty_cart_total:qty_cart_total,
+                qty_add_to_cart:qty_add_to_cart,
                 id_product: id_product,
             type:'POST',
             },
@@ -117,28 +124,82 @@ $(document).ready(function(){
             alert("Vui lòng login để đánh giá sản phẩm");
         }
     });
-
+    
     //comment
-    $('.comment-area').click(function(){
+    $('.send').click(function(){
         //kiểm tra login trước khi đánh giá
         var checkLogin = $(this).closest(".container-fluid").find(".user_id").attr('id');
         console.log(checkLogin);
         if(checkLogin){
-            var Values =  $j(this).find("input").val();
-            var id_product = $j(this).closest(".container-fluid").find(".add-to-cart").attr('id');
-            // console.log(id_product);
+            var user_name = $(this).closest(".container-fluid").find(".user_name").val();
+            var user_image = $(this).closest(".container-fluid").find(".user_image").val();
+            var comment =  $(this).closest("form").find("textarea").val();
+            var id_product = $(this).closest(".container-fluid").find(".add-to-cart").attr('id');
+            var currentdate = new Date(); 
+            var datetime = currentdate.getDate() + "-"
+                        + (currentdate.getMonth()+1)  + "-" 
+                        + currentdate.getFullYear() + " "  
+                        + currentdate.getHours() + ":"  
+                        + currentdate.getMinutes() + ":" 
+                        + currentdate.getSeconds();
+            alert("Cam on ban da binh luan");
+            var html="";
+            html += 
+            '<div style="margin-bottom:30px" class="media">'+
+                '<img width="50px" height="50px" class="mr-3 rounded-circle" alt="Bootstrap Media Preview" src="http://venus-cosmetic-shop.test/admin/images/user/'+user_image+'"/>'+
+                '<div class="media-body">'+
+                '<div class="row">'+
+                '<div class="col-8 d-flex">'+
+                '<h5>'+user_name+'</h5>'+
+                '<span style="margin-left:50px"><i class="fa fa-clock" aria-hidden="true"></i> '+ datetime +'</span>'+
+                '</div>'+
+                '<div class="col-4">'+
+                '<div class="pull-right reply">'+
+                '<a class="delete-comment" href="#"><span><i class="fa fa-times"></i> Xóa Bình Luận</span></a>'+
+                '</div>'+
+                '</div>'+
+                '<p style="margin-left:12px" >'+ comment +'</p>'+
+                '</div>'+
+                '</div>'+
+            '</div>';
+            $(this).closest(".container-fluid").find(".content_area").append(html);
             $j.ajax({
                 type:'GET',
-                url:"/danh-gia",
+                url:"/binh-luan",
                 data:{
-                    rating:Values,
+                    comment:comment,
                     product_id: id_product
                 },
                 success:function(data){
                     // console.log(data.success);
-                    console.log(Values);
                 }
             });
+        }else{
+            alert("Vui lòng login để bình luận sản phẩm");
+        }
+    });
+
+    //delete comment
+    $('a.delete-comment').click(function(){
+        //kiểm tra login trước khi đánh giá
+        var checkLogin = $(this).closest(".container-fluid").find(".user_id").attr('id');
+        console.log(checkLogin);
+        if(checkLogin){
+            if(confirm("Bạn chắc chắn muốn xóa!!")){
+                var id_comment =  $(this).attr('id');
+                $(this).closest(".media").remove();
+                $.ajax({
+                    type:'GET',
+                    url:'/binh-luan/xoa/',
+                    data:{
+                        id_comment: id_comment
+                    },
+                    success:function(data){
+                        // console.log(data.success);
+                    }
+                });
+            } 
+            return false;
         }else{
             alert("Vui lòng login để bình luận sản phẩm");
         }

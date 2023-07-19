@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Request;
 
 class RegisterController extends Controller
 {
@@ -40,6 +41,7 @@ class RegisterController extends Controller
     public function __construct()
     {
         $this->middleware('guest');
+        $this->model = new User();
     }
 
     /**
@@ -75,12 +77,24 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \App\Models\User
      */
+    /*
     protected function create(array $data)
     {
-        return User::create([
+        $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
-            'password' => Hash::make($data['password']),
+            'password' => Hash::make($data['password']),            
         ]);
+
     }
+    */
+    public function register(Request $request)
+    {
+        $params = $request->all();
+        $params['thumb'] = 'user-icon-1.png'; 
+        // die();
+        $this->model->insertItem($params,['task'=>'register']);
+        return redirect('/login')->with('success', 'Đăng kí Thành Công, Mời Đăng Nhập Tài Khoản');
+    }
+
 }

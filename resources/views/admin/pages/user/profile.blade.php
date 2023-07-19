@@ -63,7 +63,7 @@
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                             <input type="file" name="thumb" class="form-control col-md-7 col-xs-12">
-                            <img width="200px" height="200px" src="{{asset('/admin/images/'.$controllerName.'/'.Auth::user()->thumb)}}" alt="{{Auth::user()->name}}">
+                            <img width="50px" height="50px" src="{{asset('/admin/images/'.$controllerName.'/'.Auth::user()->thumb)}}" alt="avatar_user">
                         </div>
                     </div>
                     <div class="ln_solid"></div>

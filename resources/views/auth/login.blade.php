@@ -73,6 +73,7 @@
 
 @extends('layouts.login_form')
 @section('content')
+@include('frontend.templates.success')
     <div class="wrapper">
         <div class="title">
            Đăng Nhập

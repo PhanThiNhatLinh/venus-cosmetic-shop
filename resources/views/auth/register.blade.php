@@ -79,6 +79,7 @@
 
 @section('content')
 <div class="wrapper">
+    @include('frontend.templates.success')
     <div class="title">
        Đăng Kí Tài Khoản
     </div>
@@ -115,6 +116,7 @@
         <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
             <label for="password-confirm">Xác Nhận Mật Khẩu</label>
         </div>
+        <input type="hidden" name="roles[]" value="3" >
        <div class="field">
           <input type="submit" value="Đăng Kí">
        </div>
