@@ -74,11 +74,19 @@ class OrderController extends Controller
             $params = $request->all();     
             // dd($params);
             $this->model->insertItem($params,['task'=>'admin_add_new_item']);
-            // $order_id = $this->model->orderBy('id', 'desc')->first()->id;
-            $order_id = ['key'=> 'value','key2'=>'value2'];
+            $order_id = $this->model->orderBy('id', 'desc')->first()->id;
+            $order_infos = $this->model->getItem($order_id,['task'=>'admin_get_item']);
+            $products = $order_infos->product;
+            $client_name = $order_infos->user->name;
+            // dd($client_name);
+            $phone = $order_infos->user->phone;
+            $address = $order_infos->user->address;
+            $created_at = date(Config::get('linh_config.date.long_time'), strtotime($order_infos['created_at']));
+            // $order_id = ['key'=> 'value','key2'=>'value2'];
+            $infos= ['order_id'=>$order_id,'products'=>$products, 'client_name'=>$client_name, 'phone'=>$phone, 'address'=>$address, 'created_at'=>$created_at];
             Cart::destroy();
-            Mail::to('nhatlinhphan9999@gmail.com')->send(new DemoMail($order_id));
-            return redirect('/gio-hang')->with('success', 'Bạn Đã Đặt Hàng Thành Công!');           
+            Mail::to('nhatlinhphan9999@gmail.com')->send(new DemoMail($infos));
+            return redirect('/gio-hang')->with('success', 'Bạn Đã Đặt Hàng Thành Công! Hãy kiểm tra mail để xem mail xác nhận đơn hàng nhé!');           
         }
     }
 

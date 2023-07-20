@@ -226,6 +226,7 @@ class Product extends Model
            $results = self::findOrFail($id);
         }
         return $results;
+        // dd($product);
     }
 
     public function deleteThumb($images_delete_array)

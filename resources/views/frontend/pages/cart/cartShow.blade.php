@@ -18,6 +18,9 @@
             <div class="h-100 py-5">
                <div class="row d-flex justify-content-center align-items-center h-100">
                     <div class="col-11">
+                        {{-- @php
+                            dd(Cart::content());
+                        @endphp --}}
                         @foreach(Cart::content() as $product)
                             <div class="card rounded-3 mb-4">
                                 <div class="card-body p-4">

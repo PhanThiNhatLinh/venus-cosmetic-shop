@@ -21,17 +21,20 @@ class ShoppingCartController extends Controller
         $qty = $request->qty_add_to_cart;
         $productModel = new Product();
         $product = $productModel->getItem($id_product,['task'=>'admin_get_item']);
-        // dd($product);
-        $thumb = json_decode($product['thumb'],true)[0];
         
+        if($product['discount']>0){
+            $product['price'] = $product['price'] - ($product['price']*$product['discount'])/100;
+        }
+        // dd($product['price']);
+        $thumb = json_decode($product['thumb'],true)[0];        
         Cart::add([
             'id' => $id_product, 
             'name' => $product['name'], 
             'qty' => $qty, 
             'price' => $product['price'],
-            'options' => ['thumb' => $thumb]
+            'options' => ['thumb' => $thumb, 'discount' => $product['discount'],]
         ]);
-
+        
         return redirect('/gio-hang');
     }
 

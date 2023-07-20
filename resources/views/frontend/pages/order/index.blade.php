@@ -100,6 +100,7 @@
                 <div class="form-group">
                     <div class="col-md-12 col-sm-6 col-xs-12 col-md-offset-3">
                         <input type="hidden" value="{{Auth::user()->id}}" name="user_id" class="form-control col-md-7 col-xs-12">
+                        <input type="hidden" value="{{Auth::user()->id}}" name="user_id" class="form-control col-md-7 col-xs-12">
                         @if(Auth::check())
                             @if(Cart::count()>0)
                                 @if(empty(Auth::user()->address) && empty(Auth::user()->phone))
