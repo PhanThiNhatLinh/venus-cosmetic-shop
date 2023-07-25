@@ -20,15 +20,15 @@
                     <form method="POST" action="{{route($controllerName.'.save')}}" enctype="multipart/form-data" class="form-horizontal form-label-left">
                         @csrf
                         <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Tên
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Tên <span style="color: red">*</span>
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input type="text" name="name"
+                                <input type="text" name="name" placeholder="Tên từ 5-200 kí tự"
                                        class="form-control col-md-7 col-xs-12">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Slug
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Slug <span style="color: red">*</span>
                             </label>
                             <div class="col-md-3 col-sm-6 col-xs-12">
                                 <select name="permission_area" class="form-control" data-field="level">
@@ -49,10 +49,10 @@
                             <input type="hidden" name="slug" value="" class="form-control col-md-7 col-xs-12">
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Mô Tả
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Mô Tả <span style="color: red">*</span>
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input type="text" name="description"
+                                <input type="text" name="description" placeholder="Tên từ 5-200 kí tự"
                                        class="form-control col-md-7 col-xs-12">
                             </div>
                         </div>

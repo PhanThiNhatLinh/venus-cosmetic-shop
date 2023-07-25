@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 class Brand extends Model
 {
@@ -17,7 +18,7 @@ class Brand extends Model
 
     public function products()
     {
-        return $this->hasMany(Product::class, 'id_category');
+        return $this->hasMany(Product::class, 'id_brand');
     }
 
     public function getListItems($params=null,$options = null){
@@ -35,13 +36,12 @@ class Brand extends Model
                         $query->where($params['search_field'], 'LIKE', "%{$params['search_value']}%");
                     }elseif($params['search_field'] == 'all'){
                         $query->where(function($query) use($params){
-                            unset($params['search_field_for_controller'][0]); //delete the search_field 'all' in this case
-                            foreach($params['search_field_for_controller'] as $colum){
+                            foreach($this->fillable as $colum){
                                 $query->orWhere($colum,'LIKE', "%{$params['search_value']}%");
                             }
                         });
                     }
-                   $results = $query->orderBy('id','ASC')->paginate($params['item_per_page']);
+                   $results = $query->orderBy('id','DESC')->paginate($params['item_per_page']);
         }
 
         if($options['task'] == 'frontend_get_featured_brand'){
@@ -74,8 +74,7 @@ class Brand extends Model
                         $query->where($params['search_field'], 'LIKE', "%{$params['search_value']}%");
                     }elseif($params['search_field'] == 'all'){
                         $query->where(function($query) use($params){
-                            unset($params['search_field_for_controller'][0]); //delete the search_field 'all' in this case
-                            foreach($params['search_field_for_controller'] as $colum){
+                            foreach($this->fillable as $colum){
                                 $query->orWhere($colum,'LIKE', "%{$params['search_value']}%");
                             }
                         });
@@ -102,6 +101,7 @@ class Brand extends Model
             if(!empty($params['thumb'])){
                 $params['thumb'] = self::uploadImage($params['thumb']);
             }
+            $params['modified_by'] = Auth::user()->name;
             self::findOrFail($params['id'])
                 ->update($params);
         }
@@ -119,8 +119,8 @@ class Brand extends Model
         //admin
         if($options['task'] == 'admin_add_new_item'){
             $params['thumb'] = self::uploadImage($params['thumb']);
-            $params['created_by'] ='nhatlinh';
-            $params['modified_by'] ='hoanglan';
+            $params['created_by'] = Auth::user()->name;
+            $params['modified_by'] = "";
             self::create($params);
         }
     }
@@ -132,10 +132,10 @@ class Brand extends Model
         }
     }
 
-    public function getItem($params=null,$options = null){ //get item info in the db belong to id
+    public function getItem($id=null,$options = null){ //get item info in the db belong to id
         //admin
         if($options['task'] == 'admin_get_item'){
-           $results = self::findOrFail($params['id']);
+           $results = self::findOrFail($id);
         }
         return $results;
     }
@@ -152,6 +152,7 @@ class Brand extends Model
         //admin
         if($options['task'] == 'frontend_get_lists_products'){
            $brand = self::findOrFail($params['id']);
+        //    dd($brand);
            $query = $brand->products()->where('status', 'active')->where('display', 'yes');
            if(isset($params['price_field']) && $params['price_field'] !== "all"){
                 if($params['price_field']== 250000)

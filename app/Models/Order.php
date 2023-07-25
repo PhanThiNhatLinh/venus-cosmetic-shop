@@ -30,16 +30,22 @@ class Order extends Model
         if($options['task'] == 'admin_get_list_items'){
             // $results = self::paginate($params['item_per_page']);
             $query = self::select('id','user_id','created_at','status','updated_at');
-            
+            // dd($params['filter_status_order']);
+            // dd($query);
+            if($params['filter_status_order'] !== 'all'){
+                $query->where('status',$params['filter_status_order']);
+            }
             if($params['search_field'] !== 'all'){
                 $query->where($params['search_field'], 'LIKE', "%{$params['search_value']}%");
             }elseif($params['search_field'] == 'all'){
                 $query->where(function($query) use($params){
-                    unset($params['search_field_for_controller'][0]); //delete the search_field 'all' in this case
-                    foreach($params['search_field_for_controller'] as $colum){
+                    foreach($this->fillable as $colum){
                         $query->orWhere($colum,'LIKE', "%{$params['search_value']}%");
                     }
                 });
+            }
+            
+            if(empty($query->get()->toArray())){
                 //research in product table the product name = $params['search_value'];
                 $query_product = self::with(['product' => function ($query) use($params) {
                     $query->where('name','LIKE', "%{$params['search_value']}%");
@@ -49,9 +55,13 @@ class Order extends Model
                 foreach($products as $product){
                     if(count($product['product'])>0){
                         $query->orWhere('id','=', $product['id']);
+                        if($params['filter_status_order'] !== 'all'){
+                            $query->where('status',$params['filter_status_order']);
+                        }
                     }
-                }
 
+                }
+               
                 //research in user table the client name = $params['search_value'];
                 $query_user = self::with(['user' => function ($query) use($params) {
                     $query->where('name','LIKE', "%{$params['search_value']}%")
@@ -64,13 +74,15 @@ class Order extends Model
                 foreach($users as $user){
                     if(!empty($user['user']) && count($user['user'])>0){
                         $query->orWhere('id','=', $user['id']);
+                        if($params['filter_status_order'] !== 'all'){
+                            $query->where('status',$params['filter_status_order']);
+                        }
                     }
                 }
+                
             }
-            if($params['filter_status_order'] !== 'all'){
-                $query->where('status',$params['filter_status_order']);
-            }
-            $results = $query->orderBy('id','ASC')->paginate($params['item_per_page']);
+           
+            $results = $query->orderBy('id','DESC')->paginate($params['item_per_page']);
         }
 
         if($options['task'] == 'admin_get_list_items_for_user'){
@@ -83,13 +95,12 @@ class Order extends Model
                     $query->where($params['search_field'], 'LIKE', "%{$params['search_value']}%");
                 }elseif($params['search_field'] == 'all'){
                     $query->where(function($query) use($params){
-                        unset($params['search_field_for_controller'][0]); //delete the search_field 'all' in this case
-                        foreach($params['search_field_for_controller'] as $colum){
+                        foreach($this->fillable as $colum){
                             $query->orWhere($colum,'LIKE', "%{$params['search_value']}%");
                         }
                     });
                 }
-            $results = $query->orderBy('id','ASC')->paginate($params['item_per_page']);
+            $results = $query->orderBy('id','DESC')->paginate($params['item_per_page']);
         }
         //frontend
 

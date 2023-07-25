@@ -85,10 +85,12 @@
                           <h6 class="text-muted mb-3"><i class="fa fa-check text-secondary mr-3"></i><strong style="color: red">Hết Hàng</strong></h6>
                         @endif  
                     </p>
-                    <div style="display: display-block" class="row">
-                        <h5 class="text-muted mb-3">Số Lượng:<input style="width:100px" class="number_cart" type="number" value="" min="0" max={{$product['stock']}} /></h5>                            
-                    </div>
-                    <button style="margin-bottom: 2px" href="#"  id="{{$product['id']}}" class="btn btn-secondary py-3 px-5 mt-2 add-to-cart"><i style="color: white" id="fly" class="fas fa-cart-plus fa-lg"></i> Mua Hàng</button>
+                    @if ($product['stock']>0)
+                      <div style="display: display-block" class="row">
+                          <h5 class="text-muted mb-3">Số Lượng:<input style="width:100px" class="number_cart" type="number" value="" min="0" max={{$product['stock']}} /></h5>                            
+                      </div>
+                      <button style="margin-bottom: 2px" href="#"  id="{{$product['id']}}" class="btn btn-secondary py-3 px-5 mt-2 add-to-cart"><i style="color: white" id="fly" class="fas fa-cart-plus fa-lg"></i> Mua Hàng</button>
+                    @endif
                     @if(Auth::check())
                       <input type="hidden" class="user_id" id="{{Auth::user()->id}}">
                       <input type="hidden" class="user_name" value="{{Auth::user()->name}}">
@@ -145,16 +147,21 @@
                   <img width="50px" height="50px" class="mr-3 rounded-circle" alt="Bootstrap Media Preview" src="{{asset('admin/images/user/'.$comment->user->thumb)}}" />
                   <div class="media-body">
                     <div class="row">
-                      <div class="col-8 d-flex">
-                      <h5>{{$comment->user->name}}</h5>
-                      <span style="margin-left:50px"><i class="fa fa-clock" aria-hidden="true"></i> {{$comment['created_at']}}</span>
+                      <div class="col-9 d-flex">
+                      <h5 class="col-5">{{$comment->user->name}}</h5>
+                      <span class="col-4" style="margin-left:80px"><i class="fa fa-clock" aria-hidden="true"></i> {{$comment['created_at']}}</span>
                       </div>
-                      <div class="col-4">
-                        @if(Auth::user()->id == $comment->user->id)
-                          <div class="pull-right reply">
-                            <a id="{{$comment['id']}}" class="delete-comment" href="#"><span><i class="fa fa-times"></i> Xóa Bình Luận</span></a>
-                          </div>
-                        @endif
+                      <div class="col-3">
+                        {{-- @php
+                          print_r(Auth::user()->id);
+                        @endphp --}}
+                        @if(Auth::check())
+                          @if(Auth::user()->id == $comment->user->id)
+                            <div class="pull-right reply">
+                              <a id="{{$comment['id']}}" class="delete-comment" href="#"><span><i class="fa fa-times"></i> Xóa Bình Luận</span></a>
+                            </div>
+                          @endif
+                        @endif  
                       </div>
                       <p style="margin-left:12px" >{!!$comment['comment']!!}</p>
                     </div>		

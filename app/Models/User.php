@@ -21,6 +21,7 @@ class User extends Authenticatable
      */
     protected $table = 'users';
     protected $fillable = [
+        'id',
         'name',
         'email',
         'password',
@@ -98,19 +99,18 @@ class User extends Authenticatable
                         $query->where($params['search_field'], 'LIKE', "%{$params['search_value']}%");
                     }elseif($params['search_field'] == 'all'){
                         $query->where(function($query) use($params){
-                            unset($params['search_field_for_controller'][0]); //delete the search_field 'all' in this case
-                            foreach($params['search_field_for_controller'] as $colum){
+                            foreach($this->fillable as $colum){
                                 $query->orWhere($colum,'LIKE', "%{$params['search_value']}%");
                             }
                         });
                     }
-                   $results = $query->orderBy('id','ASC')->paginate($params['item_per_page']);
+                   $results = $query->orderBy('id','DESC')->paginate($params['item_per_page']);
         }
 
         if($options['task'] == 'frontend_get_list_items'){
             $query = self::select('id', 'email', 'name', 'password');
             $query->where('status','active');
-            $results = $query->orderBy('id','ASC')->get()->toArray();
+            $results = $query->orderBy('id','DESC')->get()->toArray();
         }    
 
         return $results;
@@ -126,8 +126,7 @@ class User extends Authenticatable
                     $query->where($params['search_field'], 'LIKE', "%{$params['search_value']}%");
                 }elseif($params['search_field'] == 'all'){
                     $query->where(function($query) use($params){
-                        unset($params['search_field_for_controller'][0]); //delete the search_field 'all' in this case
-                        foreach($params['search_field_for_controller'] as $colum){
+                        foreach($this->fillable as $colum){
                             $query->orWhere($colum,'LIKE', "%{$params['search_value']}%");
                         }
                     });
@@ -176,7 +175,11 @@ class User extends Authenticatable
     public function insertItem($params=null,$options = null){
         //admin
         if($options['task'] == 'admin_add_new_item'){
-            $params['thumb'] = self::uploadImage($params['thumb']);
+            if(!empty($params['thumb'])){
+                $params['thumb'] = self::uploadImage($params['thumb']);
+            }else{
+                $params['thumb'] = 'user-icon-1.png'; 
+            }
             $user = self::create($params);
             if(empty($params['roles'])){
                 $params['roles'] = '';

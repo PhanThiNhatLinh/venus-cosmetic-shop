@@ -40,8 +40,13 @@
                                 @endif
                             @endforeach
                             <a href="{{$link}}"><h5 class="font-weight-bold mb-4">{{$name}}</h5></a>
-                            <button style="margin-bottom: 2px" href="#"  id="{{$product['id']}}" class="btn btn-sm btn-secondary add-to-cart"><i style="color: white" id="fly" class="fas fa-cart-plus fa-lg"></i> Mua Hàng</button>
-                            <a href="{{$link}}" class="btn btn-sm btn-primary">Xem chi tiết</a>
+                            @if($product['stock']>0)
+                                <button style="margin-bottom: 2px" href="#"  id="{{$product['id']}}" class="btn btn-sm btn-secondary add-to-cart"><i style="color: white" id="fly" class="fas fa-cart-plus fa-lg"></i> Mua Hàng</button>
+                                <a href="{{$link}}" class="btn btn-sm btn-primary">Xem chi tiết</a>
+                            @else
+                                <button disabled style="margin-bottom: 2px" href="#"  id="{{$product['id']}}" class="btn btn-sm btn-warning add-to-cart"><i style="color: white" id="fly" class="fas fa-cart-plus fa-lg"></i> Hết Hàng</button>
+                                <a href="{{$link}}" class="btn btn-sm btn-primary">Xem Chi Tiết</a>
+                            @endif  
                         </div>
                     @endforeach
                 </div>

@@ -32,7 +32,7 @@ return [
             'brand' =>['all','name'],
             'category' =>['all','name'],
             'country' =>['all','name'],
-            'user' =>['all','name'],
+            'user' =>['all','name','email','phone','address'],
             'permission' =>['all','name'],
             'role' =>['all','name'],
             'order' =>['all','id'],
@@ -64,6 +64,9 @@ return [
         'search' => [
             'all' =>['name'=>'Tìm Kiếm Tất Cả'],
             'name' =>['name'=>'Tìm Bằng Tên'],
+            'email' =>['name'=>'Tìm Bằng Email'],
+            'phone' =>['name'=>'Tìm Bằng Số điện thoại'],
+            'address' =>['name'=>'Tìm Bằng Địa chỉ'],
             'link' =>['name'=>'Tìm Bằng Link'],
             'id' =>['name'=>'Tìm Bằng ID'],
             'code' =>['name'=>'Tìm Bằng Mã Sản Phẩm'],

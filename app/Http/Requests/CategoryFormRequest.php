@@ -49,7 +49,7 @@ class CategoryFormRequest extends FormRequest
             'image'=> ':attribute phải có đuôi là jpg, jpeg, png, bmp, gif, svg, or webp',
             'max'=> ':attribute không được vượt quá',
             'unique' => ':attribute không được trùng lặp',
-            'between' => ':attribute phải nằm trong khoảng 100-1000 ký tự'
+            'between' => ':attribute phải nằm trong khoảng 5-100 ký tự'
         ];
     }
     public function attributes(): array

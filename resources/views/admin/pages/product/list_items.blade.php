@@ -1,6 +1,3 @@
-@php
-// print_r($params);    
-@endphp
 <div class="x_content">
     <div class="table-responsive">
         <table class="table table-striped jambo_table bulk_action">
@@ -17,12 +14,15 @@
             </tr>
             </thead>
             <tbody>
+                
                 @if(count($items)>0)
+                
                     @foreach($items as $k=>$item)
                         @php
+                            
                             $index = $k+1;
                             $id = $item['id'];
-                            $name = $item['name'];
+                            $name_item = $item['name'];
                             $description = $item['description'];
                             $price = $item['price'];
                             $discount = $item['discount'];
@@ -31,9 +31,10 @@
                             $price_shock = $item['price_shock'];
                             $exp = date(Config::get('linh_config.date.short_time'), strtotime($item['expiry_date']));
                             $featured = $item['featured'];
-                            $brand = $item->brand->name;
-                            $country = $item->country->name;
-                            $category = $item->category->name;
+                           
+                            $brand = (!empty($item->brand->name) ? $item->brand->name: "Chưa có thông tin");
+                            $country = (!empty($item->country->name) ? $item->country->name: "Chưa có thông tin");
+                            $category = (!empty($item->category->name) ? $item->category->name: "Chưa có thông tin");
                             // dd($item['thumb']);
                             $thumbs = json_decode($item['thumb'],true);
                             $display = $item['display'];
@@ -50,7 +51,7 @@
                             <td width="1%">{{$index}}</td>
                             <td width="1%">{{$id}}</td>
                             <td width="40%">
-                                <p><strong>Tên: </strong>{{$name}}</p>
+                                <p><strong>Tên: </strong>{{$name_item}}</p>
                                 {{-- <p><strong>Mô Tả: </strong>{{$description}}</p> --}}
                                 <p><strong>Giá: </strong>{{$price}} VND</p>
                                 <p><strong>Phần Trăm Khuyến Mãi: </strong>{{$discount}} %</p>
@@ -64,7 +65,7 @@
                                 <p><strong>Sản Phẩm Trong Chiến Dịch Giá Sốc Mỗi Tuần : </strong>{{$price_shock}}</p>
                                 @foreach($thumbs as $thumb)
                                     @if(!empty($thumb))
-                                        <img width="100%" height="200px" src="{{asset('/admin/images/product/'.$thumb)}}" alt="{{$name}}">
+                                        <img width="100%" height="200px" src="{{asset('/admin/images/product/'.$thumb)}}" alt="{{$name_item}}">
                                         @break;
                                     @endif
                                 @endforeach

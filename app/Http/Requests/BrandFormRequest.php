@@ -25,7 +25,7 @@ class BrandFormRequest extends FormRequest
     public function rules(): array
     {
         $id = $this->id;
-        $nameCondi = 'bail|required|between: 5,100|unique:'.$this->table.',name';
+        $nameCondi = 'bail|required|between: 5,200|unique:'.$this->table.',name';
         $descriptionCondi = 'bail|required|between: 5,200';
         $thumbCondi = 'bail|required|image|max:2048';
         $statusCondi = 'bail|required|in:active,inactive';
@@ -51,7 +51,7 @@ class BrandFormRequest extends FormRequest
             'image'=> ':attribute phải có đuôi là jpg, jpeg, png, bmp, gif, svg, or webp',
             'max'=> ':attribute không được vượt quá',
             'unique' => ':attribute không được trùng lặp',
-            'between' => ':attribute phải nằm trong khoảng 100-1000 ký tự'
+            'between' => ':attribute phải nằm trong khoảng 5-200 ký tự'
         ];
     }
     public function attributes(): array

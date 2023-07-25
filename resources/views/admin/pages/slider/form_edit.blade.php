@@ -2,9 +2,6 @@
 @section('title','Quản Lý Slider')
 @section('content')
 <div class="right_col" role="main">
-    @php
-        print_r($item['thumb']);
-    @endphp
     @include('admin.templates.header_title',['type' =>'edit'])
     @include('admin.templates.notify')
     @include('admin.templates.errors')

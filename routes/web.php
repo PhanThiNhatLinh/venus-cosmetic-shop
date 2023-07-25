@@ -259,7 +259,7 @@ Route::prefix('')->namespace('Frontend')->group(function () {
     Route::prefix($prefix)->group(function () {
         $controllerName = 'blog';
         $controller = ucfirst($controllerName).'Controller@';
-        Route::get('/', $controller.'index')->name($controllerName.'.index');
+        Route::get('/', $controller.'showListBlog')->name($controllerName.'.frontend_index');
         Route::get('/{blog_name}-{blog_id}.html', $controller.'showBlogDetail')->name($controllerName.'.detail')->where(['blog_id' => '[0-9]+', 'blog_name' => '[0-9a-zA-Z_-]+']);
     });
 
@@ -268,7 +268,7 @@ Route::prefix('')->namespace('Frontend')->group(function () {
     Route::prefix($prefix)->group(function () {
         $controllerName = 'brand';
         $controller = ucfirst($controllerName).'Controller@';
-        Route::get('/', $controller.'index')->name($controllerName.'.index');
+        Route::get('/', $controller.'showListBrand')->name($controllerName.'.frontend_index');
         Route::get('/{brand_name}-{brand_id}.html', $controller.'showBrandDetail')->name($controllerName.'.detail')->where(['brand_id' => '[0-9]+', 'brand_name' => '[0-9a-zA-Z_-]+']);
     });
 

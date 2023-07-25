@@ -164,6 +164,8 @@ div[style*="margin: 16px 0;"] { margin: 0 !important; }
                                 <table align="left" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width:300px;">
                                     <tr>
                                         <td align="left" valign="top" style="font-size: 16px; font-weight: 400; line-height: 24px; color: #777777;">
+                                            <h4 style="font-family:'Times New Roman', Times, serif; font-weight: 800;">Tên Khách Hàng</h4>
+                                            <p style="font-family:'Times New Roman', Times, serif; font-weight: 400;">{{$key['client_name']}}</p>
                                             <h4 style="font-family:'Times New Roman', Times, serif; font-weight: 800;">Địa chỉ giao hàng</h4>
                                             <p style="font-family:'Times New Roman', Times, serif; font-weight: 400;">{{$key['address']}}</p>
                                             <h4 style="font-family:'Times New Roman', Times, serif; font-weight: 800;">Số điện thoại</h4>

@@ -21,6 +21,12 @@
     if(empty($filter_status_order)){
         $filter_status_order ="";
     }
+
+    $permission_field= (!empty($params['modules_field']))? '&modules_field='.$params['modules_field']: '';
+    // print_r($filter_status_order);
+    if(empty($permission_field)){
+        $permission_field ="";
+    }
 @endphp
 
 
@@ -35,9 +41,9 @@
                 @endphp
             @endif    
                 @if ($params['filter_status'] == $status['status']) 
-                    <a href="?filter_status={{$status['status']}}{{$link_search}}{{$display_field_url}}{{$filter_level_url}}" type="button" class="{{$class_active}}"> {{$params['status_templates'][$status['status']]['name']}} <span class="badge bg-white"> {{$status['count']}}</span></a>
+                    <a href="?filter_status={{$status['status']}}{{$link_search}}{{$display_field_url}}{{$filter_level_url}}{{$permission_field}}" type="button" class="{{$class_active}}"> {{$params['status_templates'][$status['status']]['name']}} <span class="badge bg-white"> {{$status['count']}}</span></a>
                 @else
-                    <a href="?filter_status={{$status['status']}}{{$link_search}}{{$display_field_url}}{{$filter_level_url}}" type="button" class="btn btn-primary"> {{$params['status_templates'][$status['status']]['name']}} <span class="badge bg-white"> {{$status['count']}}</span></a>
+                    <a href="?filter_status={{$status['status']}}{{$link_search}}{{$display_field_url}}{{$filter_level_url}}{{$permission_field}}" type="button" class="btn btn-primary"> {{$params['status_templates'][$status['status']]['name']}} <span class="badge bg-white"> {{$status['count']}}</span></a>
                 @endif
             @endforeach
         @endif    

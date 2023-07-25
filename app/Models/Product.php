@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 class Product extends Model
 {
@@ -54,8 +55,7 @@ class Product extends Model
                         $query->where($params['search_field'], 'LIKE', "%{$params['search_value']}%");
                     }elseif($params['search_field'] == 'all'){
                         $query->where(function($query) use($params){
-                            unset($params['search_field_for_controller'][0]); //delete the search_field 'all' in this case
-                            foreach($params['search_field_for_controller'] as $colum){
+                            foreach($this->fillable as $colum){
                                 $query->orWhere($colum,'LIKE', "%{$params['search_value']}%");
                             }
                         });
@@ -88,7 +88,7 @@ class Product extends Model
         //frontend
         if($options['task'] == 'frontend_get_price_shock_item'){
             $query = self::select('id','name','status','display','thumb','price_shock','price', 'discount','video');
-            $query->where('status','active')->where('display','yes')->where('price_shock','yes');
+            $query->where('status','active')->where('display','yes')->where('price_shock','yes')->where('stock','>',0);
             $results = $query->orderBy('id','ASC')->take(1)->first();
         }   
 
@@ -108,8 +108,7 @@ class Product extends Model
                         $query->where($params['search_field'], 'LIKE', "%{$params['search_value']}%");
                     }elseif($params['search_field'] == 'all'){
                         $query->where(function($query) use($params){
-                            unset($params['search_field_for_controller'][0]); //delete the search_field 'all' in this case
-                            foreach($params['search_field_for_controller'] as $colum){
+                            foreach($this->fillable as $colum){
                                 $query->orWhere($colum,'LIKE', "%{$params['search_value']}%");
                             }
                         });
@@ -133,6 +132,7 @@ class Product extends Model
                 ->update(['display' => $display]);
         }
         if($options['task'] == 'admin_edit_item'){
+            $params['modified_by'] = Auth::user()->name;
             self::findOrFail($params['id'])
                 ->update($params);
             
@@ -187,8 +187,6 @@ class Product extends Model
         }else{
             return "false";
         }
-        
-        
     }
 
     public function uploadImage($thumbObjs){
@@ -207,14 +205,16 @@ class Product extends Model
         if($options['task'] == 'admin_add_new_item'){
             $params['thumb'] = self::uploadImage($params['thumb']);
             $params['thumb'] = json_encode($params['thumb']);
-            $params['created_by'] ='nhatlinh';
-            $params['modified_by'] ='linh';
+            $params['created_by'] = Auth::user()->name;
+            $params['modified_by'] = "";
             self::create($params);
         }
     }
     public function deleteItem($item=null,$options = null){ 
         //admin
         if($options['task'] == 'admin_delete_item'){
+            //delete the image in folder public
+            $item['thumb'] = json_decode($item['thumb'],true);
             self::deleteThumb($item['thumb']);
             $item->delete();
         }

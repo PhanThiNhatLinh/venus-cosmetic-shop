@@ -28,13 +28,12 @@ class Role extends Model
                 $query->where($params['search_field'], 'LIKE', "%{$params['search_value']}%");
             }elseif($params['search_field'] == 'all'){
                 $query->where(function($query) use($params){
-                    unset($params['search_field_for_controller'][0]); //delete the search_field 'all' in this case
-                    foreach($params['search_field_for_controller'] as $colum){
+                    foreach($this->fillable as $colum){
                         $query->orWhere($colum,'LIKE', "%{$params['search_value']}%");
                     }
                 });
             }
-            $results = $query->orderBy('id','ASC')->paginate($params['item_per_page']);
+            $results = $query->orderBy('id','DESC')->paginate($params['item_per_page']);
         }
 
         //frontend

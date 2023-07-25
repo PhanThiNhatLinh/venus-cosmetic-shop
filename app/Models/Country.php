@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
+
 
 class Country extends Model
 {
@@ -29,13 +32,12 @@ class Country extends Model
                         $query->where($params['search_field'], 'LIKE', "%{$params['search_value']}%");
                     }elseif($params['search_field'] == 'all'){
                         $query->where(function($query) use($params){
-                            unset($params['search_field_for_controller'][0]); //delete the search_field 'all' in this case
-                            foreach($params['search_field_for_controller'] as $colum){
+                            foreach($this->fillable as $colum){
                                 $query->orWhere($colum,'LIKE', "%{$params['search_value']}%");
                             }
                         });
                     }
-                   $results = $query->orderBy('id','ASC')->paginate($params['item_per_page']);
+                   $results = $query->orderBy('id','DESC')->paginate($params['item_per_page']);
         }
 
         //frontend
@@ -56,8 +58,7 @@ class Country extends Model
                         $query->where($params['search_field'], 'LIKE', "%{$params['search_value']}%");
                     }elseif($params['search_field'] == 'all'){
                         $query->where(function($query) use($params){
-                            unset($params['search_field_for_controller'][0]); //delete the search_field 'all' in this case
-                            foreach($params['search_field_for_controller'] as $colum){
+                            foreach($this->fillable as $colum){
                                 $query->orWhere($colum,'LIKE', "%{$params['search_value']}%");
                             }
                         });
@@ -81,9 +82,7 @@ class Country extends Model
                 ->update(['display' => $display]);
         }
         if($options['task'] == 'admin_edit_item'){
-            if(!empty($params['thumb'])){
-                $params['thumb'] = self::uploadImage($params['thumb']);
-            }
+            $params['modified_by'] = Auth::user()->name;
             self::findOrFail($params['id'])
                 ->update($params);
         }
@@ -100,8 +99,8 @@ class Country extends Model
     public function insertItem($params=null,$options = null){
         //admin
         if($options['task'] == 'admin_add_new_item'){
-            $params['created_by'] ='nhatlinh';
-            $params['modified_by'] ='hoanglan';
+            $params['created_by'] = Auth::user()->name;
+            $params['modified_by'] = "";
             self::create($params);
         }
     }

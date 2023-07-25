@@ -23,7 +23,7 @@
                     <form method="POST" action="{{route($controllerName.'.save',['id'=> $item['id']])}}" enctype="multipart/form-data" class="form-horizontal form-label-left">
                         @csrf
                         <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Tên Xuất Xứ
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Tên Xuất Xứ <span style="color: red">*</span>
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input type="text" name="name" value="{{$item['name']}}"
@@ -31,7 +31,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Trạng Thái
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Trạng Thái <span style="color: red">*</span>
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <select name="status" class="form-control">
@@ -47,7 +47,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Hiển Thị</label>
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Hiển Thị <span style="color: red">*</span></label> 
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <select name="display" class="form-control">
                                     <option>Tùy chọn</option>

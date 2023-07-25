@@ -25,7 +25,7 @@ class PermissionFormRequest extends FormRequest
     public function rules(): array
     {
         $id = $this->id;
-        $nameCondi = 'bail|required|between: 5,100|unique:'.$this->table.',name';
+        $nameCondi = 'bail|required|between: 5,200|unique:'.$this->table.',name';
         $descriptionCondi = 'bail|required|between: 5,200';
         $permission_name = 'bail|required';
         $permission_area = 'bail|required';
@@ -47,7 +47,7 @@ class PermissionFormRequest extends FormRequest
         return [
             'required' => ':attribute không được để trống',
             'unique' => ':attribute không được trùng lặp',
-            'between' => ':attribute phải nằm trong khoảng 6-50 ký tự'
+            'between' => ':attribute phải nằm trong khoảng 5-200 ký tự'
         ];
     }
     public function attributes(): array

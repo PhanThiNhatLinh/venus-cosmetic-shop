@@ -23,6 +23,9 @@
                             $id = $item['id'];
                             $name = $item['name'];
                             $email = $item['email'];
+                            $phone = $item['phone'];
+                            $address = $item['address'];
+                            $birthday = date(Config::get('linh_config.date.short_time'), strtotime($item['birthday']));
                             $thumb = $item['thumb'];
                             $created_at = date(Config::get('linh_config.date.long_time'), strtotime($item['created_at']));
                             $updated_at = date(Config::get('linh_config.date.long_time'), strtotime($item['updated_at']));
@@ -35,9 +38,9 @@
                             <td width="40%">
                                 <p><strong>Tên: </strong>{{$name}}</p>
                                 <p><strong>Email: </strong>{{$email}}</p>
-                                <p><strong>Số điện thoại: </strong></p>
-                                <p><strong>Ngày sinh: </strong></p>
-                                <p><strong>Địa chỉ: </strong></p>
+                                <p><strong>Số điện thoại: </strong>{{$phone}}</p>
+                                <p><strong>Ngày sinh: </strong>{{$birthday}}</p>
+                                <p><strong>Địa chỉ: </strong>{{$address}}</p>
                             </td>
                             <td width="10%">
                                 <img width="50px" height="50px" src="{{asset('admin/images/'.$controllerName.'/'.$thumb)}}" alt="{{$name}}">

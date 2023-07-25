@@ -170,6 +170,7 @@ class ProductController extends Controller
         }
         $id = $request->id;
         $item = $this->model->getItem($id,['task'=>'admin_get_item']); //find($id) infos in the db
+        // dd($item);
         $this->model->deleteItem($item,['task'=>'admin_delete_item']);
         $notify = "Xóa Thành Công";
         return redirect()->route($this->controllerName.'.index')->with('notify', $notify);

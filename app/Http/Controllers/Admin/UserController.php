@@ -116,14 +116,15 @@ class UserController extends Controller
         }else{
             if($request->method() == 'POST'){
                 $params = $request->all();   
-                // dd($params['roles']) ;
-                // die();
+                
                 if(!empty($request->id)){
                     $this->model->updateItem($params,['task'=>'admin_edit_item']);
                     $notify = "Chỉnh Sửa Thông Tin Thành Công";
                     return redirect()->back()->with('notify', 'Thay đổi thông tin người dùng thành công');
                 }else{
-                    // $params['thumb'] = $request->file('thumb');
+                    $params['thumb'] = $request->file('thumb');
+                    // dd($params) ;
+                    // die();
                     $this->model->insertItem($params,['task'=>'admin_add_new_item']);
                     $notify = "Thêm Mới Thành Công";
                     return redirect()->route($this->controllerName.'.index')->with('notify', $notify);

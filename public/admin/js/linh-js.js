@@ -63,7 +63,7 @@ $(document).ready(function(){
     });
     //click button Tim kiem
     $("#btn-search").click(function(){
-        let $params = ['filter_status','display_field','filter_status_order'];
+        let $params = ['filter_status','display_field','filter_status_order','modules_field'];
         let search_field = input_search_field.val();
         let search_value = input_search_value.val();
         if(search_value.replace(/\s/g,"") == ""){  
@@ -80,7 +80,7 @@ $(document).ready(function(){
     });
     //click button Xoa tim kiem
     $("button#btn-clear").click(function(){
-        let $params = ['filter_status','display_field','filter_status_order'];
+        let $params = ['filter_status','display_field','filter_status_order','modules_field'];
         let link ='';
         $.each($params, function(key, param){
             if(search_params.has(param)){

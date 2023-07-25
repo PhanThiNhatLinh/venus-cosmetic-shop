@@ -20,7 +20,7 @@
                     <form method="POST" action="{{route($controllerName.'.save')}}" enctype="multipart/form-data" class="form-horizontal form-label-left">
                         @csrf
                         <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Tên
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Tên <span style="color: red">*</span>
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input type="text" name="name"
@@ -28,7 +28,7 @@
                             </div>
                         </div>
                         <div class="form-group"> 
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Quyền
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Quyền <span style="color: red">*</span>
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 @foreach ($permissions as $permission)
@@ -38,7 +38,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Mô Tả
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Mô Tả  <span style="color: red">*</span>
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input type="text" name="description"

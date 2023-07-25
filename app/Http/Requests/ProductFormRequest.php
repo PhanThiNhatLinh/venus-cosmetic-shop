@@ -32,7 +32,7 @@ class ProductFormRequest extends FormRequest
         $codeCondi = 'bail|between: 3,10 |unique:'.$this->table.',code';
         $descriptionCondi = 'bail|required|between: 5,2000';
         $thumbCondi = 'required';
-        $thumbCondi2 = 'image|mimes:jpeg,png,jpg,gif,svg|max:2048';
+        $thumbCondi2 = 'image|max:2048';
         $expiry_dateCondi = 'bail|required|date';
         $id_countryCondi = 'required';
         $id_brandCondi = 'required';
@@ -43,7 +43,7 @@ class ProductFormRequest extends FormRequest
             $nameCondi .=','.$this->id;
             $codeCondi .=','.$this->id;
             $thumbCondi ='';
-            $thumbCondi2 = 'image|mimes:jpeg,png,jpg,gif,svg|max:2048';
+            $thumbCondi2 = 'image|max:2048';
         }
         return [
             'name' => $nameCondi,
@@ -68,7 +68,7 @@ class ProductFormRequest extends FormRequest
             'required' => ':attribute không được để trống',
             'min' => ':attribute không được nhỏ hơn :min',
             'in' => ':attribute phải được chọn',
-            'image'=> ':attribute phải có đuôi là jpg, jpeg, png, bmp, gif, svg, or webp',
+            'image'=> ':attribute phải có đuôi là jpg, jpeg, png, bmp, gif, svg or webp',
             'max'=> ':attribute không được vượt quá',
             'unique' => ':attribute không được trùng lặp',
             'between' => ':attribute phải nằm trong khoảng 5-2000 ký tự',
@@ -91,6 +91,7 @@ class ProductFormRequest extends FormRequest
             'id_country' =>'Xuất Xứ',
             'id_brand' =>'Thương Hiệu',
             'id_category' =>'Danh mục sản phẩm',
+            'thumb.*'=> 'Hình ảnh tải lên'
         ];
     }
 }

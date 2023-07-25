@@ -6,12 +6,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 class Slider extends Model
 {
     protected $table='slider';
     protected $image_path='/admin/images/slider';
-    protected $fillable = ['id','name','description','status','display','thumb','link','created_by'];
+    protected $fillable = ['id','name','description','status','display','thumb','link','created_by','modified_by'];
     public $timestamps = true;
     use HasFactory;
     public function getListItems($params=null,$options = null){
@@ -29,13 +30,12 @@ class Slider extends Model
                         $query->where($params['search_field'], 'LIKE', "%{$params['search_value']}%");
                     }elseif($params['search_field'] == 'all'){
                         $query->where(function($query) use($params){
-                            unset($params['search_field_for_controller'][0]); //delete the search_field 'all' in this case
-                            foreach($params['search_field_for_controller'] as $colum){
+                            foreach($this->fillable as $colum){
                                 $query->orWhere($colum,'LIKE', "%{$params['search_value']}%");
                             }
                         });
                     }
-                   $results = $query->orderBy('id','ASC')->paginate($params['item_per_page']);
+                   $results = $query->orderBy('id','DESC')->paginate($params['item_per_page']);
         }
 
         if($options['task'] == 'frontend_get_list_items'){
@@ -60,8 +60,7 @@ class Slider extends Model
                         $query->where($params['search_field'], 'LIKE', "%{$params['search_value']}%");
                     }elseif($params['search_field'] == 'all'){
                         $query->where(function($query) use($params){
-                            unset($params['search_field_for_controller'][0]); //delete the search_field 'all' in this case
-                            foreach($params['search_field_for_controller'] as $colum){
+                            foreach($this->fillable as $colum){
                                 $query->orWhere($colum,'LIKE', "%{$params['search_value']}%");
                             }
                         });
@@ -88,6 +87,7 @@ class Slider extends Model
             if(!empty($params['thumb'])){
                 $params['thumb'] = self::uploadImage($params['thumb']);
             }
+            $params['modified_by'] = Auth::user()->name;
             self::findOrFail($params['id'])
                 ->update($params);
         }
@@ -107,7 +107,7 @@ class Slider extends Model
         if($options['task'] == 'admin_add_new_item'){
             // dd($params);
             $params['thumb'] = self::uploadImage($params['thumb']);
-            $params['created_by'] ='nhatlinh';
+            $params['created_by'] = Auth::user()->name;
             $params['modified_by'] =null;
             self::create($params);
         }

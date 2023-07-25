@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 
 class BrandController extends Controller
 {
-    public function index(){
+    public function showListBrand(){
         $categoryModel = new Category();
         $brandModel = new Brand();
         $items = $brandModel->getListItems(null,['task'=>'frontend_get_lists_brand']);
@@ -25,11 +25,13 @@ class BrandController extends Controller
         }else{
             $params['price_field'] = 'all';
         }
-        $params['id'] = $request->brand_id;
+        $id = $request->brand_id;
+        $params['id']= $id;
         $categoryModel = new Category();
         $categoryItems = $categoryModel->getListItems(null,['task' =>'frontend_get_list_items']);
         $brandModel = new Brand();
-        $item = $brandModel->getItem($params,['task'=>'admin_get_item']);
+        $item = $brandModel->getItem($id,['task'=>'admin_get_item']);
+        // dd($item);
         $items = $brandModel->getProductsInBrand($params,['task' =>'frontend_get_lists_products']);
         return view('frontend.pages.brand.detail', compact('categoryItems','item','items','params'));
     }

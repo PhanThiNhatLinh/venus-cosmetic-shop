@@ -46,18 +46,28 @@ class ShoppingCartController extends Controller
 
     public function upQuantity(Request $request){
         $rowId = $request->id;
+        $qty_up = $request->qty_add_to_cart;
+        // dd($qty_up);
         $product = Cart::get($rowId);
-        $qty = $product->qty + 1;
-
+        if(isset($qty_up) && $qty_up>0){
+            $qty = $product->qty + $qty_up;
+        }else{
+            $qty = $product->qty + 1;
+        }
         Cart::update($rowId,$qty);
         return redirect()->back();
     }
 
     public function downQuantity(Request $request){
         $rowId = $request->id;
+        $qty_up = $request->qty_add_to_cart;
+        // dd($qty_up);
         $product = Cart::get($rowId);
-        $qty = $product->qty - 1;
-
+        if(isset($qty_up) && $qty_up>0){
+            $qty = $product->qty - $qty_up;
+        }else{
+            $qty = $product->qty - 1;
+        }
         Cart::update($rowId,$qty);
         return redirect()->back();
     }

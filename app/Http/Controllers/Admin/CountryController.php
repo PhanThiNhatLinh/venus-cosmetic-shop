@@ -119,6 +119,7 @@ class CountryController extends Controller
             $params = $request->all();        
             // dd($params);    
             if(!empty($request->id)){
+                $this->model->updateItem($params,['task'=>'admin_edit_item']);
                 $notify = "Chỉnh Sửa Thông Tin Thành Công";
             }else{
                 $this->model->insertItem($params,['task'=>'admin_add_new_item']);

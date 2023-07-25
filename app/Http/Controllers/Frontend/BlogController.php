@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class BlogController extends Controller
 {
-    public function index(){
+    public function showListBlog(){
         $categoryModel = new Category();
         $blogModel = new Blog();
         $items = $blogModel->getListItems(null,['task'=>'frontend_get_list_items']);

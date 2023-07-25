@@ -28,6 +28,7 @@ class UserFormRequest extends FormRequest
         $id = $this->id;
         $task = $this->task ;
         $nameCondi = '';
+        $emailCondi = '';
         $statusCondi = '';
         $levelCondi = '';
         $phoneCondi = '';
@@ -39,8 +40,8 @@ class UserFormRequest extends FormRequest
             case 'add':
                 // $nameCondi = 'bail|required|between: 5,100|unique:'.$this->table.',name';
                 $statusCondi = 'bail|required|in:active,inactive';
-                // $levelCondi = 'bail|required|in:super_admin,admin,user';
                 $phoneCondi = 'bail|numeric|regex:/^\+[84]{1}[0-9]{3,11}$/|unique:'.$this->table.',phone';
+                $emailCondi = 'bail|email|unique:'.$this->table.',email';
                 $date_of_birthCondi = 'bail|date|before:'.Carbon::now()->subYears(15);
                 $thumbCondi = 'bail|image|max:2048';
                 $addressCondi = 'bail|string|between: 1,100';
@@ -48,6 +49,7 @@ class UserFormRequest extends FormRequest
                 break;
             case 'edit_info':
                 $nameCondi = 'bail|required|between:5,100';
+                $emailCondi = 'bail|email|unique:'.$this->table.',email,'.$this->id;
                 $thumbCondi = 'bail|image|max:2048';
                 $statusCondi = 'bail|in:active,inactive';
                 $date_of_birthCondi = 'bail|date|before:'.Carbon::now()->subYears(15);
@@ -61,17 +63,6 @@ class UserFormRequest extends FormRequest
                 break;
         }
 
-
-        
-        // if(!empty($id)){
-        //     $nameCondi .=','.$this->id;
-        //     $thumbCondi = 'bail|image|max:2048';
-        //     $statusCondi = 'bail|in:active,inactive';
-        //     $levelCondi = 'bail|in:super_admin,admin,user';
-        //     $phoneCondi = 'numeric';
-        //     $addressCondi = 'bail|string|between: 1,100';
-        //     $passwordCondi = 'required|string|min:8|confirmed|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/';
-        // }
         return [
             'name' => $nameCondi,
             'status' => $statusCondi, 
@@ -81,6 +72,7 @@ class UserFormRequest extends FormRequest
             'thumb' => $thumbCondi, 
             'address' => $addressCondi, 
             'password' => $passwordCondi,
+            'email' => $emailCondi,
         ];
     }    
     public function messages(): array
@@ -89,7 +81,7 @@ class UserFormRequest extends FormRequest
             'required' => ':attribute không được để trống',
             'in' => ':attribute phải được chọn',
             'unique' => ':attribute không được trùng lặp',
-            'between' => ':attribute phải nằm trong khoảng 1-50 ký tự',
+            'between' => ':attribute phải nằm trong khoảng 1-100 ký tự',
             'min' => ':attribute ít nhất phải có :min ký tự',
             'numeric' => ':attribute phải là số',
             'image' => ':attribute Phải đúng định dạng hình ảnh',
@@ -97,6 +89,7 @@ class UserFormRequest extends FormRequest
             'confirmed' => ':attribute Xác Minh phải trùng với mật khẩu',
             'regex' => ':attribute phải đúng quy tắc',
             'before' => ':attribute phải lớn hơn 15 tuổi', 
+            'email' => ':attribute chưa đúng định dạng email',
         ];
     }
     public function attributes(): array

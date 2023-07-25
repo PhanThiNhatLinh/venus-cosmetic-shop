@@ -22,6 +22,9 @@
                             dd(Cart::content());
                         @endphp --}}
                         @foreach(Cart::content() as $product)
+                        @php
+                            $link = route('product.detail',['product_id' => $product->id,'product_name' => Str::slug($product->name)]);
+                        @endphp
                             <div class="card rounded-3 mb-4">
                                 <div class="card-body p-4">
                                     <div class="row d-flex align-items-center">
@@ -31,22 +34,22 @@
                                                 class="img-fluid rounded-3" alt="">
                                         </div>
                                         <div class="col-md-3 col-lg-3 col-xl-3">
-                                            <h1 style="font-size: 15px;" class="lead fw-normal mb-2">{{$product->name}}</h1>
+                                            <a href="{{$link}}"><h1 style="font-size: 15px;" class="lead fw-normal mb-2">{{$product->name}}</h1></a>
                                         </div>
                                         <div class="col-md-1 col-lg-3 col-xl-2 d-flex">
                                             <a href="{{route('cart.up',['id'=>$product->rowId])}}" class="btn btn-link px-2"
                                                 onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
                                             <i class="fas fa-plus"></i>
                                             </a>
-                                            <input id="form1" min="0" name="quantity" value="{{$product->qty}}" type="number"
-                                                class="form-control form-control-sm" />
+                                            <input style="width:70px" id="{{$product->rowId}}" min="0" name="quantity" value="{{$product->qty}}" type="number"
+                                                class="qty_cart form-control form-control-sm"/>
                                             <a href="{{route('cart.down',['id'=>$product->rowId])}}" class="btn btn-link px-2"
                                                 onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
                                             <i class="fas fa-minus"></i>
                                             </a>
                                         </div>
                                         <div class="col-md-3 col-lg-3 col-xl-3">
-                                            <h5 class="mb-0">{{number_format($product->price,0,'','.')}}</h5>
+                                            <h5 value = {{$product->price}} class="price mb-0">{{number_format($product->price,0,'',',')}}</h5>
                                         </div>
                                         <div class="col-md-1 col-lg-1 col-xl-1 text-end">
                                             <a href="{{route('cart.remove',['id'=>$product->rowId])}}" class="text-info"><i class="fa fa-times"></i></a>
@@ -61,7 +64,7 @@
                         <div class="card mb-4">
                             <div class="card-body p-4 d-flex flex-row">
                                 <div class="form-outline flex-fill">
-                                <h4>Tổng {{Cart::count()}} Sản Phẩm : <span style="color: blue">{{number_format(Cart::subtotal(),0,'','.')}} (VND)</span></h4> 
+                                <h4 id="subtotal">Tổng {{Cart::count()}} Sản Phẩm : <span id="total_money" style="color: blue">{{number_format(Cart::subtotal(),0,'',',')}} (VND)</span></h4> 
                                 </div>
                             </div>
                         </div>
