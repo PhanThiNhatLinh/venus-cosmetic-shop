@@ -29,6 +29,9 @@ return new class extends Migration
             $table->string('created_by');
             $table->string('modified_by');
             $table->timestamps();
+            $table->foreign('id_country')->references('id')->on('country')->onDelete('cascade');
+            $table->foreign('id_brand')->references('id')->on('brand')->onDelete('cascade');
+            $table->foreign('id_category')->references('id')->on('category')->onDelete('cascade');
         });
     }
 

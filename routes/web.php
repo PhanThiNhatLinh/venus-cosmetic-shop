@@ -190,7 +190,7 @@ Route::prefix('admin')->namespace('Admin')->middleware('auth')->group(function (
 Route::prefix('')->namespace('Frontend')->group(function () {
     $controllerName = 'home';
     $controller = ucfirst($controllerName).'Controller@';
-    Route::get('/trang-chu', $controller.'index')->name($controllerName.'.index');
+    Route::get('/', $controller.'index')->name($controllerName.'.index');
 
     //Product
     
